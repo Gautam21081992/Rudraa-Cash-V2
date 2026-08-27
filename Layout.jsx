@@ -7,7 +7,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 function Logo({ compact = false }) {
   return (
     <Link className={`brand ${compact ? "brand--compact" : ""}`} to="/" aria-label="Rudraa Cash home">
-      <img src="/rudraa_logo.webp" alt="Rudraa logo" />
+      <img src="/assets/logo/rudraa_logo.webp" alt="Rudraa logo" />
       <span className="brand-copy">
         <strong>RUDRA<span className="brand-last-a">A</span></strong>
         <small>RUDRAA CASH</small>
