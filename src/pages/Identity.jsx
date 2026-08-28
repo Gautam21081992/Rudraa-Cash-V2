@@ -16,7 +16,7 @@ export default function Identity() {
       <Section>
         <SectionHeader eyebrow="Logo Philosophy" title="One mark. Three ideas. One journey." text="The supplied official logo remains the brand identity; this section explains its conceptual elements without redesigning the mark." />
         <div className="identity-layout">
-          <div className="logo-stage reveal"><img src="/assets/logo/rudraa_logo.webp" alt="Official Rudraa R, Trident and Infinity logo" /></div>
+          <div className="logo-stage reveal"><img src="/assets/logo/rudraa_logo_clean.png" alt="Official Rudraa R, Trident and Infinity logo" /></div>
           <div className="identity-controls">
             {identity.map(([label, title, tags, text, symbol], i) => (
               <button key={label} className={`identity-tab ${active === i ? "active" : ""}`} onClick={() => setActive(i)} aria-pressed={active === i}>
