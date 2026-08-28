@@ -35,7 +35,7 @@ export function usePageMeta(path) {
   useEffect(() => {
     const [title, description] = meta[path] ?? meta["/"];
     const url = `${window.location.origin}${path}`;
-    const image = `${window.location.origin}/assets/logo/rudraa_logo.png`;
+    const image = `${window.location.origin}/assets/logo/rudraa_logo_clean.png`;
 
     document.title = title;
     setMetaByName("description", description);
