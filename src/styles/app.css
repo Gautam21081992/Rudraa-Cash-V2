@@ -554,3 +554,13 @@ button { color: inherit; }
   .brand-copy strong { font-size:15px; }
   .brand-copy small { display:block; font-size:6px; letter-spacing:.06em; }
 }
+
+/* ===== BRAND COLOR FIX ===== */
+
+.brand-white {
+  color: #ffffff;
+}
+
+.brand-blue {
+  color: #00c6ff;
+}
