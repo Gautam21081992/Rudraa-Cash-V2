@@ -532,11 +532,11 @@ export function InfinityVisual({
           filter={`url(#${trailFilterId})`}
         />
 
-        {/* Main infinity body */}
+        {/* STEP 3.2 — Royal/Bright Blue Main Stroke */}
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke={`url(#${gradientId})`}
+          stroke="#1677FF"
           strokeWidth="9"
           strokeLinecap="round"
           strokeLinejoin="round"
