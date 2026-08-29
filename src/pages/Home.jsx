@@ -29,23 +29,29 @@ export default function Home() {
         }
         subtitle={
           <>
-            <span className="brand-white">प्रारंभ से</span>{" "}
-            <span className="brand-blue">अनंत तक</span>
+            <span className="hero-tagline-white">प्रारंभ से</span>{" "}
+            <span className="hero-tagline-blue">अनंत तक</span>
           </>
         }
       >
-        <div className="hero-copy">
-          <p className="hero-lead hero-supporting-text">
-            <span className="brand-white">Empowering Retailers,</span>{" "}
-            <span className="brand-blue">Empowering India.</span>
+        <div className="hero-copy hero-copy--brand">
+          <p className="hero-supporting">
+            <span>Empowering Retailers,</span>{" "}
+            <strong>Empowering India.</strong>
             <br />
-            <span className="brand-white">Your Growth,</span>{" "}
-            <span className="brand-blue">Our Commitment.</span>
+            <span>Your Growth,</span>{" "}
+            <strong>Our Commitment.</strong>
           </p>
 
           <div className="hero-actions">
-            <Button to="/rudraa-cash">Explore Rudraa Cash</Button>
-            <Button to="/contact" variant="ghost">
+            <Button to="/rudraa-cash">
+              Explore Rudraa Cash
+            </Button>
+
+            <Button
+              to="/contact"
+              variant="ghost"
+            >
               Join the Rudraa Ecosystem
             </Button>
           </div>
@@ -90,21 +96,26 @@ export default function Home() {
 
       <Section className="split-section">
         <div className="split-copy reveal">
-          <span className="eyebrow">Mobile Experience</span>
+          <span className="eyebrow">
+            Mobile Experience
+          </span>
 
           <h2>Your Business. Connected.</h2>
 
           <p>
-            A modern mobile experience designed to make business operations
-            simple, accessible and connected.
+            A modern mobile experience designed to make
+            business operations simple, accessible and
+            connected.
           </p>
 
           <p className="muted">
-            The interface shown is conceptual/prototype UI only and does not
-            represent real company data.
+            The interface shown is conceptual/prototype UI
+            only and does not represent real company data.
           </p>
 
-          <Button to="/rudraa-cash">Explore Rudraa Cash</Button>
+          <Button to="/rudraa-cash">
+            Explore Rudraa Cash
+          </Button>
         </div>
 
         <AppMockup />
@@ -112,14 +123,22 @@ export default function Home() {
 
       <Section className="brand-section">
         <div className="brand-statement reveal">
-          <span className="eyebrow">Brand Philosophy</span>
+          <span className="eyebrow">
+            Brand Philosophy
+          </span>
 
           <h2>
-            <span className="brand-white">प्रारंभ से</span>{" "}
-            <span className="brand-blue">अनंत तक</span>
+            <span className="brand-white">
+              प्रारंभ से
+            </span>{" "}
+            <span className="brand-blue">
+              अनंत तक
+            </span>
           </h2>
 
-          <p>Begin. Connect. Grow. Evolve.</p>
+          <p>
+            Begin. Connect. Grow. Evolve.
+          </p>
 
           <InfinityVisual compact />
         </div>
@@ -132,17 +151,23 @@ export default function Home() {
         />
 
         <div className="value-strip">
-          {["Trust", "Growth", "Partnership", "Innovation"].map((v, i) => (
-            <Link
-              className="value-chip reveal"
-              key={v}
-              to="/core-values"
-            >
-              <span>0{i + 1}</span>
-              {v}
-              <ArrowRight size={16} />
-            </Link>
-          ))}
+          {["Trust", "Growth", "Partnership", "Innovation"].map(
+            (value, index) => (
+              <Link
+                className="value-chip reveal"
+                key={value}
+                to="/core-values"
+              >
+                <span>
+                  0{index + 1}
+                </span>
+
+                {value}
+
+                <ArrowRight size={16} />
+              </Link>
+            )
+          )}
         </div>
       </Section>
 
