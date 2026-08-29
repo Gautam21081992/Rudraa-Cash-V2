@@ -18,7 +18,7 @@ function Logo({ compact = false }) {
 
       <span className="brand-copy">
         <strong className="rudraa-wordmark">
-          RUDRA
+          <span>RUDRA</span>
           <span className="brand-last-a">A</span>
         </strong>
       </span>
@@ -388,6 +388,10 @@ export function PremiumCard({
   );
 }
 
+/* =========================================================
+   PREMIUM RUDRAA INFINITY VISUAL
+   ========================================================= */
+
 export function InfinityVisual({
   compact = false,
 }) {
@@ -407,6 +411,10 @@ export function InfinityVisual({
     compact ? "compact" : "hero"
   }`;
 
+  const wideGlowFilterId = `infinity-wide-glow-${
+    compact ? "compact" : "hero"
+  }`;
+
   return (
     <div
       className={`infinity-visual ${
@@ -416,11 +424,13 @@ export function InfinityVisual({
       }`}
       aria-label="Animated infinity symbol representing continuity and limitless growth"
     >
+      {/* Large ambient glow behind infinity */}
       <div
         className="infinity-glow"
         aria-hidden="true"
       />
 
+      {/* Premium floating platform */}
       <div
         className="infinity-platform"
         aria-hidden="true"
@@ -434,6 +444,7 @@ export function InfinityVisual({
         focusable="false"
       >
         <defs>
+          {/* Main electric blue gradient */}
           <linearGradient
             id={gradientId}
             x1="0%"
@@ -443,26 +454,38 @@ export function InfinityVisual({
           >
             <stop
               offset="0%"
-              stopColor="#0047B8"
+              stopColor="#003A9B"
             />
 
             <stop
-              offset="50%"
+              offset="28%"
+              stopColor="#006BFF"
+            />
+
+            <stop
+              offset="52%"
+              stopColor="#19BFFF"
+            />
+
+            <stop
+              offset="72%"
               stopColor="#006BFF"
             />
 
             <stop
               offset="100%"
-              stopColor="#0052CC"
+              stopColor="#0047B8"
             />
           </linearGradient>
 
+          {/* Main glow */}
           <filter
             id={glowFilterId}
             x="-100%"
             y="-100%"
             width="300%"
             height="300%"
+            colorInterpolationFilters="sRGB"
           >
             <feGaussianBlur
               stdDeviation="5"
@@ -475,12 +498,34 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
+          {/* Wider atmospheric glow */}
+          <filter
+            id={wideGlowFilterId}
+            x="-200%"
+            y="-200%"
+            width="400%"
+            height="400%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feGaussianBlur
+              stdDeviation="10"
+              result="wideBlur"
+            />
+
+            <feMerge>
+              <feMergeNode in="wideBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          {/* Energy trail blur */}
           <filter
             id={trailFilterId}
             x="-200%"
             y="-200%"
             width="400%"
             height="400%"
+            colorInterpolationFilters="sRGB"
           >
             <feGaussianBlur
               stdDeviation="3.5"
@@ -493,6 +538,7 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
+          {/* Infinity path */}
           <path
             id={pathId}
             d="
@@ -508,29 +554,51 @@ export function InfinityVisual({
           />
         </defs>
 
-        {/* Ambient blue aura */}
+        {/* =================================================
+            AMBIENT INFINITY AURA
+           ================================================= */}
+
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#008cff"
-          strokeWidth="24"
+          stroke="#008CFF"
+          strokeWidth="30"
           strokeLinecap="round"
-          opacity="0.16"
+          strokeLinejoin="round"
+          opacity="0.10"
+          filter={`url(#${wideGlowFilterId})`}
+        />
+
+        <use
+          href={`#${pathId}`}
+          fill="none"
+          stroke="#008CFF"
+          strokeWidth="23"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.15"
           filter={`url(#${glowFilterId})`}
         />
 
-        {/* Secondary glow */}
+        {/* =================================================
+            SECONDARY CYAN GLOW
+           ================================================= */}
+
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#00c6ff"
+          stroke="#00C6FF"
           strokeWidth="15"
           strokeLinecap="round"
+          strokeLinejoin="round"
           opacity="0.18"
           filter={`url(#${trailFilterId})`}
         />
 
-        {/* Main electric-blue infinity */}
+        {/* =================================================
+            MAIN ELECTRIC BLUE INFINITY
+           ================================================= */}
+
         <use
           href={`#${pathId}`}
           fill="none"
@@ -540,20 +608,116 @@ export function InfinityVisual({
           strokeLinejoin="round"
         />
 
-        {/* Fine white highlight */}
+        {/* =================================================
+            INNER BLUE HIGHLIGHT
+           ================================================= */}
+
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="rgba(255,255,255,0.42)"
-          strokeWidth="1.6"
+          stroke="#4DD7FF"
+          strokeWidth="2.2"
           strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.58"
         />
 
-        {/* Moving blue aura */}
+        {/* =================================================
+            FINE WHITE SPECULAR HIGHLIGHT
+           ================================================= */}
+
+        <use
+          href={`#${pathId}`}
+          fill="none"
+          stroke="rgba(255,255,255,0.45)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.8"
+        />
+
+        {/* =================================================
+            MOVING ENERGY TRAIL — BACK
+           ================================================= */}
+
         <circle
-          r="10"
-          fill="#39cfff"
+          r="8"
+          fill="#00C6FF"
+          opacity="0.22"
+          filter={`url(#${trailFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            begin="-0.45s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        <circle
+          r="7"
+          fill="#36D5FF"
+          opacity="0.26"
+          filter={`url(#${trailFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            begin="-0.30s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        <circle
+          r="6"
+          fill="#8BE8FF"
           opacity="0.30"
+          filter={`url(#${trailFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            begin="-0.15s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        {/* =================================================
+            MOVING BLUE ENERGY CORE
+           ================================================= */}
+
+        <circle
+          r="11"
+          fill="#00BFFF"
+          opacity="0.18"
+          filter={`url(#${wideGlowFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        <circle
+          r="8"
+          fill="#39CFFF"
+          opacity="0.38"
           filter={`url(#${trailFilterId})`}
         >
           <animateMotion
@@ -567,11 +731,35 @@ export function InfinityVisual({
           </animateMotion>
         </circle>
 
-        {/* Soft white glow point */}
+        {/* =================================================
+            SOFT WHITE ENERGY POINT
+           ================================================= */}
+
         <circle
-          r="7"
-          fill="#ffffff"
-          opacity="0.45"
+          r="8"
+          fill="#FFFFFF"
+          opacity="0.28"
+          filter={`url(#${wideGlowFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        {/* =================================================
+            MAIN WHITE GLOWING POINT
+           ================================================= */}
+
+        <circle
+          r="5.5"
+          fill="#FFFFFF"
+          opacity="0.92"
           filter={`url(#${glowFilterId})`}
         >
           <animateMotion
@@ -585,27 +773,13 @@ export function InfinityVisual({
           </animateMotion>
         </circle>
 
-        {/* Main white glowing point */}
-        <circle
-          r="4.8"
-          fill="#ffffff"
-          filter={`url(#${glowFilterId})`}
-        >
-          <animateMotion
-            dur="8s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
+        {/* =================================================
+            WHITE-HOT CORE
+           ================================================= */}
 
-        {/* White-hot center */}
         <circle
-          r="2"
-          fill="#ffffff"
+          r="2.2"
+          fill="#FFFFFF"
         >
           <animateMotion
             dur="8s"
@@ -622,9 +796,13 @@ export function InfinityVisual({
       {!compact && (
         <div className="infinity-caption">
           <span>Continuity</span>
+
           <i>•</i>
+
           <span>Limitless Growth</span>
+
           <i>•</i>
+
           <span>Endless Possibilities</span>
         </div>
       )}
@@ -648,6 +826,7 @@ export function AppMockup() {
 
         <div className="phone-top">
           <span>Rudraa Cash</span>
+
           <span className="status-dot" />
         </div>
 
