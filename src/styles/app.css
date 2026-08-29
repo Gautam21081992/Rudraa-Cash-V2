@@ -511,7 +511,7 @@ button { color: inherit; }
   border-radius:999px; background:linear-gradient(90deg,#0b66e9,#00c6ff);
   transform:rotate(-8deg); box-shadow:0 0 8px rgba(0,198,255,.4);
 }
-.page-hero .hero-content > .eyebrow { display:none; }
+.home-page .page-hero .hero-content > .eyebrow { display:none; }
 .hero-brand-word { color:#fff; }
 .hero-brand-blue { color:#00c6ff; }
 .page-hero .hero-content > h1 { font-size:clamp(52px,6.8vw,82px); }
