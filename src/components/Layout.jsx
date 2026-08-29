@@ -1,4 +1,3 @@
-```jsx
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
@@ -34,13 +33,11 @@ export function Layout({ children }) {
 
   usePageMeta(location.pathname);
 
-  /* Reset navigation state and scroll position on route change */
   useEffect(() => {
     setMenuOpen(false);
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  /* Navbar scroll state */
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 18);
@@ -57,7 +54,6 @@ export function Layout({ children }) {
     };
   }, []);
 
-  /* Reveal animation lifecycle */
   useEffect(() => {
     const revealItems = document.querySelectorAll(
       ".reveal:not(.is-visible)"
@@ -102,11 +98,18 @@ export function Layout({ children }) {
 
   return (
     <div className="site-shell">
-      <header className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
+      <header
+        className={`navbar ${
+          scrolled ? "navbar--scrolled" : ""
+        }`}
+      >
         <div className="container nav-inner">
           <Logo />
 
-          <nav className="desktop-nav" aria-label="Primary navigation">
+          <nav
+            className="desktop-nav"
+            aria-label="Primary navigation"
+          >
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -122,15 +125,24 @@ export function Layout({ children }) {
             ))}
           </nav>
 
-          <Link className="nav-cta" to="/contact">
+          <Link
+            className="nav-cta"
+            to="/contact"
+          >
             Join Rudraa
             <ArrowUpRight size={16} />
           </Link>
 
           <button
             className="menu-button"
-            onClick={() => setMenuOpen((value) => !value)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() =>
+              setMenuOpen((value) => !value)
+            }
+            aria-label={
+              menuOpen
+                ? "Close menu"
+                : "Open menu"
+            }
             aria-expanded={menuOpen}
           >
             {menuOpen ? <X /> : <Menu />}
@@ -180,11 +192,13 @@ function Footer() {
           <Logo compact />
 
           <p className="footer-tag">
-            <span>प्रारंभ से</span> <b>अनंत तक</b>
+            <span>प्रारंभ से</span>{" "}
+            <b>अनंत तक</b>
           </p>
 
           <p className="muted">
-            Building India’s Next-Generation Fintech Ecosystem
+            Building India’s Next-Generation Fintech
+            Ecosystem
           </p>
         </div>
 
@@ -193,7 +207,10 @@ function Footer() {
 
           <div className="footer-links">
             {navItems.map((item) => (
-              <Link key={item.path} to={item.path}>
+              <Link
+                key={item.path}
+                to={item.path}
+              >
                 {item.label}
               </Link>
             ))}
@@ -204,8 +221,14 @@ function Footer() {
           <h3>Contact</h3>
 
           <div className="footer-links">
-            <a href={contact.phoneHref}>{contact.phone}</a>
-            <a href={contact.emailHref}>{contact.email}</a>
+            <a href={contact.phoneHref}>
+              {contact.phone}
+            </a>
+
+            <a href={contact.emailHref}>
+              {contact.email}
+            </a>
+
             <span>{contact.address}</span>
           </div>
         </div>
@@ -213,10 +236,13 @@ function Footer() {
 
       <div className="container footer-bottom">
         <span>
-          © {new Date().getFullYear()} Rudraa Business Solutions Pvt. Ltd.
+          © {new Date().getFullYear()} Rudraa Business
+          Solutions Pvt. Ltd.
         </span>
 
-        <span>RUDRAA BUSINESS SOLUTIONS PVT. LTD.</span>
+        <span>
+          RUDRAA BUSINESS SOLUTIONS PVT. LTD.
+        </span>
       </div>
     </footer>
   );
@@ -230,11 +256,22 @@ export function PageHero({
 }) {
   return (
     <section className="page-hero">
-      <div className="hero-orb orb-a" />
-      <div className="hero-orb orb-b" />
+      <div
+        className="hero-orb orb-a"
+        aria-hidden="true"
+      />
+
+      <div
+        className="hero-orb orb-b"
+        aria-hidden="true"
+      />
 
       <div className="container hero-content reveal">
-        {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+        {eyebrow && (
+          <span className="eyebrow">
+            {eyebrow}
+          </span>
+        )}
 
         <h1>{title}</h1>
 
@@ -252,8 +289,13 @@ export function Section({
   id,
 }) {
   return (
-    <section id={id} className={`section ${className}`}>
-      <div className="container">{children}</div>
+    <section
+      id={id}
+      className={`section ${className}`}
+    >
+      <div className="container">
+        {children}
+      </div>
     </section>
   );
 }
@@ -270,7 +312,11 @@ export function SectionHeader({
         align === "center" ? "center" : ""
       } reveal`}
     >
-      {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+      {eyebrow && (
+        <span className="eyebrow">
+          {eyebrow}
+        </span>
+      )}
 
       <h2>{title}</h2>
 
@@ -293,8 +339,12 @@ export function Button({
       <a
         className={cls}
         href={href}
-        target={external ? "_blank" : undefined}
-        rel={external ? "noreferrer" : undefined}
+        target={
+          external ? "_blank" : undefined
+        }
+        rel={
+          external ? "noreferrer" : undefined
+        }
       >
         {children}
         <ArrowUpRight size={17} />
@@ -303,7 +353,10 @@ export function Button({
   }
 
   return (
-    <Link className={cls} to={to}>
+    <Link
+      className={cls}
+      to={to}
+    >
       {children}
       <ArrowUpRight size={17} />
     </Link>
@@ -317,8 +370,14 @@ export function PremiumCard({
   className = "",
 }) {
   return (
-    <article className={`premium-card reveal ${className}`}>
-      {icon && <div className="card-icon">{icon}</div>}
+    <article
+      className={`premium-card reveal ${className}`}
+    >
+      {icon && (
+        <div className="card-icon">
+          {icon}
+        </div>
+      )}
 
       <h3>{title}</h3>
 
@@ -349,7 +408,9 @@ export function InfinityVisual({
   return (
     <div
       className={`infinity-visual ${
-        compact ? "infinity-visual--compact" : ""
+        compact
+          ? "infinity-visual--compact"
+          : ""
       }`}
       aria-label="Animated infinity symbol representing continuity and limitless growth"
     >
@@ -445,18 +506,29 @@ export function InfinityVisual({
           />
         </defs>
 
-        {/* Large atmospheric glow */}
+        {/* Ambient blue aura */}
         <use
           href={`#${pathId}`}
           fill="none"
           stroke="#008cff"
-          strokeWidth="22"
+          strokeWidth="24"
           strokeLinecap="round"
-          opacity="0.18"
+          opacity="0.16"
           filter={`url(#${glowFilterId})`}
         />
 
-        {/* Main luminous infinity */}
+        {/* Secondary glow */}
+        <use
+          href={`#${pathId}`}
+          fill="none"
+          stroke="#00c6ff"
+          strokeWidth="15"
+          strokeLinecap="round"
+          opacity="0.18"
+          filter={`url(#${trailFilterId})`}
+        />
+
+        {/* Main infinity body */}
         <use
           href={`#${pathId}`}
           fill="none"
@@ -466,20 +538,20 @@ export function InfinityVisual({
           strokeLinejoin="round"
         />
 
-        {/* Inner highlight */}
+        {/* Fine white highlight */}
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="rgba(255,255,255,0.38)"
+          stroke="rgba(255,255,255,0.42)"
           strokeWidth="1.6"
           strokeLinecap="round"
         />
 
-        {/* Moving blue glow trail */}
+        {/* Moving blue aura */}
         <circle
-          r="9"
+          r="10"
           fill="#39cfff"
-          opacity="0.28"
+          opacity="0.30"
           filter={`url(#${trailFilterId})`}
         >
           <animateMotion
@@ -487,11 +559,31 @@ export function InfinityVisual({
             repeatCount="indefinite"
             rotate="auto"
           >
-            <mpath href={`#${pathId}`} />
+            <mpath
+              href={`#${pathId}`}
+            />
           </animateMotion>
         </circle>
 
-        {/* Main white glowing point */}
+        {/* Soft white glow point */}
+        <circle
+          r="7"
+          fill="#ffffff"
+          opacity="0.45"
+          filter={`url(#${glowFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        {/* Main white point */}
         <circle
           r="4.8"
           fill="#ffffff"
@@ -502,7 +594,9 @@ export function InfinityVisual({
             repeatCount="indefinite"
             rotate="auto"
           >
-            <mpath href={`#${pathId}`} />
+            <mpath
+              href={`#${pathId}`}
+            />
           </animateMotion>
         </circle>
 
@@ -516,7 +610,9 @@ export function InfinityVisual({
             repeatCount="indefinite"
             rotate="auto"
           >
-            <mpath href={`#${pathId}`} />
+            <mpath
+              href={`#${pathId}`}
+            />
           </animateMotion>
         </circle>
       </svg>
@@ -554,30 +650,39 @@ export function AppMockup() {
         </div>
 
         <div className="app-balance">
-          <small>Prototype dashboard</small>
+          <small>
+            Prototype dashboard
+          </small>
 
-          <strong>Business Hub</strong>
+          <strong>
+            Business Hub
+          </strong>
 
           <span>
-            Conceptual interface — no real financial data
+            Conceptual interface — no real
+            financial data
           </span>
         </div>
 
         <div className="app-grid">
-          {rows.map(([name, desc], i) => (
-            <div
-              className="app-tile"
-              key={name}
-            >
-              <span>
-                0{i + 1}
-              </span>
+          {rows.map(
+            ([name, desc], index) => (
+              <div
+                className="app-tile"
+                key={name}
+              >
+                <span>
+                  0{index + 1}
+                </span>
 
-              <b>{name}</b>
+                <b>{name}</b>
 
-              <small>{desc}</small>
-            </div>
-          ))}
+                <small>
+                  {desc}
+                </small>
+              </div>
+            )
+          )}
         </div>
 
         <div className="app-footer">
@@ -626,4 +731,3 @@ export function CTA({
     </section>
   );
 }
-```
