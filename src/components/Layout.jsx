@@ -491,16 +491,18 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
+          {/* Step 2.3:
+              Smooth, natural center crossing */}
           <path
             id={pathId}
             d="
-              M 110 90
-              C 80 40 55 20 35 20
-              C 5 20 5 65 35 90
-              C 55 115 80 140 110 90
-              C 140 40 165 20 185 20
-              C 215 20 215 65 185 90
-              C 165 115 140 140 110 90
+              M 120 90
+              C 95 45 75 20 50 20
+              C 20 20 20 65 50 90
+              C 75 115 95 140 120 90
+              C 145 40 165 20 190 20
+              C 220 20 220 65 190 90
+              C 165 115 145 140 120 90
             "
             fill="none"
           />
