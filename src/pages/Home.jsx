@@ -19,7 +19,7 @@ import {
 
 export default function Home() {
   return (
-    <>
+    <div className="home-page">
       <PageHero
         title={
           <>
@@ -147,6 +147,6 @@ export default function Home() {
       </Section>
 
       <CTA />
-    </>
+    </div>
   );
 }
