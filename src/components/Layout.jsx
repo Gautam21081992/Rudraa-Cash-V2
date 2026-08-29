@@ -1,4 +1,3 @@
-```jsx
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
@@ -19,7 +18,8 @@ function Logo({ compact = false }) {
 
       <span className="brand-copy">
         <strong className="rudraa-wordmark">
-          RUDRA<span className="brand-last-a">A</span>
+          RUDRA
+          <span className="brand-last-a">A</span>
         </strong>
       </span>
     </Link>
@@ -145,6 +145,7 @@ export function Layout({ children }) {
                 : "Open menu"
             }
             aria-expanded={menuOpen}
+            type="button"
           >
             {menuOpen ? <X /> : <Menu />}
           </button>
@@ -440,7 +441,6 @@ export function InfinityVisual({
             x2="100%"
             y2="100%"
           >
-            {/* STEP 3.1 — Deep Electric Blue Base */}
             <stop
               offset="0%"
               stopColor="#0047B8"
@@ -493,8 +493,6 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
-          {/* Step 2.3:
-              Smooth, natural center crossing */}
           <path
             id={pathId}
             d="
@@ -532,11 +530,11 @@ export function InfinityVisual({
           filter={`url(#${trailFilterId})`}
         />
 
-        {/* STEP 3.2 — Royal/Bright Blue Main Stroke */}
+        {/* Main electric-blue infinity */}
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#1677FF"
+          stroke={`url(#${gradientId})`}
           strokeWidth="9"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -587,7 +585,7 @@ export function InfinityVisual({
           </animateMotion>
         </circle>
 
-        {/* Main white point */}
+        {/* Main white glowing point */}
         <circle
           r="4.8"
           fill="#ffffff"
@@ -735,4 +733,3 @@ export function CTA({
     </section>
   );
 }
-```
