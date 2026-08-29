@@ -390,37 +390,50 @@ export function PremiumCard({
 
 /* =========================================================
    PREMIUM 3D INFINITY VISUAL
+   Clean horizontal infinity geometry
    ========================================================= */
 
 export function InfinityVisual({
   compact = false,
 }) {
-  const pathId = `infinity-tube-path-${
-    compact ? "compact" : "hero"
-  }`;
+  const suffix = compact ? "compact" : "hero";
 
-  const blueGradientId = `infinity-blue-${
-    compact ? "compact" : "hero"
-  }`;
+  const pathId = `rudraa-infinity-path-${suffix}`;
+  const blueGradientId = `rudraa-infinity-blue-${suffix}`;
+  const highlightGradientId = `rudraa-infinity-highlight-${suffix}`;
+  const glowId = `rudraa-infinity-glow-${suffix}`;
+  const strongGlowId = `rudraa-infinity-strong-glow-${suffix}`;
+  const trailGlowId = `rudraa-infinity-trail-${suffix}`;
 
-  const highlightGradientId =
-    `infinity-highlight-${
-      compact ? "compact" : "hero"
-    }`;
+  /*
+    IMPORTANT:
+    This is a single closed horizontal infinity curve.
 
-  const glowId = `infinity-glow-${
-    compact ? "compact" : "hero"
-  }`;
+    The old geometry used several overlapping upper/lower
+    loops, which visually created a butterfly/bow-tie shape.
 
-  const strongGlowId =
-    `infinity-strong-glow-${
-      compact ? "compact" : "hero"
-    }`;
-
-  const trailGlowId =
-    `infinity-trail-${
-      compact ? "compact" : "hero"
-    }`;
+    This path has two clean lobes and one controlled
+    center crossing, giving a recognizable ∞ silhouette.
+  */
+  const infinityPath = `
+    M 120 90
+    C 103 63, 86 38, 58 38
+    C 33 38, 18 58, 24 78
+    C 30 99, 51 106, 70 96
+    C 83 89, 96 78, 120 90
+    C 144 102, 157 91, 170 84
+    C 189 74, 210 81, 216 102
+    C 222 122, 207 142, 182 142
+    C 154 142, 137 117, 120 90
+    C 103 63, 86 38, 58 38
+    C 33 38, 18 58, 24 78
+    C 30 99, 51 106, 70 96
+    C 83 89, 96 78, 120 90
+    C 144 102, 157 117, 170 124
+    C 189 134, 210 127, 216 106
+    C 222 86, 207 66, 182 66
+    C 154 66, 137 63, 120 90
+  `;
 
   return (
     <div
@@ -449,7 +462,10 @@ export function InfinityVisual({
         focusable="false"
       >
         <defs>
-          {/* Main blue/cyan tube material */}
+          {/* =================================================
+              BLUE TUBE MATERIAL
+             ================================================= */}
+
           <linearGradient
             id={blueGradientId}
             x1="0%"
@@ -468,12 +484,12 @@ export function InfinityVisual({
             />
 
             <stop
-              offset="42%"
+              offset="40%"
               stopColor="#00aaff"
             />
 
             <stop
-              offset="58%"
+              offset="57%"
               stopColor="#0080ff"
             />
 
@@ -488,7 +504,10 @@ export function InfinityVisual({
             />
           </linearGradient>
 
-          {/* Glossy surface highlight */}
+          {/* =================================================
+              GLASS / METAL HIGHLIGHT
+             ================================================= */}
+
           <linearGradient
             id={highlightGradientId}
             x1="0%"
@@ -499,19 +518,19 @@ export function InfinityVisual({
             <stop
               offset="0%"
               stopColor="#ffffff"
-              stopOpacity="0.78"
+              stopOpacity="0.9"
             />
 
             <stop
-              offset="20%"
-              stopColor="#a8efff"
-              stopOpacity="0.62"
+              offset="18%"
+              stopColor="#b8f4ff"
+              stopOpacity="0.7"
             />
 
             <stop
-              offset="45%"
+              offset="42%"
               stopColor="#ffffff"
-              stopOpacity="0.12"
+              stopOpacity="0.16"
             />
 
             <stop
@@ -521,7 +540,10 @@ export function InfinityVisual({
             />
           </linearGradient>
 
-          {/* Wide ambient glow */}
+          {/* =================================================
+              WIDE GLOW
+             ================================================= */}
+
           <filter
             id={glowId}
             x="-100%"
@@ -534,7 +556,10 @@ export function InfinityVisual({
             />
           </filter>
 
-          {/* Strong glow */}
+          {/* =================================================
+              STRONG GLOW
+             ================================================= */}
+
           <filter
             id={strongGlowId}
             x="-100%"
@@ -553,7 +578,10 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
-          {/* Energy trail glow */}
+          {/* =================================================
+              ENERGY TRAIL GLOW
+             ================================================= */}
+
           <filter
             id={trailGlowId}
             x="-200%"
@@ -572,35 +600,21 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
-          {/* Actual infinity path */}
+          {/* =================================================
+              ACTUAL INFINITY PATH
+             ================================================= */}
+
           <path
             id={pathId}
-            d="
-              M 120 90
-              C 94 44 72 22 49 22
-              C 27 22 18 39 22 57
-              C 26 76 43 90 63 90
-              C 84 90 101 77 120 90
-              C 139 103 156 90 177 90
-              C 197 90 214 76 218 57
-              C 222 39 213 22 191 22
-              C 168 22 146 44 120 90
-              C 94 136 72 158 49 158
-              C 27 158 18 141 22 123
-              C 26 104 43 90 63 90
-              C 84 90 101 103 120 90
-              C 139 77 156 90 177 90
-              C 197 90 214 104 218 123
-              C 222 141 213 158 191 158
-              C 168 158 146 136 120 90
-            "
+            d={infinityPath}
             fill="none"
+            stroke="none"
           />
         </defs>
 
-        {/* =================================================
-            AMBIENT LIGHT
-           ================================================= */}
+        {/* ===================================================
+            AMBIENT BLUE AURA
+           =================================================== */}
 
         <use
           href={`#${pathId}`}
@@ -608,6 +622,7 @@ export function InfinityVisual({
           stroke="#007cff"
           strokeWidth="34"
           strokeLinecap="round"
+          strokeLinejoin="round"
           opacity="0.12"
           filter={`url(#${glowId})`}
         />
@@ -618,27 +633,28 @@ export function InfinityVisual({
           stroke="#00c8ff"
           strokeWidth="25"
           strokeLinecap="round"
-          opacity="0.18"
+          strokeLinejoin="round"
+          opacity="0.2"
           filter={`url(#${strongGlowId})`}
         />
 
-        {/* =================================================
-            OUTER 3D EDGE
-           ================================================= */}
+        {/* ===================================================
+            DARK 3D OUTER DEPTH
+           =================================================== */}
 
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#000c2b"
-          strokeWidth="19"
+          stroke="#00091f"
+          strokeWidth="20"
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity="0.95"
+          opacity="0.98"
         />
 
-        {/* =================================================
-            SOLID BLUE TUBE
-           ================================================= */}
+        {/* ===================================================
+            BLUE TUBE BODY
+           =================================================== */}
 
         <use
           href={`#${pathId}`}
@@ -649,9 +665,9 @@ export function InfinityVisual({
           strokeLinejoin="round"
         />
 
-        {/* =================================================
-            INNER ELECTRIC BLUE LIGHT
-           ================================================= */}
+        {/* ===================================================
+            ELECTRIC BLUE INNER CORE
+           =================================================== */}
 
         <use
           href={`#${pathId}`}
@@ -660,12 +676,12 @@ export function InfinityVisual({
           strokeWidth="9"
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity="0.88"
+          opacity="0.9"
         />
 
-        {/* =================================================
-            GLOSSY SPECULAR HIGHLIGHT
-           ================================================= */}
+        {/* ===================================================
+            WHITE/CYAN SPECULAR EDGE
+           =================================================== */}
 
         <use
           href={`#${pathId}`}
@@ -673,17 +689,21 @@ export function InfinityVisual({
           stroke={`url(#${highlightGradientId})`}
           strokeWidth="3"
           strokeLinecap="round"
+          strokeLinejoin="round"
           opacity="0.92"
+          style={{
+            mixBlendMode: "screen",
+          }}
         />
 
-        {/* =================================================
+        {/* ===================================================
             MOVING ENERGY AURA
-           ================================================= */}
+           =================================================== */}
 
         <circle
           r="14"
           fill="#00d5ff"
-          opacity="0.26"
+          opacity="0.25"
           filter={`url(#${trailGlowId})`}
         >
           <animateMotion
@@ -697,72 +717,80 @@ export function InfinityVisual({
           </animateMotion>
         </circle>
 
-        {/* =================================================
-            ENERGY TRAIL
-           ================================================= */}
+        {/* ===================================================
+            ENERGY TRAIL — LAYER 1
+           =================================================== */}
 
         <circle
-          r="9"
-          fill="#8deeff"
-          opacity="0.28"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            begin="-0.28s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        <circle
-          r="7"
-          fill="#d9fbff"
-          opacity="0.42"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            begin="-0.18s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        <circle
-          r="5.5"
-          fill="#ffffff"
-          opacity="0.68"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            begin="-0.09s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* =================================================
-            MAIN WHITE ENERGY POINT
-           ================================================= */}
-
-        <circle
-          r="11"
-          fill="#ffffff"
+          r="10"
+          fill="#4ee8ff"
           opacity="0.22"
+          filter={`url(#${trailGlowId})`}
+        >
+          <animateMotion
+            dur="8s"
+            begin="-0.32s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        {/* ===================================================
+            ENERGY TRAIL — LAYER 2
+           =================================================== */}
+
+        <circle
+          r="8"
+          fill="#a9f4ff"
+          opacity="0.34"
+          filter={`url(#${trailGlowId})`}
+        >
+          <animateMotion
+            dur="8s"
+            begin="-0.22s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        {/* ===================================================
+            ENERGY TRAIL — LAYER 3
+           =================================================== */}
+
+        <circle
+          r="6"
+          fill="#d9fbff"
+          opacity="0.5"
+          filter={`url(#${trailGlowId})`}
+        >
+          <animateMotion
+            dur="8s"
+            begin="-0.12s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath
+              href={`#${pathId}`}
+            />
+          </animateMotion>
+        </circle>
+
+        {/* ===================================================
+            MAIN ENERGY HALO
+           =================================================== */}
+
+        <circle
+          r="12"
+          fill="#ffffff"
+          opacity="0.2"
           filter={`url(#${strongGlowId})`}
         >
           <animateMotion
@@ -775,6 +803,10 @@ export function InfinityVisual({
             />
           </animateMotion>
         </circle>
+
+        {/* ===================================================
+            MAIN WHITE ENERGY POINT
+           =================================================== */}
 
         <circle
           r="6"
@@ -792,9 +824,12 @@ export function InfinityVisual({
           </animateMotion>
         </circle>
 
-        {/* White-hot center */}
+        {/* ===================================================
+            WHITE-HOT CORE
+           =================================================== */}
+
         <circle
-          r="2.4"
+          r="2.5"
           fill="#ffffff"
         >
           <animateMotion
