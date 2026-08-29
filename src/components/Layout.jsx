@@ -1,3 +1,4 @@
+```jsx
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
@@ -439,19 +440,20 @@ export function InfinityVisual({
             x2="100%"
             y2="100%"
           >
+            {/* STEP 3.1 — Deep Electric Blue Base */}
             <stop
               offset="0%"
-              stopColor="#0877ff"
+              stopColor="#0047B8"
             />
 
             <stop
               offset="50%"
-              stopColor="#00d5ff"
+              stopColor="#006BFF"
             />
 
             <stop
               offset="100%"
-              stopColor="#176dff"
+              stopColor="#0052CC"
             />
           </linearGradient>
 
@@ -733,3 +735,4 @@ export function CTA({
     </section>
   );
 }
+```
