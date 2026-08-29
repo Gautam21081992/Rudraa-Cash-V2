@@ -1,3 +1,4 @@
+```jsx
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
@@ -20,8 +21,6 @@ function Logo({ compact = false }) {
         <strong className="rudraa-wordmark">
           RUDRA<span className="brand-last-a">A</span>
         </strong>
-
-        <small>RUDRAA BUSINESS SOLUTIONS PVT. LTD.</small>
       </span>
     </Link>
   );
@@ -339,7 +338,11 @@ export function InfinityVisual({
     compact ? "compact" : "hero"
   }`;
 
-  const filterId = `infinity-filter-${
+  const glowFilterId = `infinity-glow-filter-${
+    compact ? "compact" : "hero"
+  }`;
+
+  const trailFilterId = `infinity-trail-filter-${
     compact ? "compact" : "hero"
   }`;
 
@@ -355,11 +358,17 @@ export function InfinityVisual({
         aria-hidden="true"
       />
 
+      <div
+        className="infinity-platform"
+        aria-hidden="true"
+      />
+
       <svg
         className="infinity-svg"
         viewBox="0 0 240 180"
         role="img"
         aria-hidden="true"
+        focusable="false"
       >
         <defs>
           <linearGradient
@@ -371,29 +380,29 @@ export function InfinityVisual({
           >
             <stop
               offset="0%"
-              stopColor="#0b66e9"
+              stopColor="#0877ff"
             />
 
             <stop
-              offset="48%"
-              stopColor="#00c6ff"
+              offset="50%"
+              stopColor="#00d5ff"
             />
 
             <stop
               offset="100%"
-              stopColor="#1478ff"
+              stopColor="#176dff"
             />
           </linearGradient>
 
           <filter
-            id={filterId}
+            id={glowFilterId}
             x="-100%"
             y="-100%"
             width="300%"
             height="300%"
           >
             <feGaussianBlur
-              stdDeviation="4"
+              stdDeviation="5"
               result="blur"
             />
 
@@ -403,42 +412,104 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
+          <filter
+            id={trailFilterId}
+            x="-200%"
+            y="-200%"
+            width="400%"
+            height="400%"
+          >
+            <feGaussianBlur
+              stdDeviation="3.5"
+              result="trailBlur"
+            />
+
+            <feMerge>
+              <feMergeNode in="trailBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
           <path
             id={pathId}
-            d="M 45 90 C 18 62 18 35 45 35 C 72 35 93 90 120 90 C 147 90 168 35 195 35 C 222 35 222 62 195 90 C 168 118 147 145 120 145 C 93 145 72 90 45 90 C 18 90 18 118 45 145 C 72 145 93 90 120 90 C 147 90 168 145 195 145 C 222 145 222 118 195 90"
+            d="
+              M 120 90
+              C 95 45 75 25 50 25
+              C 20 25 20 65 50 90
+              C 75 115 95 135 120 90
+              C 145 45 165 25 190 25
+              C 220 25 220 65 190 90
+              C 165 115 145 135 120 90
+            "
             fill="none"
           />
         </defs>
 
+        {/* Large atmospheric glow */}
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="rgba(0,198,255,.18)"
-          strokeWidth="18"
+          stroke="#008cff"
+          strokeWidth="22"
           strokeLinecap="round"
-          filter={`url(#${filterId})`}
+          opacity="0.18"
+          filter={`url(#${glowFilterId})`}
         />
 
+        {/* Main luminous infinity */}
         <use
           href={`#${pathId}`}
           fill="none"
           stroke={`url(#${gradientId})`}
-          strokeWidth="8"
+          strokeWidth="9"
           strokeLinecap="round"
+          strokeLinejoin="round"
         />
 
+        {/* Inner highlight */}
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="rgba(255,255,255,.35)"
-          strokeWidth="1.5"
+          stroke="rgba(255,255,255,0.38)"
+          strokeWidth="1.6"
           strokeLinecap="round"
         />
 
+        {/* Moving blue glow trail */}
         <circle
-          r="5.5"
-          fill="#fff"
-          filter={`url(#${filterId})`}
+          r="9"
+          fill="#39cfff"
+          opacity="0.28"
+          filter={`url(#${trailFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath href={`#${pathId}`} />
+          </animateMotion>
+        </circle>
+
+        {/* Main white glowing point */}
+        <circle
+          r="4.8"
+          fill="#ffffff"
+          filter={`url(#${glowFilterId})`}
+        >
+          <animateMotion
+            dur="8s"
+            repeatCount="indefinite"
+            rotate="auto"
+          >
+            <mpath href={`#${pathId}`} />
+          </animateMotion>
+        </circle>
+
+        {/* White-hot center */}
+        <circle
+          r="2"
+          fill="#ffffff"
         >
           <animateMotion
             dur="8s"
@@ -450,13 +521,15 @@ export function InfinityVisual({
         </circle>
       </svg>
 
-      <div className="infinity-caption">
-        <span>Continuity</span>
-        <i>•</i>
-        <span>Limitless Growth</span>
-        <i>•</i>
-        <span>Endless Possibilities</span>
-      </div>
+      {!compact && (
+        <div className="infinity-caption">
+          <span>Continuity</span>
+          <i>•</i>
+          <span>Limitless Growth</span>
+          <i>•</i>
+          <span>Endless Possibilities</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -553,3 +626,4 @@ export function CTA({
     </section>
   );
 }
+```
