@@ -6,6 +6,7 @@ import {
   Layers3,
   Sparkles,
 } from "lucide-react";
+
 import {
   CTA,
   PageHero,
@@ -21,6 +22,34 @@ const journey = [
   "Network",
   "Technology Platform",
   "Fintech Ecosystem",
+];
+
+const productHighlights = [
+  {
+    icon: <Building2 />,
+    title: "Retailer-Centric",
+    text: "Designed around the retailer.",
+  },
+  {
+    icon: <Layers3 />,
+    title: "Technology-Driven",
+    text: "Built on digital infrastructure.",
+  },
+  {
+    icon: <Sparkles />,
+    title: "Growth-Focused",
+    text: "Designed for long-term scalability.",
+  },
+  {
+    icon: <Flag />,
+    title: "India-Focused",
+    text: "Built with India's business ecosystem in mind.",
+  },
+  {
+    icon: <Globe2 />,
+    title: "Long-Term Vision",
+    text: "A journey from foundation to ecosystem.",
+  },
 ];
 
 export default function About() {
@@ -66,16 +95,24 @@ export default function About() {
         <SectionHeader
           eyebrow="Our Journey"
           title="From idea to ecosystem."
+          text="A long-term journey from a focused product foundation toward a connected business ecosystem."
         />
 
         <div className="timeline">
-          {journey.map((item, i) => (
-            <div className="timeline-item reveal" key={item}>
-              <span>{String(i + 1).padStart(2, "0")}</span>
+          {journey.map((item, index) => (
+            <div
+              className="timeline-item reveal"
+              key={item}
+            >
+              <span>
+                {String(index + 1).padStart(2, "0")}
+              </span>
 
               <b>{item}</b>
 
-              {i < journey.length - 1 && <ArrowRight />}
+              {index < journey.length - 1 && (
+                <ArrowRight aria-hidden="true" />
+              )}
             </div>
           ))}
         </div>
@@ -89,35 +126,16 @@ export default function About() {
         />
 
         <div className="card-grid five">
-          <PremiumCard
-            icon={<Building2 />}
-            title="Retailer-Centric"
-            text="Designed around the retailer."
-          />
-
-          <PremiumCard
-            icon={<Layers3 />}
-            title="Technology-Driven"
-            text="Built on digital infrastructure."
-          />
-
-          <PremiumCard
-            icon={<Sparkles />}
-            title="Growth-Focused"
-            text="Designed for long-term scalability."
-          />
-
-          <PremiumCard
-            icon={<Flag />}
-            title="India-Focused"
-            text="Built with India's business ecosystem in mind."
-          />
-
-          <PremiumCard
-            icon={<Globe2 />}
-            title="Long-Term Vision"
-            text="A journey from foundation to ecosystem."
-          />
+          {productHighlights.map(
+            ({ icon, title, text }) => (
+              <PremiumCard
+                key={title}
+                icon={icon}
+                title={title}
+                text={text}
+              />
+            )
+          )}
         </div>
       </Section>
 
