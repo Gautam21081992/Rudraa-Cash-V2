@@ -61,6 +61,7 @@ button {
 
 .site-shell {
   min-height: 100vh;
+
   background:
     radial-gradient(
       circle at 50% -10%,
@@ -83,19 +84,24 @@ button {
   position: sticky;
   top: 0;
   z-index: 50;
+
   padding: 14px 0;
 
   background: rgba(2, 11, 29, 0.58);
   backdrop-filter: blur(16px);
 
   border-bottom: 1px solid transparent;
+
   transition: 0.3s ease;
 }
 
 .navbar--scrolled {
   background: rgba(2, 11, 29, 0.92);
+
   border-color: var(--line);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.16);
 }
 
 .nav-inner {
@@ -111,61 +117,96 @@ button {
 .brand {
   display: flex;
   align-items: center;
+
   gap: 10px;
+
   min-width: 188px;
 }
 
 .brand img {
   width: 48px;
   height: 48px;
+
   object-fit: contain;
 }
 
 .brand-copy {
   display: flex;
   flex-direction: column;
+
   line-height: 1;
 }
 
 .brand-copy strong,
 .rudraa-wordmark {
-  font: 800 17px Manrope, sans-serif;
+  font:
+    800 17px Manrope,
+    sans-serif;
+
   letter-spacing: 0.14em;
 }
 
+/*
+   Keep the existing company identifier available
+   where it is intentionally used outside the homepage.
+*/
+
 .brand-copy small {
   margin-top: 5px;
+
   color: #72baff;
+
   font-size: 7px;
+
   letter-spacing: 0.11em;
 }
 
+/* =========================================================
+   FINAL RUDRAA A TREATMENT
+   ========================================================= */
+
 .brand-last-a {
   position: relative;
+
   display: inline-block;
 }
 
 .brand-last-a::after {
   content: "";
+
   position: absolute;
-  left: 8%;
-  bottom: -4px;
-  width: 84%;
+
+  left: 6%;
+  bottom: -5px;
+
+  width: 88%;
   height: 3px;
 
   border-radius: 999px;
 
-  background: linear-gradient(
-    90deg,
-    #0b66e9,
-    #00c6ff
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #0b66e9 0%,
+      #00c6ff 55%,
+      #35a8ff 100%
+    );
 
   transform: rotate(-8deg);
-  box-shadow: 0 0 8px rgba(0, 198, 255, 0.4);
+
+  transform-origin: center;
+
+  box-shadow:
+    0 0 6px rgba(0, 198, 255, 0.45),
+    0 0 14px rgba(0, 132, 255, 0.22);
+
+  pointer-events: none;
 }
 
-/* Prevent old unused final-A selector from interfering */
+/*
+   Compatibility with any older final-A class.
+*/
+
 .rudraa-wordmark .rudraa-final-a {
   position: relative;
   display: inline-block;
@@ -187,16 +228,23 @@ button {
 .desktop-nav {
   display: flex;
   align-items: center;
+
   gap: 4px;
+
   flex: 1;
+
   justify-content: center;
 }
 
 .nav-link {
   color: #9eafc9;
+
   padding: 9px;
+
   font-size: 12px;
+
   transition: 0.2s;
+
   white-space: nowrap;
 }
 
@@ -206,17 +254,21 @@ button {
 }
 
 .nav-link.active {
-  text-shadow: 0 0 18px rgba(0, 198, 255, 0.35);
+  text-shadow:
+    0 0 18px rgba(0, 198, 255, 0.35);
 }
 
 .nav-cta,
 .button {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 8px;
 
   border: 1px solid rgba(0, 198, 255, 0.35);
+
   border-radius: 999px;
 
   padding: 12px 18px;
@@ -225,6 +277,7 @@ button {
   font-size: 13px;
 
   transition: 0.25s ease;
+
   cursor: pointer;
 }
 
@@ -240,32 +293,43 @@ button {
 .nav-cta:hover,
 .button:hover {
   transform: translateY(-2px);
+
   border-color: rgba(0, 198, 255, 0.72);
-  box-shadow: 0 10px 30px rgba(0, 144, 255, 0.18);
+
+  box-shadow:
+    0 10px 30px rgba(0, 144, 255, 0.18);
 }
 
 .button--primary {
-  background: linear-gradient(
-    135deg,
-    #0b66e9,
-    #00aef3
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #0b66e9,
+      #00aef3
+    );
 
   color: #fff;
+
   border-color: transparent;
 }
 
 .button--ghost {
   background: rgba(255, 255, 255, 0.03);
+
   border-color: var(--line);
+
   color: #dce9fb;
 }
 
 .menu-button {
   display: none;
+
   background: none;
+
   border: 1px solid var(--line);
+
   border-radius: 12px;
+
   padding: 8px;
 }
 
@@ -283,6 +347,7 @@ button {
   min-height: 650px;
 
   display: grid;
+
   place-items: center;
 
   overflow: hidden;
@@ -311,9 +376,11 @@ button {
   content: "";
 
   position: absolute;
+
   inset: 0;
 
   opacity: 0.22;
+
   pointer-events: none;
 
   background-image:
@@ -329,15 +396,17 @@ button {
 
   background-size: 56px 56px;
 
-  mask-image: linear-gradient(
-    to bottom,
-    black,
-    transparent 78%
-  );
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 78%
+    );
 }
 
 .hero-content {
   position: relative;
+
   padding: 90px 0 70px;
 }
 
@@ -346,6 +415,7 @@ button {
 }
 
 /* Hide old eyebrow only on homepage */
+
 .home-page .page-hero .hero-content > .eyebrow {
   display: none;
 }
@@ -356,9 +426,11 @@ button {
   color: #56caff;
 
   font-size: 11px;
+
   font-weight: 800;
 
   letter-spacing: 0.2em;
+
   text-transform: uppercase;
 
   margin-bottom: 14px;
@@ -379,6 +451,7 @@ button {
 
 .page-hero .hero-copy {
   max-width: 650px;
+
   margin-top: 22px;
 }
 
@@ -389,13 +462,17 @@ button {
     sans-serif;
 
   color: #dceeff;
+
   margin: 0 0 12px;
 }
 
 .page-hero p {
   color: #a8b9d0;
+
   font-size: 17px;
+
   line-height: 1.8;
+
   max-width: 760px;
 }
 
@@ -405,6 +482,7 @@ button {
 
 .page-hero .hero-content > h1 {
   font-size: clamp(52px, 6.8vw, 82px);
+
   letter-spacing: -0.055em;
 }
 
@@ -414,10 +492,14 @@ button {
 
 .hero-brand-blue {
   color: #00c6ff;
+
+  text-shadow:
+    0 0 24px rgba(0, 198, 255, 0.12);
 }
 
 .page-hero .hero-content > p {
   font-size: clamp(24px, 3vw, 36px);
+
   line-height: 1.2;
 
   margin: 14px 0 0;
@@ -431,10 +513,14 @@ button {
 
 .hero-tagline-blue {
   color: #00c6ff;
+
+  text-shadow:
+    0 0 20px rgba(0, 198, 255, 0.12);
 }
 
 .hero-copy--brand {
   margin-top: 20px !important;
+
   max-width: 680px !important;
 }
 
@@ -457,7 +543,11 @@ button {
 
 .hero-supporting strong {
   color: #00c6ff;
+
   font-weight: 800;
+
+  text-shadow:
+    0 0 18px rgba(0, 198, 255, 0.1);
 }
 
 .hero-description {
@@ -466,6 +556,7 @@ button {
   color: #9fb7d1 !important;
 
   font-size: 14px !important;
+
   line-height: 1.7 !important;
 
   max-width: 600px !important;
@@ -476,8 +567,11 @@ button {
 .center-actions,
 .contact-actions {
   display: flex;
+
   gap: 12px;
+
   flex-wrap: wrap;
+
   margin-top: 24px;
 }
 
@@ -494,161 +588,558 @@ button {
   border-radius: 50%;
 
   filter: blur(60px);
+
   opacity: 0.18;
+
+  pointer-events: none;
 }
 
 .orb-a {
   background: #00bff9;
+
   right: -120px;
   top: 130px;
 }
 
 .orb-b {
   background: #1557e8;
+
   left: -160px;
   bottom: 0;
 }
 
 /* =========================================================
    PREMIUM INFINITY VISUAL
+   FINAL LOCKED VERSION
    ========================================================= */
 
 .infinity-visual {
-  width: min(500px, 80vw);
+  width: min(560px, 86vw);
+
   height: 500px;
 
-  margin: 10px auto 0;
+  margin: 16px auto 0;
 
   position: relative;
 
   display: grid;
+
   place-items: center;
 
   overflow: visible;
 
   border: 0;
-  border-radius: 40px;
+
+  border-radius: 42px;
 
   background:
     radial-gradient(
-      circle at 50% 50%,
-      rgba(0, 198, 255, 0.13),
-      transparent 43%
+      ellipse at 50% 52%,
+      rgba(0, 198, 255, 0.16),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 50% 75%,
+      rgba(11, 102, 233, 0.14),
+      transparent 48%
     ),
     linear-gradient(
       145deg,
-      rgba(7, 27, 59, 0.88),
-      rgba(1, 10, 26, 0.92)
+      rgba(7, 27, 59, 0.82),
+      rgba(1, 10, 26, 0.90)
     );
 
   box-shadow:
-    inset 0 0 70px rgba(0, 174, 255, 0.06),
+    inset 0 0 80px rgba(0, 174, 255, 0.06),
+    inset 0 -35px 70px rgba(0, 0, 0, 0.20),
     0 25px 90px rgba(0, 0, 0, 0.32);
 }
 
+/*
+   Very subtle digital-grid atmosphere behind infinity.
+*/
+
+.infinity-visual::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 7%;
+
+  border-radius: 34px;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 198, 255, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 198, 255, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      rgba(0, 0, 0, 0.75) 45%,
+      transparent 78%
+    );
+
+  pointer-events: none;
+
+  opacity: 0.42;
+}
+
+/*
+   Central blue atmosphere.
+*/
+
+.infinity-visual::after {
+  content: "";
+
+  position: absolute;
+
+  width: 72%;
+  height: 32%;
+
+  left: 14%;
+  top: 37%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(0, 198, 255, 0.20),
+      rgba(11, 102, 233, 0.08) 42%,
+      transparent 72%
+    );
+
+  filter: blur(28px);
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+/* =========================================================
+   INFINITY SVG
+   ========================================================= */
+
 .infinity-svg {
-  width: 88%;
-  max-width: 520px;
+  position: relative;
+
+  z-index: 3;
+
+  width: 94%;
+
+  max-width: 540px;
+
   height: auto;
 
   overflow: visible;
+
+  display: block;
+
+  filter:
+    drop-shadow(
+      0 0 10px rgba(0, 198, 255, 0.30)
+    )
+    drop-shadow(
+      0 0 28px rgba(0, 132, 255, 0.18)
+    );
 }
 
 .infinity-svg use {
   vector-effect: non-scaling-stroke;
 }
 
-.infinity-glow {
+/*
+   Support common SVG infinity path classes.
+*/
+
+.infinity-path {
+  fill: none;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  vector-effect: non-scaling-stroke;
+}
+
+.infinity-path--outer {
+  stroke: #0b66e9;
+
+  opacity: 0.72;
+
+  filter:
+    drop-shadow(
+      0 0 8px rgba(11, 102, 233, 0.55)
+    );
+}
+
+.infinity-path--main {
+  stroke: #00c6ff;
+
+  filter:
+    drop-shadow(
+      0 0 7px rgba(0, 198, 255, 0.90)
+    )
+    drop-shadow(
+      0 0 20px rgba(0, 198, 255, 0.50)
+    );
+}
+
+.infinity-path--highlight {
+  stroke: #35a8ff;
+
+  opacity: 0.92;
+
+  filter:
+    drop-shadow(
+      0 0 8px rgba(53, 168, 255, 0.75)
+    );
+}
+
+/* =========================================================
+   INFINITY PLATFORM / DIGITAL BASE
+   ========================================================= */
+
+.infinity-platform {
   position: absolute;
 
-  width: 55%;
-  height: 35%;
+  z-index: 1;
+
+  left: 50%;
+
+  bottom: 52px;
+
+  transform: translateX(-50%);
+
+  width: 64%;
+
+  height: 42px;
 
   border-radius: 50%;
 
-  background: rgba(0, 198, 255, 0.2);
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(0, 198, 255, 0.24),
+      rgba(0, 132, 255, 0.08) 45%,
+      transparent 72%
+    );
 
-  filter: blur(45px);
+  filter: blur(4px);
+
+  box-shadow:
+    0 0 28px rgba(0, 198, 255, 0.18);
 
   pointer-events: none;
 }
 
+.infinity-platform::before {
+  content: "";
+
+  position: absolute;
+
+  left: 10%;
+  right: 10%;
+
+  top: 50%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 198, 255, 0.55),
+      transparent
+    );
+
+  box-shadow:
+    0 0 10px rgba(0, 198, 255, 0.35);
+}
+
+.infinity-platform::after {
+  content: "";
+
+  position: absolute;
+
+  left: 25%;
+  right: 25%;
+
+  top: 68%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(53, 168, 255, 0.28),
+      transparent
+    );
+}
+
+/* =========================================================
+   INFINITY GLOW
+   ========================================================= */
+
+.infinity-glow {
+  position: absolute;
+
+  z-index: 1;
+
+  width: 58%;
+  height: 38%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(0, 198, 255, 0.25),
+      rgba(0, 132, 255, 0.08) 45%,
+      transparent 72%
+    );
+
+  filter: blur(42px);
+
+  pointer-events: none;
+
+  animation:
+    infinityGlow 5s ease-in-out infinite;
+}
+
+/* =========================================================
+   WHITE GLOWING ORBIT POINT
+   ========================================================= */
+
+/*
+   Expected markup can use:
+   .infinity-orbit-dot
+   or
+   .infinity-dot
+
+   Both are supported.
+*/
+
+.infinity-orbit-dot,
+.infinity-dot {
+  position: absolute;
+
+  z-index: 8;
+
+  width: 13px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 5px #ffffff,
+    0 0 12px #ffffff,
+    0 0 24px rgba(0, 198, 255, 0.95),
+    0 0 42px rgba(0, 198, 255, 0.70);
+
+  pointer-events: none;
+
+  will-change: transform;
+}
+
+/*
+   Glowing core.
+*/
+
+.infinity-orbit-dot::before,
+.infinity-dot::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -7px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(0, 198, 255, 0.34) 32%,
+      transparent 72%
+    );
+
+  filter: blur(3px);
+}
+
+/*
+   Premium light trail.
+*/
+
+.infinity-orbit-dot::after,
+.infinity-dot::after {
+  content: "";
+
+  position: absolute;
+
+  width: 58px;
+  height: 8px;
+
+  right: 5px;
+  top: 50%;
+
+  transform:
+    translateY(-50%)
+    rotate(-18deg);
+
+  transform-origin: right center;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 198, 255, 0.08),
+      rgba(255, 255, 255, 0.48)
+    );
+
+  filter: blur(4px);
+
+  opacity: 0.75;
+}
+
+/* =========================================================
+   SVG MOTION PATH SUPPORT
+   ========================================================= */
+
+/*
+   When the dot itself is animated by SVG/JS,
+   these properties preserve smooth rendering.
+*/
+
+.infinity-orbit-motion {
+  offset-rotate: 0deg;
+
+  motion-rotation: 0deg;
+
+  will-change: offset-distance;
+
+  animation:
+    infinityPathOrbit 8s linear infinite;
+}
+
+/*
+   CSS offset-path support for a pure infinity loop.
+   The path is intentionally shaped as a mathematical
+   infinity-style orbit.
+*/
+
+.infinity-orbit-motion--css {
+  offset-path: path(
+    "M 50 50
+     C 20 8, 5 25, 20 50
+     C 35 75, 50 92, 65 50
+     C 80 8, 95 25, 80 50
+     C 65 75, 50 92, 35 50
+     C 20 8, 5 25, 20 50"
+  );
+
+  offset-distance: 0%;
+
+  offset-rotate: 0deg;
+
+  animation:
+    infinityPathOrbit 8s linear infinite;
+}
+
+@keyframes infinityPathOrbit {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* =========================================================
+   INFINITY CAPTION
+   ========================================================= */
+
 .infinity-caption {
   position: absolute;
 
-  bottom: 28px;
+  z-index: 5;
+
+  bottom: 25px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
 
   display: flex;
+
   gap: 8px;
 
   color: #7fa4c8;
 
   font-size: 10px;
+
   letter-spacing: 0.1em;
 
   text-transform: uppercase;
 
   text-align: center;
+
+  white-space: nowrap;
 }
 
 .infinity-caption i {
   color: #00c6ff;
+
   font-style: normal;
+
+  text-shadow:
+    0 0 10px rgba(0, 198, 255, 0.45);
 }
 
-/* Compact infinity */
+/* =========================================================
+   COMPACT INFINITY
+   ========================================================= */
+
 .infinity-visual--compact {
   width: min(720px, 100%);
+
   height: 260px;
 
   border: 0;
+
   box-shadow: none;
+
   background: transparent;
 
   margin: 30px auto 0;
 }
 
-/* =========================================================
-   OLD INFINITY TEXT SUPPORT
-   ========================================================= */
-
-.infinity-core {
-  font:
-    800 230px / 1
-    Manrope,
-    sans-serif;
-
-  color: transparent;
-
-  -webkit-text-stroke: 2px #39ccff;
-
-  text-shadow:
-    0 0 30px rgba(0, 198, 255, 0.35);
-
-  animation: float 5s ease-in-out infinite;
+.infinity-visual--compact::before,
+.infinity-visual--compact::after {
+  display: none;
 }
 
-.infinity-orbit {
-  position: absolute;
-
-  border: 1px solid rgba(0, 198, 255, 0.25);
-
-  border-radius: 50%;
-
-  animation: spin 14s linear infinite;
+.infinity-visual--compact .infinity-platform {
+  bottom: 18px;
 }
 
-.orbit-one {
-  width: 75%;
-  height: 38%;
-  transform: rotate(28deg);
-}
-
-.orbit-two {
-  width: 55%;
-  height: 82%;
-  transform: rotate(-32deg);
-  animation-duration: 18s;
+.infinity-visual--compact .infinity-caption {
+  bottom: 0;
 }
 
 /* =========================================================
@@ -657,17 +1148,20 @@ button {
 
 .section {
   padding: 110px 0;
+
   position: relative;
 }
 
 .section-header {
   max-width: 760px;
+
   margin-bottom: 48px;
 }
 
 .section-header.center {
   margin-left: auto;
   margin-right: auto;
+
   text-align: center;
 }
 
@@ -697,6 +1191,7 @@ button {
     );
 
   -webkit-background-clip: text;
+
   background-clip: text;
 
   -webkit-text-fill-color: transparent;
@@ -712,11 +1207,13 @@ button {
 .node-detail h3,
 .cta-card p {
   color: var(--muted);
+
   line-height: 1.8;
 }
 
 .muted {
   color: #788da8 !important;
+
   font-size: 13px !important;
 }
 
@@ -726,6 +1223,7 @@ button {
 
 .card-grid {
   display: grid;
+
   gap: 16px;
 }
 
@@ -751,6 +1249,7 @@ button {
   padding: 26px;
 
   border: 1px solid var(--line);
+
   border-radius: 24px;
 
   background:
@@ -765,6 +1264,7 @@ button {
   transition: 0.3s ease;
 
   position: relative;
+
   overflow: hidden;
 }
 
@@ -782,11 +1282,13 @@ button {
   background: #00c6ff;
 
   filter: blur(60px);
+
   opacity: 0.08;
 }
 
 .premium-card:hover {
   transform: translateY(-6px);
+
   border-color: rgba(0, 198, 255, 0.34);
 }
 
@@ -804,6 +1306,7 @@ button {
   height: 42px;
 
   display: grid;
+
   place-items: center;
 
   border-radius: 13px;
@@ -825,8 +1328,11 @@ button {
 
 .split-section {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 90px;
+
   align-items: center;
 }
 
@@ -854,28 +1360,35 @@ button {
     sans-serif;
 
   margin: 0;
+
   letter-spacing: -0.06em;
 }
 
 .brand-statement p {
   color: #80a1c5;
+
   font-size: 18px;
 }
 
 .value-strip {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 12px;
 }
 
 .value-chip {
   display: flex;
+
   align-items: center;
+
   gap: 12px;
 
   padding: 20px;
 
   border: 1px solid var(--line);
+
   border-radius: 16px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -887,16 +1400,19 @@ button {
 
 .value-chip span {
   color: #49c9ff;
+
   font-size: 11px;
 }
 
 .value-chip svg {
   margin-left: auto;
+
   color: #6c89aa;
 }
 
 .value-chip:hover {
   transform: translateY(-3px);
+
   border-color: rgba(0, 198, 255, 0.4);
 }
 
@@ -906,14 +1422,17 @@ button {
 
 .phone-wrap {
   display: flex;
+
   justify-content: center;
 }
 
 .phone {
   width: 300px;
+
   min-height: 610px;
 
   border: 8px solid #14294a;
+
   border-radius: 42px;
 
   padding: 24px 16px 16px;
@@ -950,11 +1469,13 @@ button {
 
 .phone-top {
   display: flex;
+
   justify-content: space-between;
 
   margin-top: 12px;
 
   font-size: 11px;
+
   color: #8fa7c3;
 }
 
@@ -975,6 +1496,7 @@ button {
   padding: 18px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background:
@@ -988,7 +1510,9 @@ button {
 .app-balance small,
 .app-balance span {
   display: block;
+
   color: #718ba8;
+
   font-size: 9px;
 }
 
@@ -1004,6 +1528,7 @@ button {
 
 .app-grid {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
 
   gap: 10px;
@@ -1013,9 +1538,11 @@ button {
 
 .app-tile {
   padding: 13px;
+
   min-height: 92px;
 
   border: 1px solid var(--line);
+
   border-radius: 15px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1023,6 +1550,7 @@ button {
 
 .app-tile span {
   font-size: 9px;
+
   color: #39caff;
 }
 
@@ -1033,25 +1561,31 @@ button {
 
 .app-tile b {
   margin-top: 8px;
+
   font-size: 12px;
 }
 
 .app-tile small {
   color: #718ba8;
+
   margin-top: 3px;
+
   font-size: 9px;
 }
 
 .app-footer {
   display: flex;
+
   justify-content: space-around;
 
   margin-top: 18px;
+
   padding-top: 14px;
 
   border-top: 1px solid var(--line);
 
   color: #6f89a6;
+
   font-size: 9px;
 }
 
@@ -1068,13 +1602,17 @@ button {
     );
 
   border-top: 1px solid var(--line);
+
   border-bottom: 1px solid var(--line);
 }
 
 .flow {
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
+
   gap: 12px;
+
   align-items: stretch;
 }
 
@@ -1086,17 +1624,21 @@ button {
   padding: 24px;
 
   border: 1px solid var(--line);
+
   border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.025);
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 }
 
 .flow-step span {
   color: #43caff;
+
   font-size: 11px;
 }
 
@@ -1114,7 +1656,9 @@ button {
 
 .benefit-grid {
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
+
   gap: 14px;
 }
 
@@ -1122,6 +1666,7 @@ button {
   padding: 25px;
 
   border: 1px solid var(--line);
+
   border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1143,7 +1688,9 @@ button {
 
 .scale-line {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 0;
 
   position: relative;
@@ -1155,6 +1702,7 @@ button {
   position: absolute;
 
   top: 24px;
+
   left: 12%;
   right: 12%;
 
@@ -1174,6 +1722,7 @@ button {
   text-align: center;
 
   position: relative;
+
   z-index: 1;
 }
 
@@ -1184,6 +1733,7 @@ button {
   margin: 0 auto 15px;
 
   display: grid;
+
   place-items: center;
 
   border-radius: 50%;
@@ -1205,6 +1755,7 @@ button {
 
 .identity-layout {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
 
   gap: 70px;
@@ -1216,6 +1767,7 @@ button {
   padding: 35px;
 
   border: 1px solid var(--line);
+
   border-radius: 32px;
 
   background:
@@ -1229,22 +1781,27 @@ button {
 
 .logo-stage img {
   width: 100%;
+
   max-width: 560px;
 
   display: block;
+
   margin: auto;
 }
 
 .identity-controls {
   display: grid;
+
   gap: 10px;
 }
 
 .identity-tab {
   display: grid;
+
   grid-template-columns: 50px 1fr;
 
   gap: 14px;
+
   align-items: center;
 
   text-align: left;
@@ -1252,6 +1809,7 @@ button {
   padding: 15px;
 
   border: 1px solid var(--line);
+
   border-radius: 16px;
 
   background: transparent;
@@ -1262,6 +1820,7 @@ button {
 .identity-tab:hover,
 .identity-tab.active {
   border-color: rgba(0, 198, 255, 0.4);
+
   background: rgba(0, 198, 255, 0.06);
 }
 
@@ -1270,6 +1829,7 @@ button {
   height: 48px;
 
   display: grid;
+
   place-items: center;
 
   border-radius: 14px;
@@ -1292,6 +1852,7 @@ button {
   margin-top: 5px;
 
   color: #7893b0;
+
   font-size: 10px;
 }
 
@@ -1309,7 +1870,9 @@ button {
 
 .color-grid {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 14px;
 }
 
@@ -1317,6 +1880,7 @@ button {
   padding: 18px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1342,7 +1906,9 @@ button {
 
 .color-card span {
   color: #7893b0;
+
   font-size: 12px;
+
   margin-top: 5px;
 }
 
@@ -1360,6 +1926,7 @@ button {
   text-align: center;
 
   border: 1px solid var(--line);
+
   border-radius: 30px;
 
   background:
@@ -1381,6 +1948,7 @@ button {
 
 .two-col {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
 
   gap: 80px;
@@ -1392,7 +1960,9 @@ button {
 
 .timeline {
   display: grid;
+
   grid-template-columns: repeat(6, 1fr);
+
   gap: 10px;
 }
 
@@ -1402,17 +1972,21 @@ button {
   padding: 20px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background: rgba(255, 255, 255, 0.025);
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 }
 
 .timeline-item span {
   color: #43caff;
+
   font-size: 11px;
 }
 
@@ -1434,6 +2008,7 @@ button {
   padding: 45px;
 
   border: 1px solid rgba(0, 198, 255, 0.18);
+
   border-radius: 30px;
 
   background:
@@ -1451,7 +2026,9 @@ button {
 
 .mission-grid {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 14px;
 }
 
@@ -1463,11 +2040,13 @@ button {
   min-height: 270px;
 
   border: 1px solid var(--line);
+
   border-radius: 22px;
 
   background: rgba(255, 255, 255, 0.025);
 
   cursor: pointer;
+
   transition: 0.25s;
 }
 
@@ -1477,7 +2056,9 @@ button {
 
 .mission-card span {
   float: right;
+
   color: #4dcfff;
+
   font-size: 10px;
 }
 
@@ -1491,13 +2072,16 @@ button {
 
 .mission-card p {
   color: #8097b2;
+
   line-height: 1.7;
+
   font-size: 13px;
 }
 
 .mission-card:hover,
 .mission-card.active {
   transform: translateY(-4px);
+
   border-color: rgba(0, 198, 255, 0.4);
 }
 
@@ -1507,7 +2091,9 @@ button {
 
 .roadmap-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 16px;
 }
 
@@ -1519,6 +2105,7 @@ button {
   padding: 28px;
 
   border: 1px solid var(--line);
+
   border-radius: 22px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1555,7 +2142,9 @@ button {
 
 .seven-roadmap {
   display: grid;
+
   grid-template-columns: repeat(7, 1fr);
+
   gap: 8px;
 }
 
@@ -1565,6 +2154,7 @@ button {
   min-height: 130px;
 
   border: 1px solid var(--line);
+
   border-radius: 16px;
 
   background: rgba(255, 255, 255, 0.02);
@@ -1575,7 +2165,9 @@ button {
 .seven-node:hover,
 .seven-node.active {
   border-color: rgba(0, 198, 255, 0.5);
+
   background: rgba(0, 198, 255, 0.07);
+
   transform: translateY(-3px);
 }
 
@@ -1587,33 +2179,41 @@ button {
 
 .seven-node span {
   color: #44cfff;
+
   font-size: 10px;
 }
 
 .seven-node b {
   margin-top: 20px;
+
   font-size: 12px;
 }
 
 .seven-node small {
   color: #7893b0;
+
   margin-top: 4px;
+
   font-size: 10px;
 }
 
 .roadmap-focus {
   margin-top: -35px;
+
   margin-bottom: 55px;
 
   padding: 20px 24px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background: rgba(255, 255, 255, 0.025);
 
   display: flex;
+
   flex-direction: column;
+
   gap: 7px;
 }
 
@@ -1634,14 +2234,17 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 18px;
+
   flex-wrap: wrap;
 
   padding: 28px;
 
   border: 1px solid var(--line);
+
   border-radius: 24px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1661,7 +2264,9 @@ button {
 
 .transformation {
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
+
   gap: 10px;
 }
 
@@ -1671,12 +2276,15 @@ button {
   padding: 22px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background: rgba(255, 255, 255, 0.025);
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 }
 
@@ -1686,11 +2294,13 @@ button {
 
 .transform-step svg {
   display: none;
+
   color: #48cfff;
 }
 
 .number-icon {
   font-size: 11px;
+
   color: #48cfff;
 }
 
@@ -1700,35 +2310,44 @@ button {
 
 .node-flow {
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   gap: 8px;
 }
 
 .node-wrap {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
 }
 
 .ecosystem-node {
   width: 190px;
+
   min-height: 160px;
 
   padding: 22px;
 
   border: 1px solid var(--line);
+
   border-radius: 22px;
 
   background: rgba(255, 255, 255, 0.025);
 
   cursor: pointer;
+
   text-align: left;
 }
 
 .ecosystem-node:hover,
 .ecosystem-node.active {
   border-color: rgba(0, 198, 255, 0.45);
+
   background: rgba(0, 198, 255, 0.06);
 }
 
@@ -1751,6 +2370,7 @@ button {
 
 .ecosystem-node small {
   margin-top: 5px;
+
   color: #7893b0;
 }
 
@@ -1766,6 +2386,7 @@ button {
   padding: 28px;
 
   border: 1px solid var(--line);
+
   border-radius: 20px;
 
   text-align: center;
@@ -1779,7 +2400,9 @@ button {
 
 .connection-grid {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 12px;
 }
 
@@ -1789,6 +2412,7 @@ button {
   min-height: 150px;
 
   border: 1px solid var(--line);
+
   border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1796,6 +2420,7 @@ button {
 
 .connection-card span {
   color: #48cfff;
+
   font-size: 10px;
 }
 
@@ -1815,8 +2440,11 @@ button {
 
 .network-ladder {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 12px;
+
   align-items: end;
 }
 
@@ -1824,6 +2452,7 @@ button {
   padding: 25px;
 
   border: 1px solid var(--line);
+
   border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1839,6 +2468,7 @@ button {
 
 .ladder-card span {
   color: #48cfff;
+
   font-size: 10px;
 }
 
@@ -1856,7 +2486,9 @@ button {
 
 .ladder-card p {
   color: #7893b0;
+
   font-size: 12px;
+
   line-height: 1.5;
 }
 
@@ -1866,7 +2498,9 @@ button {
 
 .security-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 15px;
 }
 
@@ -1880,6 +2514,7 @@ button {
   padding: 32px;
 
   border: 1px solid var(--line);
+
   border-radius: 24px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1902,12 +2537,15 @@ button {
 
 .support-callout p {
   margin: 0;
+
   color: #8097b2;
 }
 
 .tech-roadmap {
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
+
   gap: 10px;
 }
 
@@ -1917,6 +2555,7 @@ button {
   min-height: 140px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1924,6 +2563,7 @@ button {
 
 .tech-step span {
   color: #48cfff;
+
   font-size: 10px;
 }
 
@@ -1943,6 +2583,7 @@ button {
 
 .contact-grid {
   display: grid;
+
   grid-template-columns: 0.9fr 1.1fr;
 
   gap: 70px;
@@ -1952,6 +2593,7 @@ button {
 
 .contact-list {
   display: grid;
+
   gap: 10px;
 }
 
@@ -1965,6 +2607,7 @@ button {
   padding: 18px;
 
   border: 1px solid var(--line);
+
   border-radius: 18px;
 
   background: rgba(255, 255, 255, 0.025);
@@ -1972,6 +2615,7 @@ button {
 
 .contact-card svg {
   color: #4ccfff;
+
   flex: 0 0 auto;
 }
 
@@ -1982,7 +2626,9 @@ button {
 
 .contact-card small {
   color: #718ba8;
+
   font-size: 10px;
+
   margin-bottom: 5px;
 }
 
@@ -1994,6 +2640,7 @@ button {
   padding: 30px;
 
   border: 1px solid var(--line);
+
   border-radius: 26px;
 
   background:
@@ -2028,6 +2675,7 @@ button {
   display: block;
 
   color: #a7bad0;
+
   font-size: 12px;
 }
 
@@ -2043,9 +2691,11 @@ button {
   margin-top: 7px;
 
   border: 1px solid var(--line);
+
   border-radius: 12px;
 
   background: #06142c;
+
   color: #fff;
 
   padding: 12px 13px;
@@ -2069,11 +2719,13 @@ button {
   display: flex;
 
   gap: 8px;
+
   align-items: flex-start;
 
   color: #70dcb8;
 
   font-size: 12px;
+
   line-height: 1.5;
 }
 
@@ -2128,7 +2780,9 @@ button {
 
 .footer-links {
   display: flex;
+
   flex-direction: column;
+
   gap: 12px;
 }
 
@@ -2137,6 +2791,7 @@ button {
   color: #9fb0c8;
 
   font-size: 13px;
+
   line-height: 1.7;
 }
 
@@ -2192,6 +2847,7 @@ button {
 
 .final-brand p {
   color: #87a6c5;
+
   font-size: 18px;
 }
 
@@ -2213,6 +2869,7 @@ button {
   padding: 80px 20px;
 
   display: grid;
+
   place-items: center;
 
   text-align: center;
@@ -2220,8 +2877,11 @@ button {
 
 .not-found > div {
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   gap: 24px;
 }
 
@@ -2247,11 +2907,12 @@ button {
 
 .reveal.is-visible {
   opacity: 1;
+
   transform: none;
 }
 
 /* =========================================================
-   ANIMATIONS
+   GENERAL ANIMATIONS
    ========================================================= */
 
 @keyframes spin {
@@ -2268,6 +2929,21 @@ button {
 
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes infinityGlow {
+  0%,
+  100% {
+    opacity: 0.72;
+
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform: scale(1.04);
   }
 }
 
@@ -2365,14 +3041,24 @@ button {
   }
 
   /*
-    Keep the company text visible in the navbar,
-    but small enough for mobile.
+     Keep company text available where used,
+     while keeping navbar compact.
   */
+
   .brand-copy small {
     display: block;
+
     font-size: 6px;
+
     letter-spacing: 0.06em;
+
     margin-top: 5px;
+  }
+
+  .brand-last-a::after {
+    bottom: -4px;
+
+    height: 2.5px;
   }
 
   .nav-cta {
@@ -2394,11 +3080,13 @@ button {
   .page-hero h1,
   .page-hero .hero-content > h1 {
     font-size: clamp(42px, 13vw, 58px);
+
     line-height: 1;
   }
 
   .page-hero .hero-content > p {
     font-size: clamp(22px, 7vw, 28px);
+
     line-height: 1.22;
   }
 
@@ -2408,16 +3096,19 @@ button {
 
   .hero-supporting {
     font-size: 18px !important;
+
     line-height: 1.45 !important;
   }
 
   .hero-description {
     font-size: 13px !important;
+
     line-height: 1.65 !important;
   }
 
   .hero-actions {
     flex-direction: column;
+
     align-items: stretch;
   }
 
@@ -2426,32 +3117,60 @@ button {
   }
 
   /* =====================================================
-     MOBILE INFINITY
+     MOBILE PREMIUM INFINITY
      ===================================================== */
 
   .infinity-visual {
     width: 100%;
-    height: 340px;
 
-    margin-top: 28px;
+    height: 350px;
 
-    border-radius: 26px;
+    margin-top: 30px;
+
+    border-radius: 28px;
+  }
+
+  .infinity-visual::before {
+    inset: 5%;
+
+    background-size: 25px 25px;
   }
 
   .infinity-svg {
-    width: 96%;
-    max-width: 500px;
+    width: 98%;
+
+    max-width: 520px;
   }
 
   .infinity-glow {
-    width: 65%;
-    height: 35%;
+    width: 70%;
 
-    filter: blur(38px);
+    height: 38%;
+
+    filter: blur(35px);
+  }
+
+  .infinity-platform {
+    width: 72%;
+
+    bottom: 44px;
+
+    height: 34px;
+  }
+
+  .infinity-orbit-dot,
+  .infinity-dot {
+    width: 11px;
+    height: 11px;
+  }
+
+  .infinity-orbit-dot::after,
+  .infinity-dot::after {
+    width: 45px;
   }
 
   .infinity-caption {
-    bottom: 18px;
+    bottom: 16px;
 
     left: 50%;
 
@@ -2468,17 +3187,20 @@ button {
     text-align: center;
 
     font-size: 8px;
+
+    white-space: normal;
   }
 
   .infinity-visual--compact {
     width: 100%;
+
     height: 230px;
 
     margin-top: 20px;
   }
 
-  .infinity-core {
-    font-size: 150px;
+  .infinity-visual--compact .infinity-platform {
+    bottom: 22px;
   }
 
   /* =====================================================
@@ -2519,6 +3241,7 @@ button {
   .two-col,
   .contact-grid {
     grid-template-columns: 1fr;
+
     gap: 45px;
   }
 
@@ -2551,17 +3274,20 @@ button {
 
   .scale-line {
     grid-template-columns: 1fr;
+
     gap: 28px;
   }
 
   .scale-line::before {
     left: 50%;
+
     right: auto;
 
     top: 24px;
     bottom: 24px;
 
     width: 1px;
+
     height: auto;
   }
 
@@ -2591,11 +3317,13 @@ button {
 
   .node-wrap {
     flex-direction: column;
+
     width: 100%;
   }
 
   .ecosystem-node {
     width: 100%;
+
     min-height: 110px;
   }
 
@@ -2617,6 +3345,7 @@ button {
 
   .transform-step svg {
     display: block;
+
     align-self: center;
   }
 
@@ -2671,6 +3400,7 @@ button {
 
   .footer-links span {
     max-width: 100%;
+
     line-height: 1.8;
   }
 
@@ -2704,12 +3434,24 @@ button {
   .brand-copy strong,
   .rudraa-wordmark {
     font-size: 13px;
+
     letter-spacing: 0.11em;
   }
 
   .brand-copy small {
     font-size: 5px;
+
     letter-spacing: 0.045em;
+  }
+
+  .brand-last-a::after {
+    left: 7%;
+
+    width: 86%;
+
+    bottom: -3px;
+
+    height: 2px;
   }
 
   .page-hero .hero-content > h1 {
@@ -2724,13 +3466,55 @@ button {
     font-size: 17px !important;
   }
 
+  /* Final small-screen infinity sizing */
+
   .infinity-visual {
-    height: 300px;
+    height: 310px;
+
+    margin-top: 26px;
+
+    border-radius: 24px;
+  }
+
+  .infinity-svg {
+    width: 101%;
+  }
+
+  .infinity-glow {
+    width: 74%;
+
+    height: 36%;
+
+    filter: blur(30px);
+  }
+
+  .infinity-platform {
+    width: 76%;
+
+    bottom: 38px;
+
+    height: 28px;
+  }
+
+  .infinity-orbit-dot,
+  .infinity-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .infinity-orbit-dot::after,
+  .infinity-dot::after {
+    width: 38px;
+
+    opacity: 0.65;
   }
 
   .infinity-caption {
     font-size: 7px;
+
     gap: 5px;
+
+    bottom: 13px;
   }
 
   .value-strip {
@@ -2773,6 +3557,7 @@ button {
     scroll-behavior: auto !important;
 
     animation-duration: 0.001ms !important;
+
     animation-iteration-count: 1 !important;
 
     transition-duration: 0.001ms !important;
@@ -2780,7 +3565,17 @@ button {
 
   .reveal {
     opacity: 1;
+
     transform: none;
+  }
+
+  .infinity-glow {
+    animation: none !important;
+  }
+
+  .infinity-orbit-motion,
+  .infinity-orbit-motion--css {
+    animation: none !important;
   }
 }
 
