@@ -3590,3 +3590,335 @@ button {
 .brand-blue {
   color: #00c6ff;
 }
+/* =========================================================
+   RUDRAA PREMIUM INFINITY — FINAL OVERRIDE
+   ========================================================= */
+
+.infinity-visual {
+  width: min(560px, 88vw);
+  height: 470px;
+  margin: 8px auto 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 40px;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 198, 255, 0.12) 0%,
+      rgba(0, 117, 255, 0.055) 32%,
+      transparent 68%
+    );
+
+  box-shadow:
+    inset 0 0 90px rgba(0, 174, 255, 0.035),
+    0 25px 90px rgba(0, 0, 0, 0.28);
+}
+
+.infinity-svg {
+  width: min(94%, 540px);
+  height: auto;
+  overflow: visible;
+  display: block;
+}
+
+.infinity-svg use {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Ambient light behind infinity */
+.infinity-glow {
+  position: absolute;
+  width: 62%;
+  height: 42%;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(0, 198, 255, 0.28) 0%,
+      rgba(0, 112, 255, 0.12) 38%,
+      transparent 72%
+    );
+
+  filter: blur(45px);
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Soft futuristic floor/platform */
+.infinity-platform {
+  position: absolute;
+  left: 50%;
+  bottom: 54px;
+
+  width: 58%;
+  height: 24px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(0, 198, 255, 0.24) 0%,
+      rgba(0, 104, 255, 0.10) 38%,
+      transparent 72%
+    );
+
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* Energy point breathing effect */
+.infinity-energy-aura {
+  animation: infinity-energy-pulse 1.8s ease-in-out infinite;
+}
+
+.infinity-energy-trail {
+  animation: infinity-energy-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes infinity-energy-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* Caption */
+.infinity-caption {
+  position: absolute;
+  bottom: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  color: #7fa4c8;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+.infinity-caption i {
+  color: #00c6ff;
+  font-style: normal;
+  text-shadow: 0 0 8px rgba(0, 198, 255, 0.7);
+}
+
+/* =========================================================
+   FINAL BRAND WORDMARK
+   ========================================================= */
+
+.brand {
+  min-width: 188px;
+}
+
+.brand img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+}
+
+.rudraa-wordmark {
+  color: #ffffff;
+}
+
+.brand-last-a {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+}
+
+.brand-last-a::after {
+  content: "";
+  position: absolute;
+
+  left: 5%;
+  bottom: -5px;
+
+  width: 90%;
+  height: 3px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    #006BFF 0%,
+    #00C6FF 55%,
+    #6FE5FF 100%
+  );
+
+  transform: rotate(-8deg);
+  transform-origin: center;
+
+  box-shadow:
+    0 0 5px rgba(0, 198, 255, 0.7),
+    0 0 12px rgba(0, 119, 255, 0.45);
+}
+
+/* =========================================================
+   HERO FINAL POLISH
+   ========================================================= */
+
+.home-page .page-hero .hero-content {
+  padding-top: 82px;
+  padding-bottom: 58px;
+}
+
+.home-page .page-hero .hero-content > h1 {
+  font-size: clamp(50px, 6.2vw, 78px);
+  line-height: 0.98;
+}
+
+.home-page .page-hero .hero-content > p {
+  font-size: clamp(23px, 2.7vw, 34px);
+  line-height: 1.2;
+  margin-top: 15px;
+}
+
+.hero-copy--brand {
+  margin-top: 18px !important;
+}
+
+.hero-supporting {
+  font-size: clamp(17px, 2vw, 23px) !important;
+  line-height: 1.48 !important;
+}
+
+/* =========================================================
+   MOBILE HERO
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .home-page .page-hero {
+    min-height: auto;
+  }
+
+  .home-page .page-hero .hero-content {
+    padding-top: 68px;
+    padding-bottom: 35px;
+    text-align: center;
+  }
+
+  .home-page .page-hero .hero-content > h1 {
+    font-size: clamp(42px, 13vw, 62px);
+    letter-spacing: -0.05em;
+  }
+
+  .home-page .page-hero .hero-content > p {
+    font-size: clamp(22px, 6.5vw, 30px);
+    margin-top: 13px;
+  }
+
+  .hero-copy--brand {
+    max-width: 100% !important;
+    margin-top: 17px !important;
+  }
+
+  .hero-supporting {
+    font-size: clamp(16px, 4.4vw, 20px) !important;
+    line-height: 1.55 !important;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .infinity-visual {
+    width: min(100%, 440px);
+    height: 330px;
+    margin-top: 5px;
+    border-radius: 28px;
+  }
+
+  .infinity-svg {
+    width: 94%;
+  }
+
+  .infinity-platform {
+    bottom: 42px;
+    width: 62%;
+  }
+
+  .infinity-caption {
+    bottom: 13px;
+    gap: 6px;
+    font-size: 7px;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page .page-hero .hero-content {
+    padding-top: 58px;
+    padding-bottom: 25px;
+  }
+
+  .home-page .page-hero .hero-content > h1 {
+    font-size: clamp(39px, 12vw, 52px);
+  }
+
+  .home-page .page-hero .hero-content > p {
+    font-size: clamp(20px, 6vw, 26px);
+  }
+
+  .hero-supporting {
+    font-size: 15px !important;
+    line-height: 1.58 !important;
+  }
+
+  .hero-actions {
+    gap: 9px;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .infinity-visual {
+    width: 100%;
+    height: 285px;
+    margin-top: 0;
+  }
+
+  .infinity-caption {
+    display: none;
+  }
+
+  .infinity-platform {
+    bottom: 32px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .infinity-energy-aura,
+  .infinity-energy-trail {
+    animation: none;
+  }
+
+  .infinity-svg animateMotion {
+    animation-play-state: paused;
+  }
+}
