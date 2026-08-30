@@ -3068,3 +3068,388 @@ a {
       rotateY(0deg);
   }
 }
+/* =========================================================
+   RUDRAA CASH V2 — NAVIGATION + INFINITY FINAL OVERRIDES
+   ========================================================= */
+
+.navbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+  width: 100% !important;
+}
+
+.nav-inner {
+  position: relative;
+  z-index: 10000;
+}
+
+.desktop-nav {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex: 1;
+}
+
+.nav-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  white-space: nowrap;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.nav-link.active {
+  color: #ffffff !important;
+}
+
+.nav-link.active::after {
+  width: 24px !important;
+}
+
+.nav-cta {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  flex-shrink: 0;
+}
+
+.menu-button {
+  display: none !important;
+  position: relative;
+  z-index: 10002;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 198, 255, 0.25);
+  border-radius: 12px;
+  background: rgba(6, 20, 44, 0.95);
+  color: #ffffff;
+}
+
+.menu-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.mobile-menu {
+  display: none !important;
+}
+
+.mobile-menu--open {
+  display: block !important;
+}
+
+.mobile-menu-inner {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 14px 0 20px;
+}
+
+.mobile-link,
+.mobile-contact {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  min-height: 52px;
+  padding: 13px 15px;
+  margin-top: 7px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  color: #dfeeff;
+  background: rgba(6,20,44,0.72);
+  font-weight: 700;
+}
+
+.mobile-link.active {
+  color: #ffffff;
+  border-color: rgba(0,198,255,0.45);
+  background: rgba(0,124,255,0.12);
+}
+
+.mobile-contact {
+  margin-top: 12px;
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    #0876ff,
+    #00aef8
+  );
+}
+
+/* ---------- INFINITY ---------- */
+
+.infinity-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(560px, 100%);
+  margin: 18px auto 0;
+  min-height: 250px;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.infinity-svg {
+  display: block !important;
+  width: min(520px, 100%);
+  height: auto;
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+.infinity-glow {
+  position: absolute;
+  width: 62%;
+  height: 62%;
+  left: 50%;
+  top: 43%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0,198,255,0.20) 0%,
+    rgba(0,124,255,0.10) 35%,
+    transparent 72%
+  );
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 0;
+  animation: infinityPulse 3.2s ease-in-out infinite;
+}
+
+.infinity-energy-point {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.infinity-caption {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -4px;
+  color: #87a6c5;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.infinity-caption i {
+  color: #00c6ff;
+  font-style: normal;
+}
+
+.infinity-visual--compact {
+  width: min(380px, 100%);
+  min-height: 190px;
+}
+
+.infinity-visual--compact .infinity-svg {
+  width: min(360px, 100%);
+}
+
+@keyframes infinityPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* ---------- REVEAL SAFETY ---------- */
+
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal:not(.is-visible) {
+  animation: revealIn 0.7s ease both;
+}
+
+@keyframes revealIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 1080px) {
+  .desktop-nav {
+    gap: 15px;
+  }
+
+  .nav-link {
+    font-size: 11px;
+  }
+
+  .brand {
+    min-width: 170px;
+  }
+}
+
+@media (max-width: 900px) {
+  .desktop-nav,
+  .nav-cta {
+    display: none !important;
+  }
+
+  .menu-button {
+    display: inline-flex !important;
+    margin-left: auto;
+  }
+
+  .navbar {
+    background: rgba(2,11,29,0.96) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .mobile-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    width: 100%;
+    max-height: calc(100vh - 74px);
+    overflow-y: auto;
+    background: rgba(2,11,29,0.98);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  }
+
+  .mobile-menu--open {
+    display: block !important;
+  }
+
+  .brand img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand-copy small {
+    font-size: 5px;
+  }
+
+  .infinity-visual {
+    min-height: 210px;
+    margin-top: 8px;
+  }
+
+  .infinity-svg {
+    width: min(430px, 96vw);
+  }
+
+  .infinity-caption {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .nav-inner {
+    min-height: 68px;
+    gap: 10px;
+  }
+
+  .brand {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .brand img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .rudraa-wordmark {
+    font-size: 14px !important;
+  }
+
+  .brand-copy small {
+    display: block;
+    max-width: 155px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .menu-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .mobile-menu-inner {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .page-hero {
+    min-height: auto;
+  }
+
+  .infinity-visual {
+    min-height: 180px;
+    margin-top: 0;
+  }
+
+  .infinity-svg {
+    width: 96vw;
+    max-width: 360px;
+  }
+
+  .infinity-caption {
+    max-width: 300px;
+    line-height: 1.6;
+  }
+
+  .infinity-visual--compact {
+    min-height: 160px;
+  }
+
+  .infinity-visual--compact .infinity-svg {
+    width: min(330px, 94vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .infinity-glow,
+  .infinity-energy-point,
+  .reveal {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .infinity-energy-point {
+    display: none;
+  }
+}
