@@ -4,10 +4,6 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navItems, contact } from "../data/siteData";
 import { usePageMeta } from "../hooks/usePageMeta";
 
-/* =========================================================
-   LOGO
-   ========================================================= */
-
 function Logo({ compact = false }) {
   return (
     <Link
@@ -22,29 +18,14 @@ function Logo({ compact = false }) {
 
       <span className="brand-copy">
         <strong className="rudraa-wordmark">
-          RUDR
-          <span className="brand-last-a">A</span>
+          RUDRA<span className="brand-last-a">A</span>
         </strong>
 
-        <span className="brand-separator" />
-
-        <span className="brand-business">
-          BUSINESS SOLUTIONS
-        </span>
-
-        <span className="brand-separator" />
-
-        <span className="brand-private">
-          PRIVATE LIMITED
-        </span>
+        <small>RUDRAA BUSINESS SOLUTIONS PVT. LTD.</small>
       </span>
     </Link>
   );
 }
-
-/* =========================================================
-   LAYOUT
-   ========================================================= */
 
 export function Layout({ children }) {
   const location = useLocation();
@@ -53,10 +34,6 @@ export function Layout({ children }) {
   const [scrolled, setScrolled] = useState(false);
 
   usePageMeta(location.pathname);
-
-  /* ---------------------------------------------------------
-     Close mobile menu + reset scroll on route change
-     --------------------------------------------------------- */
 
   useEffect(() => {
     setMenuOpen(false);
@@ -67,45 +44,21 @@ export function Layout({ children }) {
     });
   }, [location.pathname]);
 
-  /* ---------------------------------------------------------
-     Navbar scroll state
-     --------------------------------------------------------- */
-
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 18);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 16);
     };
 
-    onScroll();
+    handleScroll();
 
-    window.addEventListener("scroll", onScroll, {
+    window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  /* ---------------------------------------------------------
-     Lock body scroll while mobile menu is open
-     --------------------------------------------------------- */
-
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add("menu-open");
-    } else {
-      document.body.classList.remove("menu-open");
-    }
-
-    return () => {
-      document.body.classList.remove("menu-open");
-    };
-  }, [menuOpen]);
-
-  /* ---------------------------------------------------------
-     Reveal animation observer
-     --------------------------------------------------------- */
 
   useEffect(() => {
     const revealItems = document.querySelectorAll(
@@ -113,7 +66,7 @@ export function Layout({ children }) {
     );
 
     if (!revealItems.length) {
-      return undefined;
+      return;
     }
 
     if (!("IntersectionObserver" in window)) {
@@ -121,7 +74,7 @@ export function Layout({ children }) {
         element.classList.add("is-visible");
       });
 
-      return undefined;
+      return;
     }
 
     const observer = new IntersectionObserver(
@@ -136,7 +89,7 @@ export function Layout({ children }) {
         });
       },
       {
-        threshold: 0.12,
+        threshold: 0.08,
         rootMargin: "0px 0px -40px 0px",
       }
     );
@@ -150,62 +103,34 @@ export function Layout({ children }) {
     };
   }, [location.pathname]);
 
-  /* ---------------------------------------------------------
-     Escape key closes mobile menu
-     --------------------------------------------------------- */
-
-  useEffect(() => {
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, []);
-
   return (
     <div className="site-shell">
-      {/* =====================================================
-          NAVBAR
-         ===================================================== */}
-
       <header
         className={`navbar ${
           scrolled ? "navbar--scrolled" : ""
-        } ${menuOpen ? "navbar--menu-open" : ""}`}
+        }`}
       >
         <div className="container nav-inner">
-          {/* Logo */}
-
           <Logo />
-
-          {/* Desktop Navigation */}
 
           <nav
             className="desktop-nav"
             aria-label="Primary navigation"
           >
             {navItems.map((item) => {
-              const isActive =
-                location.pathname === item.path;
+              const active =
+                location.pathname === item.path ||
+                (item.path !== "/" &&
+                  location.pathname.startsWith(`${item.path}/`));
 
               return (
                 <Link
                   key={item.path}
-                  className={
-                    isActive
-                      ? "nav-link active"
-                      : "nav-link"
-                  }
                   to={item.path}
-                  aria-current={
-                    isActive ? "page" : undefined
-                  }
+                  className={`nav-link ${
+                    active ? "active" : ""
+                  }`}
+                  aria-current={active ? "page" : undefined}
                 >
                   {item.label}
                 </Link>
@@ -213,43 +138,26 @@ export function Layout({ children }) {
             })}
           </nav>
 
-          {/* Desktop CTA */}
-
-          <Link
-            className="nav-cta"
-            to="/contact"
-          >
-            <span>Join Rudraa</span>
+          <Link className="nav-cta" to="/contact">
+            Join Rudraa
             <ArrowUpRight size={16} />
           </Link>
 
-          {/* Mobile Menu Button */}
-
           <button
-            className="menu-button"
-            onClick={() =>
-              setMenuOpen((value) => !value)
-            }
+            type="button"
+            className={`menu-button ${
+              menuOpen ? "menu-button--open" : ""
+            }`}
+            onClick={() => setMenuOpen((value) => !value)}
             aria-label={
-              menuOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
+              menuOpen ? "Close navigation menu" : "Open navigation menu"
             }
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
-            type="button"
           >
-            {menuOpen ? (
-              <X size={23} />
-            ) : (
-              <Menu size={23} />
-            )}
+            {menuOpen ? <X /> : <Menu />}
           </button>
         </div>
-
-        {/* ===================================================
-            MOBILE NAVIGATION
-           =================================================== */}
 
         <div
           id="mobile-navigation"
@@ -259,77 +167,54 @@ export function Layout({ children }) {
           aria-hidden={!menuOpen}
         >
           <div className="mobile-menu-inner">
-            <div className="mobile-menu-label">
-              Navigation
-            </div>
+            {navItems.map((item) => {
+              const active =
+                location.pathname === item.path ||
+                (item.path !== "/" &&
+                  location.pathname.startsWith(`${item.path}/`));
 
-            <nav aria-label="Mobile navigation">
-              {navItems.map((item) => {
-                const isActive =
-                  location.pathname === item.path;
-
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={
-                      isActive
-                        ? "mobile-link active"
-                        : "mobile-link"
-                    }
-                    aria-current={
-                      isActive ? "page" : undefined
-                    }
-                  >
-                    <span>{item.label}</span>
-
-                    <ArrowUpRight size={17} />
-                  </Link>
-                );
-              })}
-            </nav>
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  tabIndex={menuOpen ? 0 : -1}
+                  className={`mobile-link ${
+                    active ? "active" : ""
+                  }`}
+                  aria-current={active ? "page" : undefined}
+                >
+                  <span>{item.label}</span>
+                  <ArrowUpRight size={17} />
+                </Link>
+              );
+            })}
 
             <a
               className="mobile-contact"
               href={contact.whatsapp}
               target="_blank"
               rel="noreferrer"
+              tabIndex={menuOpen ? 0 : -1}
             >
-              <span>WhatsApp Us</span>
+              WhatsApp Us
               <ArrowUpRight size={17} />
             </a>
           </div>
         </div>
       </header>
 
-      {/* =====================================================
-          MAIN CONTENT
-         ===================================================== */}
-
       <main>{children}</main>
-
-      {/* =====================================================
-          FOOTER
-         ===================================================== */}
 
       <Footer />
     </div>
   );
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
 function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-grid">
-        {/* ---------------------------------------------------
-            Brand
-           --------------------------------------------------- */}
-
-        <div className="footer-brand">
+        <div>
           <Logo compact />
 
           <p className="footer-tag">
@@ -338,33 +223,21 @@ function Footer() {
           </p>
 
           <p className="muted">
-            Building India’s Next-Generation Fintech
-            Ecosystem
+            Building India’s Next-Generation Fintech Ecosystem
           </p>
         </div>
-
-        {/* ---------------------------------------------------
-            Explore
-           --------------------------------------------------- */}
 
         <div>
           <h3>Explore</h3>
 
           <div className="footer-links">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-              >
+              <Link key={item.path} to={item.path}>
                 {item.label}
               </Link>
             ))}
           </div>
         </div>
-
-        {/* ---------------------------------------------------
-            Contact
-           --------------------------------------------------- */}
 
         <div>
           <h3>Contact</h3>
@@ -383,27 +256,18 @@ function Footer() {
         </div>
       </div>
 
-      {/* -----------------------------------------------------
-          Footer Bottom
-         ----------------------------------------------------- */}
-
       <div className="container footer-bottom">
         <span>
-          © {new Date().getFullYear()} Rudraa Business
-          Solutions Pvt. Ltd.
+          © {new Date().getFullYear()} Rudraa Business Solutions Pvt. Ltd.
         </span>
 
-        <span className="footer-bottom-mark">
-          RUDRAA CASH
+        <span>
+          RUDRAA BUSINESS SOLUTIONS PVT. LTD.
         </span>
       </div>
     </footer>
   );
 }
-
-/* =========================================================
-   PAGE HERO
-   ========================================================= */
 
 export function PageHero({
   eyebrow,
@@ -413,21 +277,12 @@ export function PageHero({
 }) {
   return (
     <section className="page-hero">
-      <div
-        className="hero-orb orb-a"
-        aria-hidden="true"
-      />
+      <div className="hero-orb orb-a" />
+      <div className="hero-orb orb-b" />
 
-      <div
-        className="hero-orb orb-b"
-        aria-hidden="true"
-      />
-
-      <div className="container hero-content reveal">
+      <div className="container hero-content reveal is-visible">
         {eyebrow && (
-          <span className="eyebrow">
-            {eyebrow}
-          </span>
+          <span className="eyebrow">{eyebrow}</span>
         )}
 
         <h1>{title}</h1>
@@ -439,10 +294,6 @@ export function PageHero({
     </section>
   );
 }
-
-/* =========================================================
-   SECTION
-   ========================================================= */
 
 export function Section({
   children,
@@ -461,10 +312,6 @@ export function Section({
   );
 }
 
-/* =========================================================
-   SECTION HEADER
-   ========================================================= */
-
 export function SectionHeader({
   eyebrow,
   title,
@@ -478,9 +325,7 @@ export function SectionHeader({
       } reveal`}
     >
       {eyebrow && (
-        <span className="eyebrow">
-          {eyebrow}
-        </span>
+        <span className="eyebrow">{eyebrow}</span>
       )}
 
       <h2>{title}</h2>
@@ -489,10 +334,6 @@ export function SectionHeader({
     </div>
   );
 }
-
-/* =========================================================
-   BUTTON
-   ========================================================= */
 
 export function Button({
   to,
@@ -508,33 +349,22 @@ export function Button({
       <a
         className={cls}
         href={href}
-        target={
-          external ? "_blank" : undefined
-        }
-        rel={
-          external ? "noreferrer" : undefined
-        }
+        target={external ? "_blank" : undefined}
+        rel={external ? "noreferrer" : undefined}
       >
-        <span>{children}</span>
+        {children}
         <ArrowUpRight size={17} />
       </a>
     );
   }
 
   return (
-    <Link
-      className={cls}
-      to={to}
-    >
-      <span>{children}</span>
+    <Link className={cls} to={to}>
+      {children}
       <ArrowUpRight size={17} />
     </Link>
   );
 }
-
-/* =========================================================
-   PREMIUM CARD
-   ========================================================= */
 
 export function PremiumCard({
   icon,
@@ -547,10 +377,7 @@ export function PremiumCard({
       className={`premium-card reveal ${className}`}
     >
       {icon && (
-        <div
-          className="card-icon"
-          aria-hidden="true"
-        >
+        <div className="card-icon">
           {icon}
         </div>
       )}
@@ -562,61 +389,14 @@ export function PremiumCard({
   );
 }
 
-/* =========================================================
-   PREMIUM 3D INFINITY VISUAL
-   ========================================================= */
-
 export function InfinityVisual({
   compact = false,
 }) {
-  const suffix = compact
-    ? "compact"
-    : "hero";
+  const suffix = compact ? "compact" : "hero";
 
-  const pathId =
-    `rudraa-infinity-path-${suffix}`;
-
-  const blueGradientId =
-    `rudraa-infinity-blue-${suffix}`;
-
-  const highlightGradientId =
-    `rudraa-infinity-highlight-${suffix}`;
-
-  const glowId =
-    `rudraa-infinity-glow-${suffix}`;
-
-  const strongGlowId =
-    `rudraa-infinity-strong-glow-${suffix}`;
-
-  const trailGlowId =
-    `rudraa-infinity-trail-${suffix}`;
-
-  /*
-    Clean horizontal infinity geometry.
-
-    The curve is intentionally kept as a single path so
-    the animated energy point follows one continuous route.
-  */
-
-  const infinityPath = `
-    M 120 90
-    C 103 63, 86 38, 58 38
-    C 33 38, 18 58, 24 78
-    C 30 99, 51 106, 70 96
-    C 83 89, 96 78, 120 90
-    C 144 102, 157 91, 170 84
-    C 189 74, 210 81, 216 102
-    C 222 122, 207 142, 182 142
-    C 154 142, 137 117, 120 90
-    C 103 63, 86 38, 58 38
-    C 33 38, 18 58, 24 78
-    C 30 99, 51 106, 70 96
-    C 83 89, 96 78, 120 90
-    C 144 102, 157 117, 170 124
-    C 189 134, 210 127, 216 106
-    C 222 86, 207 66, 182 66
-    C 154 66, 137 63, 120 90
-  `;
+  const pathId = `infinity-path-${suffix}`;
+  const gradientId = `infinity-gradient-${suffix}`;
+  const filterId = `infinity-filter-${suffix}`;
 
   return (
     <div
@@ -625,36 +405,23 @@ export function InfinityVisual({
           ? "infinity-visual--compact"
           : ""
       }`}
-      aria-label="Animated 3D infinity symbol representing continuity and limitless growth"
+      role="img"
+      aria-label="Animated infinity symbol representing continuity and limitless growth"
     >
-      {/* Ambient glow */}
-
       <div
         className="infinity-glow"
         aria-hidden="true"
       />
 
-      {/* Ground platform */}
-
-      <div
-        className="infinity-platform"
-        aria-hidden="true"
-      />
-
       <svg
-        className="infinity-svg infinity-svg--3d"
+        className="infinity-svg"
         viewBox="0 0 240 180"
-        role="img"
         aria-hidden="true"
         focusable="false"
       >
         <defs>
-          {/* =================================================
-              BLUE TUBE MATERIAL
-             ================================================= */}
-
           <linearGradient
-            id={blueGradientId}
+            id={gradientId}
             x1="0%"
             y1="0%"
             x2="100%"
@@ -662,100 +429,29 @@ export function InfinityVisual({
           >
             <stop
               offset="0%"
-              stopColor="#001957"
+              stopColor="#0876ff"
             />
 
             <stop
-              offset="18%"
-              stopColor="#003eb8"
-            />
-
-            <stop
-              offset="40%"
-              stopColor="#00aaff"
-            />
-
-            <stop
-              offset="57%"
-              stopColor="#0080ff"
-            />
-
-            <stop
-              offset="80%"
-              stopColor="#0043c5"
+              offset="50%"
+              stopColor="#00c6ff"
             />
 
             <stop
               offset="100%"
-              stopColor="#00133f"
+              stopColor="#1478ff"
             />
           </linearGradient>
-
-          {/* =================================================
-              GLASS / METAL HIGHLIGHT
-             ================================================= */}
-
-          <linearGradient
-            id={highlightGradientId}
-            x1="0%"
-            y1="0%"
-            x2="0%"
-            y2="100%"
-          >
-            <stop
-              offset="0%"
-              stopColor="#ffffff"
-              stopOpacity="0.9"
-            />
-
-            <stop
-              offset="18%"
-              stopColor="#b8f4ff"
-              stopOpacity="0.7"
-            />
-
-            <stop
-              offset="42%"
-              stopColor="#ffffff"
-              stopOpacity="0.16"
-            />
-
-            <stop
-              offset="100%"
-              stopColor="#00164d"
-              stopOpacity="0.72"
-            />
-          </linearGradient>
-
-          {/* =================================================
-              WIDE GLOW
-             ================================================= */}
 
           <filter
-            id={glowId}
+            id={filterId}
             x="-100%"
             y="-100%"
             width="300%"
             height="300%"
           >
             <feGaussianBlur
-              stdDeviation="10"
-            />
-          </filter>
-
-          {/* =================================================
-              STRONG GLOW
-             ================================================= */}
-
-          <filter
-            id={strongGlowId}
-            x="-100%"
-            y="-100%"
-            width="300%"
-            height="300%"
-          >
-            <feGaussianBlur
-              stdDeviation="4.5"
+              stdDeviation="4"
               result="blur"
             />
 
@@ -765,290 +461,64 @@ export function InfinityVisual({
             </feMerge>
           </filter>
 
-          {/* =================================================
-              ENERGY TRAIL GLOW
-             ================================================= */}
-
-          <filter
-            id={trailGlowId}
-            x="-200%"
-            y="-200%"
-            width="400%"
-            height="400%"
-          >
-            <feGaussianBlur
-              stdDeviation="5"
-              result="trailBlur"
-            />
-
-            <feMerge>
-              <feMergeNode in="trailBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          {/* =================================================
-              INFINITY PATH
-             ================================================= */}
-
           <path
             id={pathId}
-            d={infinityPath}
+            d="M45 90 C18 62 18 35 45 35 C72 35 93 90 120 90 C147 90 168 35 195 35 C222 35 222 62 195 90 C168 118 147 145 120 145 C93 145 72 90 45 90 C18 90 18 118 45 145 C72 145 93 90 120 90 C147 90 168 145 195 145 C222 145 222 118 195 90"
             fill="none"
-            stroke="none"
           />
         </defs>
 
-        {/* ===================================================
-            AMBIENT BLUE AURA
-           =================================================== */}
-
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#007cff"
-          strokeWidth="34"
+          stroke="rgba(0,198,255,.18)"
+          strokeWidth="18"
           strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.12"
-          filter={`url(#${glowId})`}
+          filter={`url(#${filterId})`}
         />
 
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#00c8ff"
-          strokeWidth="25"
+          stroke={`url(#${gradientId})`}
+          strokeWidth="8"
           strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.2"
-          filter={`url(#${strongGlowId})`}
         />
-
-        {/* ===================================================
-            DARK 3D OUTER DEPTH
-           =================================================== */}
 
         <use
           href={`#${pathId}`}
           fill="none"
-          stroke="#00091f"
-          strokeWidth="20"
+          stroke="rgba(255,255,255,.5)"
+          strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.98"
         />
-
-        {/* ===================================================
-            BLUE TUBE BODY
-           =================================================== */}
-
-        <use
-          href={`#${pathId}`}
-          fill="none"
-          stroke={`url(#${blueGradientId})`}
-          strokeWidth="16"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* ===================================================
-            ELECTRIC BLUE INNER CORE
-           =================================================== */}
-
-        <use
-          href={`#${pathId}`}
-          fill="none"
-          stroke="#008fff"
-          strokeWidth="9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.9"
-        />
-
-        {/* ===================================================
-            WHITE / CYAN SPECULAR EDGE
-           =================================================== */}
-
-        <use
-          href={`#${pathId}`}
-          fill="none"
-          stroke={`url(#${highlightGradientId})`}
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.92"
-          style={{
-            mixBlendMode: "screen",
-          }}
-        />
-
-        {/* ===================================================
-            MOVING ENERGY AURA
-           =================================================== */}
 
         <circle
-          r="14"
-          fill="#00d5ff"
-          opacity="0.25"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* ===================================================
-            ENERGY TRAIL — LAYER 1
-           =================================================== */}
-
-        <circle
-          r="10"
-          fill="#4ee8ff"
-          opacity="0.22"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            begin="-0.32s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* ===================================================
-            ENERGY TRAIL — LAYER 2
-           =================================================== */}
-
-        <circle
-          r="8"
-          fill="#a9f4ff"
-          opacity="0.34"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            begin="-0.22s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* ===================================================
-            ENERGY TRAIL — LAYER 3
-           =================================================== */}
-
-        <circle
-          r="6"
-          fill="#d9fbff"
-          opacity="0.5"
-          filter={`url(#${trailGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            begin="-0.12s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* ===================================================
-            MAIN ENERGY HALO
-           =================================================== */}
-
-        <circle
-          r="12"
+          className="infinity-energy-point"
+          r="5.5"
           fill="#ffffff"
-          opacity="0.2"
-          filter={`url(#${strongGlowId})`}
+          filter={`url(#${filterId})`}
         >
           <animateMotion
             dur="8s"
             repeatCount="indefinite"
             rotate="auto"
           >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* ===================================================
-            MAIN WHITE ENERGY POINT
-           =================================================== */}
-
-        <circle
-          r="6"
-          fill="#ffffff"
-          filter={`url(#${strongGlowId})`}
-        >
-          <animateMotion
-            dur="8s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
-          </animateMotion>
-        </circle>
-
-        {/* ===================================================
-            WHITE-HOT CORE
-           =================================================== */}
-
-        <circle
-          r="2.5"
-          fill="#ffffff"
-        >
-          <animateMotion
-            dur="8s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath
-              href={`#${pathId}`}
-            />
+            <mpath href={`#${pathId}`} />
           </animateMotion>
         </circle>
       </svg>
 
-      {/* Caption */}
-
-      {!compact && (
-        <div className="infinity-caption">
-          <span>Continuity</span>
-          <i>•</i>
-          <span>Limitless Growth</span>
-          <i>•</i>
-          <span>Endless Possibilities</span>
-        </div>
-      )}
+      <div className="infinity-caption">
+        <span>Continuity</span>
+        <i>•</i>
+        <span>Limitless Growth</span>
+        <i>•</i>
+        <span>Endless Possibilities</span>
+      </div>
     </div>
   );
 }
-
-/* =========================================================
-   APP MOCKUP
-   ========================================================= */
 
 export function AppMockup() {
   const rows = [
@@ -1062,62 +532,39 @@ export function AppMockup() {
   return (
     <div className="phone-wrap reveal">
       <div className="phone">
-        {/* Phone notch */}
-
         <div className="phone-notch" />
-
-        {/* App top bar */}
 
         <div className="phone-top">
           <span>Rudraa Cash</span>
-
-          <span
-            className="status-dot"
-            aria-label="Prototype status"
-          />
+          <span className="status-dot" />
         </div>
 
-        {/* Balance / dashboard card */}
-
         <div className="app-balance">
-          <small>
-            Prototype dashboard
-          </small>
+          <small>Prototype dashboard</small>
 
-          <strong>
-            Business Hub
-          </strong>
+          <strong>Business Hub</strong>
 
           <span>
-            Conceptual interface — no real
-            financial data
+            Conceptual interface — no real financial data
           </span>
         </div>
 
-        {/* App navigation tiles */}
-
         <div className="app-grid">
-          {rows.map(
-            ([name, desc], index) => (
-              <div
-                className="app-tile"
-                key={name}
-              >
-                <span>
-                  0{index + 1}
-                </span>
+          {rows.map(([name, desc], index) => (
+            <div
+              className="app-tile"
+              key={name}
+            >
+              <span>
+                0{index + 1}
+              </span>
 
-                <b>{name}</b>
+              <b>{name}</b>
 
-                <small>
-                  {desc}
-                </small>
-              </div>
-            )
-          )}
+              <small>{desc}</small>
+            </div>
+          ))}
         </div>
-
-        {/* App footer */}
 
         <div className="app-footer">
           <span>Home</span>
@@ -1129,10 +576,6 @@ export function AppMockup() {
   );
 }
 
-/* =========================================================
-   CTA
-   ========================================================= */
-
 export function CTA({
   title = "Build the Future With Rudraa",
   text = "Join the Rudraa ecosystem.",
@@ -1142,7 +585,7 @@ export function CTA({
     <section className="section cta-section">
       <div className="container">
         <div className="cta-card reveal">
-          <div className="cta-content">
+          <div>
             <span className="eyebrow">
               RUDRAA CASH
             </span>
