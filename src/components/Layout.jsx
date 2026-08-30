@@ -425,7 +425,7 @@ export function InfinityVisual({
 
       <img
         className="infinity-image"
-        src="/assets/infinity/rudraa-infinity-hero.png"
+        src="/assets/logo/infinity/rudraa-infinity-hero.png"
         alt="Rudraa Cash Infinity"
         loading={compact ? "lazy" : "eager"}
         draggable="false"
