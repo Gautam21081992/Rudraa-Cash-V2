@@ -3453,3 +3453,279 @@ a {
     display: none;
   }
 }
+/* =========================================================
+   RUDRAA CASH V2 — FINAL INFINITY PNG VISIBILITY FIX
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   Layout.jsx already contains the Infinity image.
+   This block makes the PNG visible, responsive and
+   prevents it from being hidden by previous SVG rules.
+*/
+
+.infinity-visual {
+  position: relative !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: min(620px, 100%) !important;
+
+  min-height: 300px !important;
+
+  margin: 18px auto 0 !important;
+
+  overflow: visible !important;
+
+  isolation: isolate !important;
+}
+
+/* ---------- PNG INFINITY ---------- */
+
+.infinity-visual img {
+  position: relative !important;
+
+  z-index: 5 !important;
+
+  display: block !important;
+
+  visibility: visible !important;
+
+  opacity: 1 !important;
+
+  width: min(560px, 100%) !important;
+
+  height: auto !important;
+
+  max-width: 100% !important;
+
+  object-fit: contain !important;
+
+  object-position: center !important;
+
+  margin: 0 auto !important;
+
+  flex: 0 0 auto !important;
+
+  filter:
+    drop-shadow(
+      0 18px 28px
+      rgba(0, 31, 90, 0.65)
+    )
+    drop-shadow(
+      0 0 28px
+      rgba(0, 119, 255, 0.32)
+    ) !important;
+}
+
+/*
+   If the image has a class such as:
+   .infinity-image
+   .infinity-hero-image
+   .hero-infinity
+   .infinity-png
+   this guarantees the same final treatment.
+*/
+
+.infinity-image,
+.infinity-hero-image,
+.hero-infinity,
+.infinity-png {
+  position: relative !important;
+
+  z-index: 5 !important;
+
+  display: block !important;
+
+  visibility: visible !important;
+
+  opacity: 1 !important;
+
+  width: min(560px, 100%) !important;
+
+  height: auto !important;
+
+  max-width: 100% !important;
+
+  object-fit: contain !important;
+
+  object-position: center !important;
+
+  margin-inline: auto !important;
+}
+
+/* ---------- SVG MUST NOT COVER PNG ---------- */
+
+.infinity-visual > .infinity-svg {
+  z-index: 2 !important;
+}
+
+/* ---------- AMBIENT GLOW ---------- */
+
+.infinity-visual .infinity-glow {
+  z-index: 0 !important;
+
+  pointer-events: none !important;
+}
+
+/* ---------- PLATFORM ---------- */
+
+.infinity-visual .infinity-platform {
+  z-index: 1 !important;
+
+  pointer-events: none !important;
+}
+
+/* ---------- CAPTION ---------- */
+
+.infinity-visual .infinity-caption {
+  position: relative !important;
+
+  z-index: 8 !important;
+
+  visibility: visible !important;
+
+  opacity: 1 !important;
+}
+
+/* ---------- HERO ---------- */
+
+.page-hero .infinity-visual {
+  position: relative !important;
+
+  z-index: 4 !important;
+
+  margin-top: 20px !important;
+}
+
+.page-hero .infinity-visual img {
+  width: min(580px, 100%) !important;
+
+  max-width: 100% !important;
+
+  height: auto !important;
+
+  object-fit: contain !important;
+}
+
+/* ---------- COMPACT VERSION ---------- */
+
+.infinity-visual--compact {
+  min-height: 220px !important;
+}
+
+.infinity-visual--compact img {
+  width: min(400px, 100%) !important;
+
+  max-width: 100% !important;
+
+  height: auto !important;
+
+  object-fit: contain !important;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .infinity-visual {
+    width: min(520px, 100%) !important;
+
+    min-height: 250px !important;
+  }
+
+  .infinity-visual img {
+    width: min(470px, 96vw) !important;
+
+    max-width: 96vw !important;
+
+    height: auto !important;
+  }
+
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .infinity-visual {
+    width: 100% !important;
+
+    min-height: 210px !important;
+
+    margin-top: 5px !important;
+  }
+
+  .infinity-visual img {
+    width: min(390px, 94vw) !important;
+
+    max-width: 94vw !important;
+
+    height: auto !important;
+
+    object-fit: contain !important;
+  }
+
+  .page-hero .infinity-visual img {
+    width: min(390px, 94vw) !important;
+
+    max-width: 94vw !important;
+  }
+
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+  .infinity-visual {
+    min-height: 180px !important;
+  }
+
+  .infinity-visual img {
+    width: min(350px, 92vw) !important;
+
+    max-width: 92vw !important;
+  }
+
+}
+
+/* =========================================================
+   FINAL VISIBILITY SAFETY
+   ========================================================= */
+
+.infinity-visual img[hidden] {
+  display: block !important;
+}
+
+.infinity-visual img[aria-hidden="true"] {
+  visibility: visible !important;
+
+  opacity: 1 !important;
+}
+
+/*
+   Prevent generic animation/reveal classes from
+   accidentally keeping the Infinity PNG invisible.
+*/
+
+.infinity-visual img.reveal {
+  opacity: 1 !important;
+
+  transform: none !important;
+
+  visibility: visible !important;
+}
+
+/* =========================================================
+   END — FINAL INFINITY PNG VISIBILITY FIX
+   ========================================================= */
