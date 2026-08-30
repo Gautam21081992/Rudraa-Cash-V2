@@ -189,7 +189,11 @@ a {
 .brand-copy {
   display: flex;
   flex-direction: column;
+
+  justify-content: center;
 }
+
+/* RUDRAA — WHITE */
 
 .brand-copy strong,
 .rudraa-wordmark {
@@ -203,13 +207,72 @@ a {
   letter-spacing: 0.13em;
 }
 
-.brand-copy small {
-  color: #718ba8;
+/* BUSINESS SOLUTIONS — ELECTRIC BLUE */
 
-  font-size: 6px;
+.brand-business {
+  display: block;
 
-  letter-spacing: 0.06em;
+  margin-top: 4px;
+
+  color: #00c6ff;
+
+  font:
+    800 6px/1.35
+    Manrope,
+    sans-serif;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
 }
+
+/* PRIVATE LIMITED — WHITE */
+
+.brand-private {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #ffffff;
+
+  font:
+    800 6px/1.35
+    Manrope,
+    sans-serif;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+/* BRAND SEPARATORS */
+
+.brand-separator {
+  display: block;
+
+  width: 100%;
+
+  height: 1px;
+
+  margin: 3px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(0, 198, 255, 0.55),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  box-shadow:
+    0 0 5px rgba(0, 198, 255, 0.12);
+}
+
+/* LAST A */
 
 .brand-last-a {
   position: relative;
@@ -2382,14 +2445,19 @@ a {
     font-size: 15px;
   }
 
-  .brand-copy small {
-    display: block;
-
+  .brand-business,
+  .brand-private {
     font-size: 6px;
 
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
 
-    margin-top: 5px;
+    line-height: 1.3;
+  }
+
+  .brand-separator {
+    margin: 2px 0;
+
+    height: 1px;
   }
 
   .brand-last-a::after {
@@ -2774,10 +2842,19 @@ a {
     letter-spacing: 0.11em;
   }
 
-  .brand-copy small {
+  .brand-business,
+  .brand-private {
     font-size: 5px;
 
-    letter-spacing: 0.045em;
+    letter-spacing: 0.055em;
+
+    line-height: 1.3;
+  }
+
+  .brand-separator {
+    margin: 2px 0;
+
+    height: 1px;
   }
 
   .brand-last-a::after {
@@ -2932,6 +3009,17 @@ a {
   .brand-copy strong,
   .rudraa-wordmark {
     font-size: 12px;
+  }
+
+  .brand-business,
+  .brand-private {
+    font-size: 4.5px;
+
+    letter-spacing: 0.045em;
+  }
+
+  .brand-separator {
+    margin: 1px 0;
   }
 
   .page-hero .hero-content > h1 {
