@@ -37,6 +37,7 @@ export function Layout({ children }) {
 
   useEffect(() => {
     setMenuOpen(false);
+
     window.scrollTo({
       top: 0,
       left: 0,
@@ -150,7 +151,9 @@ export function Layout({ children }) {
             }`}
             onClick={() => setMenuOpen((value) => !value)}
             aria-label={
-              menuOpen ? "Close navigation menu" : "Open navigation menu"
+              menuOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
             }
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
@@ -232,7 +235,10 @@ function Footer() {
 
           <div className="footer-links">
             {navItems.map((item) => (
-              <Link key={item.path} to={item.path}>
+              <Link
+                key={item.path}
+                to={item.path}
+              >
                 {item.label}
               </Link>
             ))}
@@ -277,17 +283,28 @@ export function PageHero({
 }) {
   return (
     <section className="page-hero">
-      <div className="hero-orb orb-a" />
-      <div className="hero-orb orb-b" />
+      <div
+        className="hero-orb orb-a"
+        aria-hidden="true"
+      />
+
+      <div
+        className="hero-orb orb-b"
+        aria-hidden="true"
+      />
 
       <div className="container hero-content reveal is-visible">
         {eyebrow && (
-          <span className="eyebrow">{eyebrow}</span>
+          <span className="eyebrow">
+            {eyebrow}
+          </span>
         )}
 
         <h1>{title}</h1>
 
-        {subtitle && <p>{subtitle}</p>}
+        {subtitle && (
+          <p>{subtitle}</p>
+        )}
 
         {children}
       </div>
@@ -325,12 +342,16 @@ export function SectionHeader({
       } reveal`}
     >
       {eyebrow && (
-        <span className="eyebrow">{eyebrow}</span>
+        <span className="eyebrow">
+          {eyebrow}
+        </span>
       )}
 
       <h2>{title}</h2>
 
-      {text && <p>{text}</p>}
+      {text && (
+        <p>{text}</p>
+      )}
     </div>
   );
 }
@@ -350,7 +371,11 @@ export function Button({
         className={cls}
         href={href}
         target={external ? "_blank" : undefined}
-        rel={external ? "noreferrer" : undefined}
+        rel={
+          external
+            ? "noreferrer"
+            : undefined
+        }
       >
         {children}
         <ArrowUpRight size={17} />
@@ -359,7 +384,10 @@ export function Button({
   }
 
   return (
-    <Link className={cls} to={to}>
+    <Link
+      className={cls}
+      to={to}
+    >
       {children}
       <ArrowUpRight size={17} />
     </Link>
@@ -389,14 +417,31 @@ export function PremiumCard({
   );
 }
 
+/* =========================================================
+   FINAL RUDRAA CASH INFINITY VISUAL
+   ========================================================= */
+
 export function InfinityVisual({
   compact = false,
 }) {
-  const suffix = compact ? "compact" : "hero";
+  const suffix = compact
+    ? "compact"
+    : "hero";
 
-  const pathId = `infinity-path-${suffix}`;
-  const gradientId = `infinity-gradient-${suffix}`;
-  const filterId = `infinity-filter-${suffix}`;
+  const pathId =
+    `infinity-path-${suffix}`;
+
+  const gradientId =
+    `infinity-gradient-${suffix}`;
+
+  const glowId =
+    `infinity-glow-${suffix}`;
+
+  const strongGlowId =
+    `infinity-strong-glow-${suffix}`;
+
+  const platformGradientId =
+    `infinity-platform-gradient-${suffix}`;
 
   return (
     <div
@@ -406,127 +451,321 @@ export function InfinityVisual({
           : ""
       }`}
       role="img"
-      aria-label="Animated infinity symbol representing continuity and limitless growth"
+      aria-label="Animated neon infinity symbol representing continuity, limitless growth and endless possibilities"
     >
       <div
-        className="infinity-glow"
+        className="infinity-bg"
         aria-hidden="true"
-      />
-
-      <svg
-        className="infinity-svg"
-        viewBox="0 0 240 180"
-        aria-hidden="true"
-        focusable="false"
       >
-        <defs>
-          <linearGradient
-            id={gradientId}
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="100%"
-          >
-            <stop
-              offset="0%"
-              stopColor="#0876ff"
-            />
+        <div className="infinity-particles" />
+        <div className="infinity-grid" />
+      </div>
 
-            <stop
-              offset="50%"
-              stopColor="#00c6ff"
-            />
-
-            <stop
-              offset="100%"
-              stopColor="#1478ff"
-            />
-          </linearGradient>
-
-          <filter
-            id={filterId}
-            x="-100%"
-            y="-100%"
-            width="300%"
-            height="300%"
-          >
-            <feGaussianBlur
-              stdDeviation="4"
-              result="blur"
-            />
-
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          <path
-            id={pathId}
-            d="M45 90 C18 62 18 35 45 35 C72 35 93 90 120 90 C147 90 168 35 195 35 C222 35 222 62 195 90 C168 118 147 145 120 145 C93 145 72 90 45 90 C18 90 18 118 45 145 C72 145 93 90 120 90 C147 90 168 145 195 145 C222 145 222 118 195 90"
-            fill="none"
-          />
-        </defs>
-
-        <use
-          href={`#${pathId}`}
-          fill="none"
-          stroke="rgba(0,198,255,.18)"
-          strokeWidth="18"
-          strokeLinecap="round"
-          filter={`url(#${filterId})`}
+      <div className="infinity-container">
+        <div
+          className="infinity-glow"
+          aria-hidden="true"
         />
 
-        <use
-          href={`#${pathId}`}
+        <svg
+          className="infinity-svg"
+          viewBox="0 0 900 520"
           fill="none"
-          stroke={`url(#${gradientId})`}
-          strokeWidth="8"
-          strokeLinecap="round"
-        />
-
-        <use
-          href={`#${pathId}`}
-          fill="none"
-          stroke="rgba(255,255,255,.5)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-
-        <circle
-          className="infinity-energy-point"
-          r="5.5"
-          fill="#ffffff"
-          filter={`url(#${filterId})`}
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
         >
-          <animateMotion
-            dur="8s"
-            repeatCount="indefinite"
-            rotate="auto"
-          >
-            <mpath href={`#${pathId}`} />
-          </animateMotion>
-        </circle>
-      </svg>
+          <defs>
+            {/* Main neon gradient */}
+            <linearGradient
+              id={gradientId}
+              x1="120"
+              y1="80"
+              x2="780"
+              y2="440"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop
+                offset="0%"
+                stopColor="#075BFF"
+              />
 
-      <div className="infinity-caption">
-        <span>Continuity</span>
-        <i>•</i>
-        <span>Limitless Growth</span>
-        <i>•</i>
-        <span>Endless Possibilities</span>
+              <stop
+                offset="35%"
+                stopColor="#008CFF"
+              />
+
+              <stop
+                offset="65%"
+                stopColor="#00D9FF"
+              />
+
+              <stop
+                offset="100%"
+                stopColor="#0876FF"
+              />
+            </linearGradient>
+
+            {/* Soft glow */}
+            <filter
+              id={glowId}
+              x="-80%"
+              y="-80%"
+              width="260%"
+              height="260%"
+            >
+              <feGaussianBlur
+                stdDeviation="10"
+                result="blur"
+              />
+
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            {/* Strong neon glow */}
+            <filter
+              id={strongGlowId}
+              x="-150%"
+              y="-150%"
+              width="400%"
+              height="400%"
+            >
+              <feGaussianBlur
+                stdDeviation="18"
+                result="blur"
+              />
+
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            {/* Infinity path */}
+            <path
+              id={pathId}
+              d="
+                M 170 260
+                C 105 195, 125 105, 220 105
+                C 315 105, 355 260, 450 260
+                C 545 260, 585 105, 680 105
+                C 775 105, 795 195, 730 260
+                C 665 325, 775 415, 680 415
+                C 585 415, 545 260, 450 260
+                C 355 260, 315 415, 220 415
+                C 125 415, 105 325, 170 260
+              "
+            />
+
+            {/* Platform glow */}
+            <radialGradient
+              id={platformGradientId}
+              cx="0"
+              cy="0"
+              r="1"
+              gradientTransform="translate(450 430) rotate(90) scale(70 300)"
+            >
+              <stop
+                offset="0%"
+                stopColor="rgba(0,198,255,0.45)"
+              />
+
+              <stop
+                offset="55%"
+                stopColor="rgba(0,110,255,0.18)"
+              />
+
+              <stop
+                offset="100%"
+                stopColor="rgba(0,0,0,0)"
+              />
+            </radialGradient>
+          </defs>
+
+          {/* Atmospheric glow behind infinity */}
+          <ellipse
+            cx="450"
+            cy="300"
+            rx="330"
+            ry="145"
+            fill="rgba(0,145,255,0.08)"
+            filter={`url(#${strongGlowId})`}
+          />
+
+          {/* Outer neon glow */}
+          <use
+            href={`#${pathId}`}
+            stroke="rgba(0,170,255,0.20)"
+            strokeWidth="42"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            filter={`url(#${strongGlowId})`}
+          />
+
+          {/* Blue glow layer */}
+          <use
+            href={`#${pathId}`}
+            stroke="rgba(0,119,255,0.45)"
+            strokeWidth="25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            filter={`url(#${glowId})`}
+          />
+
+          {/* Main infinity body */}
+          <use
+            href={`#${pathId}`}
+            stroke={`url(#${gradientId})`}
+            strokeWidth="13"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {/* Cyan inner highlight */}
+          <use
+            href={`#${pathId}`}
+            stroke="rgba(110,235,255,0.85)"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {/* Fine white-blue highlight */}
+          <use
+            href={`#${pathId}`}
+            stroke="rgba(255,255,255,0.32)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+
+          {/* Moving white energy point */}
+          <circle
+            className="infinity-energy-point"
+            r="10"
+            fill="#ffffff"
+            filter={`url(#${strongGlowId})`}
+          >
+            <animateMotion
+              dur="8s"
+              repeatCount="indefinite"
+              rotate="auto"
+            >
+              <mpath
+                href={`#${pathId}`}
+              />
+            </animateMotion>
+          </circle>
+
+          {/* Bright core */}
+          <circle
+            className="infinity-energy-core"
+            r="4"
+            fill="#ffffff"
+          >
+            <animateMotion
+              dur="8s"
+              repeatCount="indefinite"
+              rotate="auto"
+            >
+              <mpath
+                href={`#${pathId}`}
+              />
+            </animateMotion>
+          </circle>
+
+          {/* Futuristic platform */}
+          <ellipse
+            cx="450"
+            cy="435"
+            rx="285"
+            ry="55"
+            fill={`url(#${platformGradientId})`}
+          />
+
+          <ellipse
+            cx="450"
+            cy="432"
+            rx="235"
+            ry="34"
+            stroke="rgba(0,198,255,0.35)"
+            strokeWidth="2"
+          />
+
+          <ellipse
+            cx="450"
+            cy="432"
+            rx="185"
+            ry="24"
+            stroke="rgba(0,119,255,0.5)"
+            strokeWidth="2"
+          />
+
+          <ellipse
+            cx="450"
+            cy="432"
+            rx="120"
+            ry="15"
+            stroke="rgba(0,224,255,0.65)"
+            strokeWidth="2"
+          />
+
+          <ellipse
+            cx="450"
+            cy="432"
+            rx="70"
+            ry="8"
+            fill="rgba(0,198,255,0.35)"
+            filter={`url(#${glowId})`}
+          />
+        </svg>
+
+        {!compact && (
+          <div className="infinity-caption">
+            <span>Continuity</span>
+
+            <i>•</i>
+
+            <span>Limitless Growth</span>
+
+            <i>•</i>
+
+            <span>Endless Possibilities</span>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
+/* =========================================================
+   RUDRAA CASH APP MOCKUP
+   ========================================================= */
+
 export function AppMockup() {
   const rows = [
-    ["Dashboard", "Business overview"],
-    ["Wallet", "Digital wallet"],
-    ["Transactions", "Activity view"],
-    ["Settlement", "Settlement flow"],
-    ["Support", "Business assistance"],
+    [
+      "Dashboard",
+      "Business overview",
+    ],
+    [
+      "Wallet",
+      "Digital wallet",
+    ],
+    [
+      "Transactions",
+      "Activity view",
+    ],
+    [
+      "Settlement",
+      "Settlement flow",
+    ],
+    [
+      "Support",
+      "Business assistance",
+    ],
   ];
 
   return (
@@ -536,13 +775,18 @@ export function AppMockup() {
 
         <div className="phone-top">
           <span>Rudraa Cash</span>
+
           <span className="status-dot" />
         </div>
 
         <div className="app-balance">
-          <small>Prototype dashboard</small>
+          <small>
+            Prototype dashboard
+          </small>
 
-          <strong>Business Hub</strong>
+          <strong>
+            Business Hub
+          </strong>
 
           <span>
             Conceptual interface — no real financial data
@@ -550,20 +794,24 @@ export function AppMockup() {
         </div>
 
         <div className="app-grid">
-          {rows.map(([name, desc], index) => (
-            <div
-              className="app-tile"
-              key={name}
-            >
-              <span>
-                0{index + 1}
-              </span>
+          {rows.map(
+            ([name, desc], index) => (
+              <div
+                className="app-tile"
+                key={name}
+              >
+                <span>
+                  0{index + 1}
+                </span>
 
-              <b>{name}</b>
+                <b>{name}</b>
 
-              <small>{desc}</small>
-            </div>
-          ))}
+                <small>
+                  {desc}
+                </small>
+              </div>
+            )
+          )}
         </div>
 
         <div className="app-footer">
@@ -575,6 +823,10 @@ export function AppMockup() {
     </div>
   );
 }
+
+/* =========================================================
+   CTA
+   ========================================================= */
 
 export function CTA({
   title = "Build the Future With Rudraa",
