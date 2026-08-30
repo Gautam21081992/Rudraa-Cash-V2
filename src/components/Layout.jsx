@@ -4,6 +4,10 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navItems, contact } from "../data/siteData";
 import { usePageMeta } from "../hooks/usePageMeta";
 
+/* =========================================================
+   LOGO
+   ========================================================= */
+
 function Logo({ compact = false }) {
   return (
     <Link
@@ -18,7 +22,7 @@ function Logo({ compact = false }) {
 
       <span className="brand-copy">
         <strong className="rudraa-wordmark">
-          RUDRA
+          RUDR
           <span className="brand-last-a">A</span>
         </strong>
 
@@ -38,6 +42,10 @@ function Logo({ compact = false }) {
   );
 }
 
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
 export function Layout({ children }) {
   const location = useLocation();
 
@@ -46,10 +54,22 @@ export function Layout({ children }) {
 
   usePageMeta(location.pathname);
 
+  /* ---------------------------------------------------------
+     Close mobile menu + reset scroll on route change
+     --------------------------------------------------------- */
+
   useEffect(() => {
     setMenuOpen(false);
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
   }, [location.pathname]);
+
+  /* ---------------------------------------------------------
+     Navbar scroll state
+     --------------------------------------------------------- */
 
   useEffect(() => {
     const onScroll = () => {
@@ -67,13 +87,33 @@ export function Layout({ children }) {
     };
   }, []);
 
+  /* ---------------------------------------------------------
+     Lock body scroll while mobile menu is open
+     --------------------------------------------------------- */
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
+
+    return () => {
+      document.body.classList.remove("menu-open");
+    };
+  }, [menuOpen]);
+
+  /* ---------------------------------------------------------
+     Reveal animation observer
+     --------------------------------------------------------- */
+
   useEffect(() => {
     const revealItems = document.querySelectorAll(
       ".reveal:not(.is-visible)"
     );
 
     if (!revealItems.length) {
-      return;
+      return undefined;
     }
 
     if (!("IntersectionObserver" in window)) {
@@ -81,7 +121,7 @@ export function Layout({ children }) {
         element.classList.add("is-visible");
       });
 
-      return;
+      return undefined;
     }
 
     const observer = new IntersectionObserver(
@@ -97,6 +137,7 @@ export function Layout({ children }) {
       },
       {
         threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px",
       }
     );
 
@@ -109,42 +150,80 @@ export function Layout({ children }) {
     };
   }, [location.pathname]);
 
+  /* ---------------------------------------------------------
+     Escape key closes mobile menu
+     --------------------------------------------------------- */
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
   return (
     <div className="site-shell">
+      {/* =====================================================
+          NAVBAR
+         ===================================================== */}
+
       <header
         className={`navbar ${
           scrolled ? "navbar--scrolled" : ""
-        }`}
+        } ${menuOpen ? "navbar--menu-open" : ""}`}
       >
         <div className="container nav-inner">
+          {/* Logo */}
+
           <Logo />
+
+          {/* Desktop Navigation */}
 
           <nav
             className="desktop-nav"
             aria-label="Primary navigation"
           >
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                className={
-                  location.pathname === item.path
-                    ? "nav-link active"
-                    : "nav-link"
-                }
-                to={item.path}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive =
+                location.pathname === item.path;
+
+              return (
+                <Link
+                  key={item.path}
+                  className={
+                    isActive
+                      ? "nav-link active"
+                      : "nav-link"
+                  }
+                  to={item.path}
+                  aria-current={
+                    isActive ? "page" : undefined
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
+
+          {/* Desktop CTA */}
 
           <Link
             className="nav-cta"
             to="/contact"
           >
-            Join Rudraa
+            <span>Join Rudraa</span>
             <ArrowUpRight size={16} />
           </Link>
+
+          {/* Mobile Menu Button */}
 
           <button
             className="menu-button"
@@ -153,31 +232,62 @@ export function Layout({ children }) {
             }
             aria-label={
               menuOpen
-                ? "Close menu"
-                : "Open menu"
+                ? "Close navigation menu"
+                : "Open navigation menu"
             }
             aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
             type="button"
           >
-            {menuOpen ? <X /> : <Menu />}
+            {menuOpen ? (
+              <X size={23} />
+            ) : (
+              <Menu size={23} />
+            )}
           </button>
         </div>
 
-        {menuOpen && (
-          <div className="mobile-menu">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={
-                  location.pathname === item.path
-                    ? "mobile-link active"
-                    : "mobile-link"
-                }
-              >
-                {item.label}
-              </Link>
-            ))}
+        {/* ===================================================
+            MOBILE NAVIGATION
+           =================================================== */}
+
+        <div
+          id="mobile-navigation"
+          className={`mobile-menu ${
+            menuOpen ? "mobile-menu--open" : ""
+          }`}
+          aria-hidden={!menuOpen}
+        >
+          <div className="mobile-menu-inner">
+            <div className="mobile-menu-label">
+              Navigation
+            </div>
+
+            <nav aria-label="Mobile navigation">
+              {navItems.map((item) => {
+                const isActive =
+                  location.pathname === item.path;
+
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={
+                      isActive
+                        ? "mobile-link active"
+                        : "mobile-link"
+                    }
+                    aria-current={
+                      isActive ? "page" : undefined
+                    }
+                  >
+                    <span>{item.label}</span>
+
+                    <ArrowUpRight size={17} />
+                  </Link>
+                );
+              })}
+            </nav>
 
             <a
               className="mobile-contact"
@@ -185,24 +295,41 @@ export function Layout({ children }) {
               target="_blank"
               rel="noreferrer"
             >
-              WhatsApp Us
+              <span>WhatsApp Us</span>
+              <ArrowUpRight size={17} />
             </a>
           </div>
-        )}
+        </div>
       </header>
 
+      {/* =====================================================
+          MAIN CONTENT
+         ===================================================== */}
+
       <main>{children}</main>
+
+      {/* =====================================================
+          FOOTER
+         ===================================================== */}
 
       <Footer />
     </div>
   );
 }
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-grid">
-        <div>
+        {/* ---------------------------------------------------
+            Brand
+           --------------------------------------------------- */}
+
+        <div className="footer-brand">
           <Logo compact />
 
           <p className="footer-tag">
@@ -215,6 +342,10 @@ function Footer() {
             Ecosystem
           </p>
         </div>
+
+        {/* ---------------------------------------------------
+            Explore
+           --------------------------------------------------- */}
 
         <div>
           <h3>Explore</h3>
@@ -230,6 +361,10 @@ function Footer() {
             ))}
           </div>
         </div>
+
+        {/* ---------------------------------------------------
+            Contact
+           --------------------------------------------------- */}
 
         <div>
           <h3>Contact</h3>
@@ -248,15 +383,27 @@ function Footer() {
         </div>
       </div>
 
+      {/* -----------------------------------------------------
+          Footer Bottom
+         ----------------------------------------------------- */}
+
       <div className="container footer-bottom">
-  <span>
-    © {new Date().getFullYear()} Rudraa Business
-    Solutions Pvt. Ltd.
-  </span>
-</div>
+        <span>
+          © {new Date().getFullYear()} Rudraa Business
+          Solutions Pvt. Ltd.
+        </span>
+
+        <span className="footer-bottom-mark">
+          RUDRAA CASH
+        </span>
+      </div>
     </footer>
   );
 }
+
+/* =========================================================
+   PAGE HERO
+   ========================================================= */
 
 export function PageHero({
   eyebrow,
@@ -293,6 +440,10 @@ export function PageHero({
   );
 }
 
+/* =========================================================
+   SECTION
+   ========================================================= */
+
 export function Section({
   children,
   className = "",
@@ -309,6 +460,10 @@ export function Section({
     </section>
   );
 }
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
 
 export function SectionHeader({
   eyebrow,
@@ -335,6 +490,10 @@ export function SectionHeader({
   );
 }
 
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
 export function Button({
   to,
   href,
@@ -356,7 +515,7 @@ export function Button({
           external ? "noreferrer" : undefined
         }
       >
-        {children}
+        <span>{children}</span>
         <ArrowUpRight size={17} />
       </a>
     );
@@ -367,11 +526,15 @@ export function Button({
       className={cls}
       to={to}
     >
-      {children}
+      <span>{children}</span>
       <ArrowUpRight size={17} />
     </Link>
   );
 }
+
+/* =========================================================
+   PREMIUM CARD
+   ========================================================= */
 
 export function PremiumCard({
   icon,
@@ -384,7 +547,10 @@ export function PremiumCard({
       className={`premium-card reveal ${className}`}
     >
       {icon && (
-        <div className="card-icon">
+        <div
+          className="card-icon"
+          aria-hidden="true"
+        >
           {icon}
         </div>
       )}
@@ -398,31 +564,40 @@ export function PremiumCard({
 
 /* =========================================================
    PREMIUM 3D INFINITY VISUAL
-   Clean horizontal infinity geometry
    ========================================================= */
 
 export function InfinityVisual({
   compact = false,
 }) {
-  const suffix = compact ? "compact" : "hero";
+  const suffix = compact
+    ? "compact"
+    : "hero";
 
-  const pathId = `rudraa-infinity-path-${suffix}`;
-  const blueGradientId = `rudraa-infinity-blue-${suffix}`;
-  const highlightGradientId = `rudraa-infinity-highlight-${suffix}`;
-  const glowId = `rudraa-infinity-glow-${suffix}`;
-  const strongGlowId = `rudraa-infinity-strong-glow-${suffix}`;
-  const trailGlowId = `rudraa-infinity-trail-${suffix}`;
+  const pathId =
+    `rudraa-infinity-path-${suffix}`;
+
+  const blueGradientId =
+    `rudraa-infinity-blue-${suffix}`;
+
+  const highlightGradientId =
+    `rudraa-infinity-highlight-${suffix}`;
+
+  const glowId =
+    `rudraa-infinity-glow-${suffix}`;
+
+  const strongGlowId =
+    `rudraa-infinity-strong-glow-${suffix}`;
+
+  const trailGlowId =
+    `rudraa-infinity-trail-${suffix}`;
 
   /*
-    IMPORTANT:
-    This is a single closed horizontal infinity curve.
+    Clean horizontal infinity geometry.
 
-    The old geometry used several overlapping upper/lower
-    loops, which visually created a butterfly/bow-tie shape.
-
-    This path has two clean lobes and one controlled
-    center crossing, giving a recognizable ∞ silhouette.
+    The curve is intentionally kept as a single path so
+    the animated energy point follows one continuous route.
   */
+
   const infinityPath = `
     M 120 90
     C 103 63, 86 38, 58 38
@@ -452,10 +627,14 @@ export function InfinityVisual({
       }`}
       aria-label="Animated 3D infinity symbol representing continuity and limitless growth"
     >
+      {/* Ambient glow */}
+
       <div
         className="infinity-glow"
         aria-hidden="true"
       />
+
+      {/* Ground platform */}
 
       <div
         className="infinity-platform"
@@ -609,7 +788,7 @@ export function InfinityVisual({
           </filter>
 
           {/* =================================================
-              ACTUAL INFINITY PATH
+              INFINITY PATH
              ================================================= */}
 
           <path
@@ -688,7 +867,7 @@ export function InfinityVisual({
         />
 
         {/* ===================================================
-            WHITE/CYAN SPECULAR EDGE
+            WHITE / CYAN SPECULAR EDGE
            =================================================== */}
 
         <use
@@ -852,6 +1031,8 @@ export function InfinityVisual({
         </circle>
       </svg>
 
+      {/* Caption */}
+
       {!compact && (
         <div className="infinity-caption">
           <span>Continuity</span>
@@ -865,6 +1046,10 @@ export function InfinityVisual({
   );
 }
 
+/* =========================================================
+   APP MOCKUP
+   ========================================================= */
+
 export function AppMockup() {
   const rows = [
     ["Dashboard", "Business overview"],
@@ -877,12 +1062,22 @@ export function AppMockup() {
   return (
     <div className="phone-wrap reveal">
       <div className="phone">
+        {/* Phone notch */}
+
         <div className="phone-notch" />
+
+        {/* App top bar */}
 
         <div className="phone-top">
           <span>Rudraa Cash</span>
-          <span className="status-dot" />
+
+          <span
+            className="status-dot"
+            aria-label="Prototype status"
+          />
         </div>
+
+        {/* Balance / dashboard card */}
 
         <div className="app-balance">
           <small>
@@ -898,6 +1093,8 @@ export function AppMockup() {
             financial data
           </span>
         </div>
+
+        {/* App navigation tiles */}
 
         <div className="app-grid">
           {rows.map(
@@ -920,6 +1117,8 @@ export function AppMockup() {
           )}
         </div>
 
+        {/* App footer */}
+
         <div className="app-footer">
           <span>Home</span>
           <span>Activity</span>
@@ -930,6 +1129,10 @@ export function AppMockup() {
   );
 }
 
+/* =========================================================
+   CTA
+   ========================================================= */
+
 export function CTA({
   title = "Build the Future With Rudraa",
   text = "Join the Rudraa ecosystem.",
@@ -939,7 +1142,7 @@ export function CTA({
     <section className="section cta-section">
       <div className="container">
         <div className="cta-card reveal">
-          <div>
+          <div className="cta-content">
             <span className="eyebrow">
               RUDRAA CASH
             </span>
