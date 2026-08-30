@@ -249,15 +249,11 @@ function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <span>
-          © {new Date().getFullYear()} Rudraa Business
-          Solutions Pvt. Ltd.
-        </span>
-
-        <span>
-          RUDRAA BUSINESS SOLUTIONS PVT. LTD.
-        </span>
-      </div>
+  <span>
+    © {new Date().getFullYear()} Rudraa Business
+    Solutions Pvt. Ltd.
+  </span>
+</div>
     </footer>
   );
 }
