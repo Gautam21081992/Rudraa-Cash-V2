@@ -21,6 +21,18 @@ function Logo({ compact = false }) {
           RUDRA
           <span className="brand-last-a">A</span>
         </strong>
+
+        <span className="brand-separator" />
+
+        <span className="brand-business">
+          BUSINESS SOLUTIONS
+        </span>
+
+        <span className="brand-separator" />
+
+        <span className="brand-private">
+          PRIVATE LIMITED
+        </span>
       </span>
     </Link>
   );
