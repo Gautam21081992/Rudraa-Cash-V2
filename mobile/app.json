@@ -6,9 +6,19 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "scheme": "rudraacash",
+    "icon": "./assets/rudraa_logo_clean_transparent.png",
+    "splash": {
+      "image": "./assets/rudraa_logo_clean_transparent.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "android": {
       "package": "com.rudraacash.app",
-      "versionCode": 1
+      "versionCode": 2,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/rudraa_logo_clean_transparent.png",
+        "backgroundColor": "#FFFFFF"
+      }
     }
   }
 }
