@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Rudraa Cash",
+    "slug": "rudraa-cash",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "rudraacash",
+    "android": {
+      "package": "com.rudraacash.app",
+      "versionCode": 1
+    }
+  }
+}
