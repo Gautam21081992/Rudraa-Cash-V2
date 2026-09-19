@@ -29,6 +29,11 @@ jobs:
       - name: Setup EAS
         run: npm install -g eas-cli
 
+      - name: Configure EAS project
+        run: eas init --account gautam_2108 --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          
       - name: Build Android APK
         run: eas build --platform android --profile preview --non-interactive
         env:
