@@ -32,6 +32,24 @@ export default function App() {
   const [beneficiary, setBeneficiary] = useState("");
   const [account, setAccount] = useState("");
   const [amount, setAmount] = useState("");
+  const sendOtp = () => {
+  if (mobile.length !== 10) {
+    alert("Please enter a valid 10-digit mobile number");
+    return;
+  }
+
+  setOtpSent(true);
+};
+
+const verifyOtp = () => {
+  if (otp.length !== 4) {
+    alert("Please enter 4-digit OTP");
+    return;
+  }
+
+  setLoggedIn(true);
+  setScreen("home");
+};
 
   if (!loggedIn) {
     return (
