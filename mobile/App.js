@@ -42,8 +42,8 @@ export default function App() {
 };
 
 const verifyOtp = () => {
-  if (otp.length !== 4) {
-    alert("Please enter 4-digit OTP");
+  if (otp.length !== 6) {
+    alert("Please enter 6-digit OTP");
     return;
   }
 
@@ -91,7 +91,7 @@ const verifyOtp = () => {
 
                 <TouchableOpacity
                   style={styles.primaryButton}
-                  onPress={() => setOtpSent(true)}
+                  onPress={sendOtp}
                 >
                   <Text style={styles.primaryButtonText}>Send OTP</Text>
                 </TouchableOpacity>
@@ -112,7 +112,7 @@ const verifyOtp = () => {
 
                 <TouchableOpacity
                   style={styles.primaryButton}
-                  onPress={() => setLoggedIn(true)}
+                  onPress={verifyOtp}
                 >
                   <Text style={styles.primaryButtonText}>
                     Verify and Continue
