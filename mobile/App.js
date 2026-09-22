@@ -459,7 +459,54 @@ const verifyOtp = () => {
       </Screen>
     );
   }
+if (screen === "notifications") {
+  return (
+    <Screen
+      title="Notifications"
+      onBack={() => setScreen("home")}
+    >
+      <View style={styles.infoBanner}>
+        <Text style={styles.infoTitle}>Notifications</Text>
 
+        <Text style={styles.infoText}>
+          Important updates about your account, transactions and
+          settlements will appear here.
+        </Text>
+      </View>
+
+      <MenuItem
+        title="Account Updates"
+        subtitle="Your account and KYC updates will appear here."
+        onPress={() => {}}
+      />
+
+      <MenuItem
+        title="Transaction Updates"
+        subtitle="Transaction status and important alerts."
+        onPress={() => {}}
+      />
+
+      <MenuItem
+        title="Settlement Updates"
+        subtitle="Settlement status and payout notifications."
+        onPress={() => {}}
+      />
+
+      <View style={styles.statusCard}>
+        <Text style={styles.statusIcon}>i</Text>
+
+        <Text style={styles.statusTitle}>
+          Notification Backend Required
+        </Text>
+
+        <Text style={styles.statusText}>
+          Real-time notifications will be connected to the
+          production backend and notification service.
+        </Text>
+      </View>
+    </Screen>
+  );
+          }
   if (screen === "support") {
     return (
       <Screen title="Customer Support" onBack={() => setScreen("profile")}>
