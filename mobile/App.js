@@ -583,7 +583,7 @@ const verifyOtp = () => {
 
         <View style={styles.welcomeRow}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.welcome}>Welcome back</Text>
+            <Text style={styles.welcome}>Welcome, Retailer</Text>
             <Text style={styles.muted}>
               Manage your retailer business
             </Text>
