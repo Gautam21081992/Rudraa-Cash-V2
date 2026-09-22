@@ -583,6 +583,12 @@ const verifyOtp = () => {
 
         <View style={styles.welcomeRow}>
           <View style={{ flex: 1 }}>
+              <TouchableOpacity
+  style={styles.notificationButton}
+  onPress={() => setScreen("notifications")}
+>
+  <Text style={styles.notificationIcon}>🔔</Text>
+</TouchableOpacity>
             <Text style={styles.welcome}>Welcome, Retailer</Text>
             <Text style={styles.muted}>
               Manage your retailer business
