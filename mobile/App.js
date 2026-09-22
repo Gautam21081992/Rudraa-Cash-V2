@@ -448,7 +448,7 @@ const verifyOtp = () => {
 
   if (screen === "notifications") {
     return (
-      <Screen title="Notifications" onBack={() => setScreen("profile")}>
+      <Screen title="Notifications" onBack={() => setScreen("home")}>
         <View style={styles.emptyCard}>
           <Text style={styles.emptyIcon}>N</Text>
           <Text style={styles.emptyTitle}>No Notifications</Text>
