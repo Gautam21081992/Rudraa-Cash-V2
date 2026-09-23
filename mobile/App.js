@@ -20,6 +20,7 @@ const MUTED = "#6B7C87";
 const WHITE = "#FFFFFF";
 const GREEN = "#168A45";
 const ORANGE = "#E58A00";
+const RED = "#C62828";
 
 const LOGO = require("./assets/rudraa_logo_clean_transparent.png");
 
@@ -37,7 +38,10 @@ export default function App() {
 
   const sendOtp = () => {
     if (mobile.length !== 10) {
-      Alert.alert("Invalid Mobile", "Please enter a valid 10-digit mobile number.");
+      Alert.alert(
+        "Invalid Mobile",
+        "Please enter a valid 10-digit mobile number."
+      );
       return;
     }
 
@@ -62,12 +66,18 @@ export default function App() {
     }
 
     if (account.trim().length < 6) {
-      Alert.alert("Invalid Account", "Please enter a valid account number.");
+      Alert.alert(
+        "Invalid Account",
+        "Please enter a valid account number."
+      );
       return;
     }
 
     if (!amount.trim() || Number(amount) <= 0) {
-      Alert.alert("Invalid Amount", "Please enter a valid transfer amount.");
+      Alert.alert(
+        "Invalid Amount",
+        "Please enter a valid transfer amount."
+      );
       return;
     }
 
@@ -97,14 +107,19 @@ export default function App() {
           />
 
           <Text style={styles.loginTitle}>Rudraa Cash</Text>
+
           <Text style={styles.loginSubtitle}>
             Empowering India, Empowering Retailers
           </Text>
 
           <View style={styles.loginCard}>
-            <Text style={styles.sectionTitle}>Retailer Login</Text>
+            <Text style={styles.sectionTitle}>
+              Retailer Login
+            </Text>
 
-            <Text style={styles.inputLabel}>Mobile Number</Text>
+            <Text style={styles.inputLabel}>
+              Mobile Number
+            </Text>
 
             <TextInput
               style={styles.input}
@@ -121,11 +136,15 @@ export default function App() {
                 style={styles.primaryButton}
                 onPress={sendOtp}
               >
-                <Text style={styles.primaryButtonText}>Send OTP</Text>
+                <Text style={styles.primaryButtonText}>
+                  Send OTP
+                </Text>
               </TouchableOpacity>
             ) : (
               <>
-                <Text style={styles.inputLabel}>6-Digit OTP</Text>
+                <Text style={styles.inputLabel}>
+                  6-Digit OTP
+                </Text>
 
                 <TextInput
                   style={styles.input}
@@ -161,14 +180,16 @@ export default function App() {
             )}
 
             <Text style={styles.demoText}>
-              Secure retailer access will be connected with production
-              authentication and OTP service.
+              Secure retailer access will be connected with
+              production authentication and OTP service.
             </Text>
           </View>
         </ScrollView>
       </SafeAreaView>
     );
   }
+
+  /* MONEY TRANSFER */
 
   if (screen === "transfer") {
     return (
@@ -177,13 +198,19 @@ export default function App() {
         onBack={() => setScreen("home")}
       >
         <View style={styles.infoBanner}>
-          <Text style={styles.infoTitle}>Send Money</Text>
+          <Text style={styles.infoTitle}>
+            Send Money
+          </Text>
+
           <Text style={styles.infoText}>
-            Enter beneficiary details and transfer amount to continue.
+            Enter beneficiary details and transfer amount to
+            continue.
           </Text>
         </View>
 
-        <Text style={styles.inputLabel}>Beneficiary Name</Text>
+        <Text style={styles.inputLabel}>
+          Beneficiary Name
+        </Text>
 
         <TextInput
           style={styles.input}
@@ -193,7 +220,9 @@ export default function App() {
           onChangeText={setBeneficiary}
         />
 
-        <Text style={styles.inputLabel}>Bank Account Number</Text>
+        <Text style={styles.inputLabel}>
+          Bank Account Number
+        </Text>
 
         <TextInput
           style={styles.input}
@@ -204,7 +233,9 @@ export default function App() {
           onChangeText={setAccount}
         />
 
-        <Text style={styles.inputLabel}>Transfer Amount</Text>
+        <Text style={styles.inputLabel}>
+          Transfer Amount
+        </Text>
 
         <TextInput
           style={styles.input}
@@ -216,7 +247,10 @@ export default function App() {
         />
 
         <View style={styles.feeCard}>
-          <Text style={styles.feeTitle}>Transfer Status</Text>
+          <Text style={styles.feeTitle}>
+            Transfer Status
+          </Text>
+
           <Text style={styles.feeText}>
             Production banking/payment API required
           </Text>
@@ -241,7 +275,9 @@ export default function App() {
         onBack={() => setScreen("transfer")}
       >
         <View style={styles.reviewCard}>
-          <Text style={styles.reviewTitle}>Transfer Details</Text>
+          <Text style={styles.reviewTitle}>
+            Transfer Details
+          </Text>
 
           <Row
             title="Beneficiary"
@@ -272,9 +308,10 @@ export default function App() {
           </Text>
 
           <Text style={styles.statusText}>
-            Actual money transfer will be enabled only after approved
-            banking/payment APIs, secure backend services, authentication,
-            KYC and transaction verification are connected.
+            Actual money transfer will be enabled only after
+            approved banking/payment APIs, secure backend
+            services, authentication, KYC and transaction
+            verification are connected.
           </Text>
         </View>
 
@@ -299,41 +336,101 @@ export default function App() {
     );
   }
 
+  /* TRANSACTIONS */
+
   if (screen === "transactions") {
     return (
+      <TransactionsScreen
+        setScreen={setScreen}
+      />
+    );
+  }
+
+  if (screen === "transactionDetails") {
+    return (
       <Screen
-        title="Transactions"
-        onBack={() => setScreen("home")}
+        title="Transaction Details"
+        onBack={() => setScreen("transactions")}
       >
-        <View style={styles.infoBanner}>
-          <Text style={styles.infoTitle}>Transaction History</Text>
-          <Text style={styles.infoText}>
-            Your transfer and transaction records will appear here.
+        <View style={styles.transactionStatusCard}>
+          <View style={styles.successCircle}>
+            <Text style={styles.successCheck}>✓</Text>
+          </View>
+
+          <Text style={styles.transactionStatusTitle}>
+            Transaction Status
+          </Text>
+
+          <Text style={styles.pendingStatus}>
+            API Required
+          </Text>
+
+          <Text style={styles.transactionStatusText}>
+            This is a transaction-detail preview. Actual
+            transaction status will be received from the secure
+            production backend.
           </Text>
         </View>
 
-        <View style={styles.filterRow}>
-          <Filter text="All" active />
-          <Filter text="Success" />
-          <Filter text="Pending" />
-          <Filter text="Failed" />
-        </View>
-
-        <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>₹</Text>
-
-          <Text style={styles.emptyTitle}>
-            No Transactions Yet
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsHeading}>
+            Transaction Information
           </Text>
 
-          <Text style={styles.emptyText}>
-            Transaction records will appear here after your first
-            transaction.
-          </Text>
+          <Row
+            title="Transaction ID"
+            value="RC-TXN-000001"
+          />
+
+          <Row
+            title="Type"
+            value="Money Transfer"
+          />
+
+          <Row
+            title="Beneficiary"
+            value="Demo Beneficiary"
+          />
+
+          <Row
+            title="Account"
+            value="XXXXXX1234"
+          />
+
+          <Row
+            title="Amount"
+            value="Rs. 0.00"
+          />
+
+          <Row
+            title="Date"
+            value="Not Available"
+          />
+
+          <Row
+            title="Status"
+            value="API Required"
+          />
         </View>
+
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={() =>
+            Alert.alert(
+              "Transaction Support",
+              "Production transaction support will be connected with the backend support system."
+            )
+          }
+        >
+          <Text style={styles.primaryButtonText}>
+            Need Help?
+          </Text>
+        </TouchableOpacity>
       </Screen>
     );
   }
+
+  /* SETTLEMENT */
 
   if (screen === "settlement") {
     return (
@@ -408,8 +505,9 @@ export default function App() {
           </Text>
 
           <Text style={styles.statusText}>
-            Real settlement requires verified bank details, secure
-            backend services and approved banking/payment APIs.
+            Real settlement requires verified bank details,
+            secure backend services and approved banking/payment
+            APIs.
           </Text>
         </View>
 
@@ -463,6 +561,8 @@ export default function App() {
       </Screen>
     );
   }
+
+  /* PROFILE */
 
   if (screen === "profile") {
     return (
@@ -518,6 +618,8 @@ export default function App() {
       </Screen>
     );
   }
+
+  /* KYC */
 
   if (screen === "kyc") {
     return (
@@ -594,6 +696,8 @@ export default function App() {
     );
   }
 
+  /* BANK */
+
   if (screen === "bank") {
     return (
       <Screen
@@ -666,6 +770,8 @@ export default function App() {
     );
   }
 
+  /* NOTIFICATIONS */
+
   if (screen === "notifications") {
     return (
       <Screen
@@ -678,8 +784,8 @@ export default function App() {
           </Text>
 
           <Text style={styles.infoText}>
-            Important updates about your account, transactions and
-            settlements will appear here.
+            Important updates about your account, transactions
+            and settlements will appear here.
           </Text>
         </View>
 
@@ -716,6 +822,8 @@ export default function App() {
       </Screen>
     );
   }
+
+  /* SUPPORT */
 
   if (screen === "support") {
     return (
@@ -805,6 +913,8 @@ export default function App() {
     );
   }
 
+  /* ABOUT */
+
   if (screen === "about") {
     return (
       <Screen
@@ -864,6 +974,8 @@ export default function App() {
     );
   }
 
+  /* HOME */
+
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="dark" />
@@ -883,7 +995,9 @@ export default function App() {
             style={styles.notificationButton}
             onPress={() => setScreen("notifications")}
           >
-            <Text style={styles.notificationText}>N</Text>
+            <Text style={styles.notificationText}>
+              N
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -979,7 +1093,9 @@ export default function App() {
         </View>
 
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>₹</Text>
+          <Text style={styles.emptyIcon}>
+            ₹
+          </Text>
 
           <Text style={styles.emptyTitle}>
             No Recent Transactions
@@ -1015,6 +1131,122 @@ export default function App() {
   );
 }
 
+/* TRANSACTION SCREEN COMPONENT */
+
+function TransactionsScreen({ setScreen }) {
+  const [filter, setFilter] = useState("All");
+
+  const openDetails = () => {
+    setScreen("transactionDetails");
+  };
+
+  return (
+    <Screen
+      title="Transactions"
+      onBack={() => setScreen("home")}
+    >
+      <View style={styles.infoBanner}>
+        <Text style={styles.infoTitle}>
+          Transaction History
+        </Text>
+
+        <Text style={styles.infoText}>
+          View transfers, settlement activity and transaction
+          status from one place.
+        </Text>
+      </View>
+
+      <Text style={styles.filterHeading}>
+        Filter Transactions
+      </Text>
+
+      <View style={styles.filterRow}>
+        {["All", "Success", "Pending", "Failed"].map(
+          (item) => (
+            <TouchableOpacity
+              key={item}
+              style={[
+                styles.filter,
+                filter === item && styles.filterActive,
+              ]}
+              onPress={() => setFilter(item)}
+            >
+              <Text
+                style={[
+                  styles.filterText,
+                  filter === item &&
+                    styles.filterTextActive,
+                ]}
+              >
+                {item}
+              </Text>
+            </TouchableOpacity>
+          )
+        )}
+      </View>
+
+      <View style={styles.transactionPreviewCard}>
+        <View style={styles.transactionTop}>
+          <View style={styles.transactionIcon}>
+            <Text style={styles.transactionIconText}>
+              ₹
+            </Text>
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <Text style={styles.transactionName}>
+              Demo Transaction
+            </Text>
+
+            <Text style={styles.transactionId}>
+              RC-TXN-000001
+            </Text>
+          </View>
+
+          <Text style={styles.transactionAmount}>
+            Rs. 0.00
+          </Text>
+        </View>
+
+        <View style={styles.transactionBottom}>
+          <Text style={styles.transactionDate}>
+            Money Transfer
+          </Text>
+
+          <Text style={styles.apiStatus}>
+            API Required
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.detailsButton}
+          onPress={openDetails}
+        >
+          <Text style={styles.detailsButtonText}>
+            View Details
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.statusCard}>
+        <Text style={styles.statusIcon}>
+          i
+        </Text>
+
+        <Text style={styles.statusTitle}>
+          Production Transaction Data Required
+        </Text>
+
+        <Text style={styles.statusText}>
+          This preview is ready for backend integration. Real
+          transaction records, statuses and timestamps will be
+          loaded from the secure production API.
+        </Text>
+      </View>
+    </Screen>
+  );
+}
+
 function Screen({ title, onBack, children }) {
   return (
     <SafeAreaView style={styles.safe}>
@@ -1025,7 +1257,9 @@ function Screen({ title, onBack, children }) {
           style={styles.backButton}
           onPress={onBack}
         >
-          <Text style={styles.backText}>‹</Text>
+          <Text style={styles.backText}>
+            ‹
+          </Text>
         </TouchableOpacity>
 
         <Text style={styles.screenTitle}>
@@ -1076,26 +1310,6 @@ function Stat({ title, value }) {
         {title}
       </Text>
     </View>
-  );
-}
-
-function Filter({ text, active }) {
-  return (
-    <TouchableOpacity
-      style={[
-        styles.filter,
-        active && styles.filterActive,
-      ]}
-    >
-      <Text
-        style={[
-          styles.filterText,
-          active && styles.filterTextActive,
-        ]}
-      >
-        {text}
-      </Text>
-    </TouchableOpacity>
   );
 }
 
@@ -1150,28 +1364,46 @@ function BottomNav({ screen, setScreen }) {
       <NavItem
         icon="≡"
         title="Transactions"
-        active={screen === "transactions"}
+        active={
+          screen === "transactions" ||
+          screen === "transactionDetails"
+        }
         onPress={() => setScreen("transactions")}
       />
 
       <NavItem
         icon="₹"
         title="Settlement"
-        active={screen === "settlement"}
+        active={
+          screen === "settlement" ||
+          screen === "settlementInfo" ||
+          screen === "settlementHistory"
+        }
         onPress={() => setScreen("settlement")}
       />
 
       <NavItem
         icon="R"
         title="Profile"
-        active={screen === "profile"}
+        active={
+          screen === "profile" ||
+          screen === "kyc" ||
+          screen === "kycInfo" ||
+          screen === "bank" ||
+          screen === "bankInfo"
+        }
         onPress={() => setScreen("profile")}
       />
     </View>
   );
 }
 
-function NavItem({ icon, title, active, onPress }) {
+function NavItem({
+  icon,
+  title,
+  active,
+  onPress,
+}) {
   return (
     <TouchableOpacity
       style={styles.navItem}
@@ -1612,6 +1844,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 
+  feeCardTitle: {
+    color: DARK,
+    fontSize: 14,
+    fontWeight: "800",
+  },
+
   reviewCard: {
     backgroundColor: WHITE,
     borderWidth: 1,
@@ -1683,6 +1921,13 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
 
+  filterHeading: {
+    color: DARK,
+    fontSize: 14,
+    fontWeight: "800",
+    marginBottom: 9,
+  },
+
   filterRow: {
     flexDirection: "row",
     marginBottom: 18,
@@ -1710,6 +1955,153 @@ const styles = StyleSheet.create({
 
   filterTextActive: {
     color: WHITE,
+  },
+
+  transactionPreviewCard: {
+    backgroundColor: WHITE,
+    borderWidth: 1,
+    borderColor: BORDER,
+    borderRadius: 18,
+    padding: 16,
+    marginBottom: 16,
+  },
+
+  transactionTop: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  transactionIcon: {
+    width: 45,
+    height: 45,
+    borderRadius: 14,
+    backgroundColor: LIGHT,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
+
+  transactionIconText: {
+    color: BLUE,
+    fontSize: 19,
+    fontWeight: "900",
+  },
+
+  transactionName: {
+    color: DARK,
+    fontSize: 14,
+    fontWeight: "800",
+  },
+
+  transactionId: {
+    color: MUTED,
+    fontSize: 10,
+    marginTop: 4,
+  },
+
+  transactionAmount: {
+    color: DARK,
+    fontSize: 14,
+    fontWeight: "900",
+  },
+
+  transactionBottom: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 15,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: "#EEF3F6",
+  },
+
+  transactionDate: {
+    color: MUTED,
+    fontSize: 11,
+  },
+
+  apiStatus: {
+    color: ORANGE,
+    fontSize: 11,
+    fontWeight: "800",
+  },
+
+  detailsButton: {
+    borderWidth: 1,
+    borderColor: BLUE,
+    borderRadius: 10,
+    height: 42,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 14,
+  },
+
+  detailsButtonText: {
+    color: BLUE,
+    fontSize: 13,
+    fontWeight: "800",
+  },
+
+  transactionStatusCard: {
+    backgroundColor: LIGHT,
+    borderWidth: 1,
+    borderColor: BORDER,
+    borderRadius: 18,
+    padding: 22,
+    alignItems: "center",
+    marginBottom: 16,
+  },
+
+  successCircle: {
+    width: 62,
+    height: 62,
+    borderRadius: 31,
+    backgroundColor: "#E8F7EE",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
+  },
+
+  successCheck: {
+    color: GREEN,
+    fontSize: 30,
+    fontWeight: "900",
+  },
+
+  transactionStatusTitle: {
+    color: DARK,
+    fontSize: 17,
+    fontWeight: "800",
+  },
+
+  pendingStatus: {
+    color: ORANGE,
+    fontSize: 13,
+    fontWeight: "800",
+    marginTop: 5,
+  },
+
+  transactionStatusText: {
+    color: MUTED,
+    fontSize: 12,
+    lineHeight: 18,
+    textAlign: "center",
+    marginTop: 8,
+  },
+
+  detailsCard: {
+    backgroundColor: WHITE,
+    borderWidth: 1,
+    borderColor: BORDER,
+    borderRadius: 18,
+    padding: 18,
+    marginBottom: 16,
+  },
+
+  detailsHeading: {
+    color: DARK,
+    fontSize: 17,
+    fontWeight: "800",
+    marginBottom: 4,
   },
 
   menuItem: {
