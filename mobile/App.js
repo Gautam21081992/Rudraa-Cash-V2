@@ -1,109 +1,136 @@
 import React, { useState } from "react";
 import {
-  SafeAreaView,
   View,
   Text,
-  StyleSheet,
-  StatusBar,
+  TextInput,
   TouchableOpacity,
   ScrollView,
-  TextInput,
+  StyleSheet,
+  SafeAreaView,
   Image,
+  Alert,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 const BLUE = "#0077B6";
-const DARK = "#073B4C";
-const LIGHT = "#F4FAFD";
-const BORDER = "#D9EEF7";
-const MUTED = "#607D8B";
+const DARK = "#123047";
+const LIGHT = "#F5FAFD";
+const BORDER = "#D9E7EF";
+const MUTED = "#6B7C87";
 const WHITE = "#FFFFFF";
-const GREEN = "#168A5B";
+const GREEN = "#168A45";
 const ORANGE = "#E58A00";
 
 const LOGO = require("./assets/rudraa_logo_clean_transparent.png");
 
 export default function App() {
-  const [screen, setScreen] = useState("home");
+  const [screen, setScreen] = useState("login");
   const [loggedIn, setLoggedIn] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
 
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
+
   const [beneficiary, setBeneficiary] = useState("");
   const [account, setAccount] = useState("");
   const [amount, setAmount] = useState("");
+
   const sendOtp = () => {
-  if (mobile.length !== 10) {
-    alert("Please enter a valid 10-digit mobile number");
-    return;
-  }
+    if (mobile.length !== 10) {
+      Alert.alert("Invalid Mobile", "Please enter a valid 10-digit mobile number.");
+      return;
+    }
 
-  setOtpSent(true);
-};
+    setOtpSent(true);
+    Alert.alert("OTP Sent", "Demo OTP screen activated.");
+  };
 
-const verifyOtp = () => {
-  if (otp.length !== 6) {
-    alert("Please enter 6-digit OTP");
-    return;
-  }
+  const verifyOtp = () => {
+    if (otp.length !== 6) {
+      Alert.alert("Invalid OTP", "Please enter 6-digit OTP.");
+      return;
+    }
 
-  setLoggedIn(true);
-  setScreen("home");
-};
+    setLoggedIn(true);
+    setScreen("home");
+  };
+
+  const startTransfer = () => {
+    if (!beneficiary.trim()) {
+      Alert.alert("Required", "Please enter beneficiary name.");
+      return;
+    }
+
+    if (account.trim().length < 6) {
+      Alert.alert("Invalid Account", "Please enter a valid account number.");
+      return;
+    }
+
+    if (!amount.trim() || Number(amount) <= 0) {
+      Alert.alert("Invalid Amount", "Please enter a valid transfer amount.");
+      return;
+    }
+
+    setScreen("transferInfo");
+  };
+
+  const confirmTransfer = () => {
+    Alert.alert(
+      "API Required",
+      "Real money transfer will work only after approved banking/payment APIs, secure backend, KYC and authentication are connected."
+    );
+  };
 
   if (!loggedIn) {
     return (
       <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle="dark-content" backgroundColor={WHITE} />
+        <StatusBar style="dark" />
 
-        <ScrollView contentContainerStyle={styles.loginContainer}>
-          <View style={styles.logoBox}>
-            <Image source={LOGO} style={styles.logo} resizeMode="contain" />
-          </View>
+        <ScrollView
+          contentContainerStyle={styles.loginContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Image
+            source={LOGO}
+            style={styles.loginLogo}
+            resizeMode="contain"
+          />
 
-          <Text style={styles.brand}>RUDRAA CASH</Text>
-          <Text style={styles.loginSubtitle}>Retailer Business App</Text>
+          <Text style={styles.loginTitle}>Rudraa Cash</Text>
+          <Text style={styles.loginSubtitle}>
+            Empowering India, Empowering Retailers
+          </Text>
 
           <View style={styles.loginCard}>
-            <Text style={styles.loginTitle}>
-              {otpSent ? "Verify OTP" : "Welcome Back"}
-            </Text>
+            <Text style={styles.sectionTitle}>Retailer Login</Text>
 
-            <Text style={styles.loginText}>
-              {otpSent
-                ? "Enter the OTP sent to your registered mobile number."
-                : "Login to manage your retailer business."}
-            </Text>
+            <Text style={styles.inputLabel}>Mobile Number</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Enter 10-digit mobile number"
+              placeholderTextColor="#9AAAB4"
+              keyboardType="number-pad"
+              maxLength={10}
+              value={mobile}
+              onChangeText={setMobile}
+            />
 
             {!otpSent ? (
-              <>
-                <Text style={styles.label}>Mobile Number</Text>
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter mobile number"
-                  placeholderTextColor="#9AAAB2"
-                  keyboardType="phone-pad"
-                  maxLength={10}
-                  value={mobile}
-                  onChangeText={setMobile}
-                />
-
-                <TouchableOpacity
-                  style={styles.primaryButton}
-                  onPress={sendOtp}
-                >
-                  <Text style={styles.primaryButtonText}>Send OTP</Text>
-                </TouchableOpacity>
-              </>
+              <TouchableOpacity
+                style={styles.primaryButton}
+                onPress={sendOtp}
+              >
+                <Text style={styles.primaryButtonText}>Send OTP</Text>
+              </TouchableOpacity>
             ) : (
               <>
-                <Text style={styles.label}>OTP</Text>
+                <Text style={styles.inputLabel}>6-Digit OTP</Text>
 
                 <TextInput
                   style={styles.input}
                   placeholder="Enter 6-digit OTP"
-                  placeholderTextColor="#9AAAB2"
+                  placeholderTextColor="#9AAAB4"
                   keyboardType="number-pad"
                   maxLength={6}
                   value={otp}
@@ -119,21 +146,25 @@ const verifyOtp = () => {
                   </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setOtpSent(false)}>
-                  <Text style={styles.linkText}>Change Mobile Number</Text>
+                <TouchableOpacity
+                  style={styles.secondaryButton}
+                  onPress={() => {
+                    setOtp("");
+                    setOtpSent(false);
+                  }}
+                >
+                  <Text style={styles.secondaryButtonText}>
+                    Change Mobile Number
+                  </Text>
                 </TouchableOpacity>
               </>
             )}
+
+            <Text style={styles.demoText}>
+              Secure retailer access will be connected with production
+              authentication and OTP service.
+            </Text>
           </View>
-
-          <Text style={styles.tagline}>
-            Empowering India, Empowering Retailers
-          </Text>
-
-          <Text style={styles.demoNote}>
-            Demo login interface. Production authentication requires secure API
-            integration.
-          </Text>
         </ScrollView>
       </SafeAreaView>
     );
@@ -141,59 +172,63 @@ const verifyOtp = () => {
 
   if (screen === "transfer") {
     return (
-      <Screen title="Money Transfer" onBack={() => setScreen("home")}>
+      <Screen
+        title="Money Transfer"
+        onBack={() => setScreen("home")}
+      >
         <View style={styles.infoBanner}>
-          <Text style={styles.infoTitle}>Transfer Money</Text>
+          <Text style={styles.infoTitle}>Send Money</Text>
           <Text style={styles.infoText}>
-            Enter beneficiary and transaction details.
+            Enter beneficiary details and transfer amount to continue.
           </Text>
         </View>
 
-        <Text style={styles.label}>Beneficiary Name</Text>
+        <Text style={styles.inputLabel}>Beneficiary Name</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Enter beneficiary name"
-          placeholderTextColor="#9AAAB2"
+          placeholderTextColor="#9AAAB4"
           value={beneficiary}
           onChangeText={setBeneficiary}
         />
 
-        <Text style={styles.label}>Account / UPI ID</Text>
+        <Text style={styles.inputLabel}>Bank Account Number</Text>
 
         <TextInput
           style={styles.input}
-          placeholder="Enter account number or UPI ID"
-          placeholderTextColor="#9AAAB2"
+          placeholder="Enter account number"
+          placeholderTextColor="#9AAAB4"
+          keyboardType="number-pad"
           value={account}
           onChangeText={setAccount}
         />
 
-        <Text style={styles.label}>Amount</Text>
+        <Text style={styles.inputLabel}>Transfer Amount</Text>
 
         <TextInput
           style={styles.input}
-          placeholder="Enter amount"
-          placeholderTextColor="#9AAAB2"
+          placeholder="Enter amount in Rs."
+          placeholderTextColor="#9AAAB4"
           keyboardType="decimal-pad"
           value={amount}
           onChangeText={setAmount}
         />
 
-        <View style={styles.previewCard}>
-          <Text style={styles.cardTitle}>Transaction Preview</Text>
-
-          <Row label="Beneficiary" value={beneficiary || "-"} />
-          <Row label="Account / UPI" value={account || "-"} />
-          <Row label="Amount" value={amount ? "Rs. " + amount : "Rs. 0.00"} />
-          <Row label="Platform Fee" value="0.50%" />
+        <View style={styles.feeCard}>
+          <Text style={styles.feeTitle}>Transfer Status</Text>
+          <Text style={styles.feeText}>
+            Production banking/payment API required
+          </Text>
         </View>
 
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => setScreen("transferInfo")}
+          onPress={startTransfer}
         >
-          <Text style={styles.primaryButtonText}>Continue</Text>
+          <Text style={styles.primaryButtonText}>
+            Review Transfer
+          </Text>
         </TouchableOpacity>
       </Screen>
     );
@@ -201,23 +236,64 @@ const verifyOtp = () => {
 
   if (screen === "transferInfo") {
     return (
-      <Screen title="Transfer Status" onBack={() => setScreen("transfer")}>
+      <Screen
+        title="Review Transfer"
+        onBack={() => setScreen("transfer")}
+      >
+        <View style={styles.reviewCard}>
+          <Text style={styles.reviewTitle}>Transfer Details</Text>
+
+          <Row
+            title="Beneficiary"
+            value={beneficiary || "Not Added"}
+          />
+
+          <Row
+            title="Account Number"
+            value={account || "Not Added"}
+          />
+
+          <Row
+            title="Amount"
+            value={`Rs. ${amount || "0.00"}`}
+          />
+
+          <Row
+            title="Status"
+            value="API Required"
+          />
+        </View>
+
         <View style={styles.statusCard}>
           <Text style={styles.statusIcon}>!</Text>
 
-          <Text style={styles.statusTitle}>API Integration Required</Text>
+          <Text style={styles.statusTitle}>
+            Secure Transfer API Required
+          </Text>
 
           <Text style={styles.statusText}>
-            Real money transfer will be enabled after secure backend and
-            approved payment or banking API integration.
+            Actual money transfer will be enabled only after approved
+            banking/payment APIs, secure backend services, authentication,
+            KYC and transaction verification are connected.
           </Text>
         </View>
 
         <TouchableOpacity
-          style={styles.secondaryButton}
-          onPress={() => setScreen("home")}
+          style={styles.primaryButton}
+          onPress={confirmTransfer}
         >
-          <Text style={styles.secondaryButtonText}>Back to Dashboard</Text>
+          <Text style={styles.primaryButtonText}>
+            Confirm Transfer
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.secondaryButton}
+          onPress={() => setScreen("transfer")}
+        >
+          <Text style={styles.secondaryButtonText}>
+            Edit Details
+          </Text>
         </TouchableOpacity>
       </Screen>
     );
@@ -225,18 +301,34 @@ const verifyOtp = () => {
 
   if (screen === "transactions") {
     return (
-      <Screen title="Transactions" onBack={() => setScreen("home")}>
+      <Screen
+        title="Transactions"
+        onBack={() => setScreen("home")}
+      >
+        <View style={styles.infoBanner}>
+          <Text style={styles.infoTitle}>Transaction History</Text>
+          <Text style={styles.infoText}>
+            Your transfer and transaction records will appear here.
+          </Text>
+        </View>
+
         <View style={styles.filterRow}>
           <Filter text="All" active />
           <Filter text="Success" />
           <Filter text="Pending" />
+          <Filter text="Failed" />
         </View>
 
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>Rs</Text>
-          <Text style={styles.emptyTitle}>No Transactions Yet</Text>
+          <Text style={styles.emptyIcon}>₹</Text>
+
+          <Text style={styles.emptyTitle}>
+            No Transactions Yet
+          </Text>
+
           <Text style={styles.emptyText}>
-            Your transaction history will appear here.
+            Transaction records will appear here after your first
+            transaction.
           </Text>
         </View>
       </Screen>
@@ -245,31 +337,58 @@ const verifyOtp = () => {
 
   if (screen === "settlement") {
     return (
-      <Screen title="Settlement" onBack={() => setScreen("home")}>
+      <Screen
+        title="Settlement"
+        onBack={() => setScreen("home")}
+      >
         <View style={styles.balanceCard}>
-          <Text style={styles.balanceLabel}>Settlement Balance</Text>
-          <Text style={styles.balance}>Rs. 0.00</Text>
-          <Text style={styles.balanceSub}>Available for settlement</Text>
+          <Text style={styles.balanceLabel}>
+            Settlement Balance
+          </Text>
+
+          <Text style={styles.balanceAmount}>
+            Rs. 0.00
+          </Text>
+
+          <Text style={styles.balanceSub}>
+            Available for settlement
+          </Text>
         </View>
 
-        <View style={styles.menuCard}>
-          <Row label="Bank Account" value="Not Added" />
-          <Row label="Settlement Fee" value="0.50%" />
-          <Row label="Status" value="API Required" />
-        </View>
+        <MenuItem
+          title="Bank Account"
+          subtitle="Not Added"
+          onPress={() => setScreen("bank")}
+        />
+
+        <MenuItem
+          title="Settlement Fee"
+          subtitle="0.50%"
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Settlement Status"
+          subtitle="API Required"
+          onPress={() => setScreen("settlementInfo")}
+        />
 
         <TouchableOpacity
           style={styles.primaryButton}
           onPress={() => setScreen("settlementInfo")}
         >
-          <Text style={styles.primaryButtonText}>Request Settlement</Text>
+          <Text style={styles.primaryButtonText}>
+            Request Settlement
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.secondaryButton}
           onPress={() => setScreen("settlementHistory")}
         >
-          <Text style={styles.secondaryButtonText}>Settlement History</Text>
+          <Text style={styles.secondaryButtonText}>
+            Settlement History
+          </Text>
         </TouchableOpacity>
       </Screen>
     );
@@ -277,17 +396,48 @@ const verifyOtp = () => {
 
   if (screen === "settlementInfo") {
     return (
-      <Screen title="Settlement Status" onBack={() => setScreen("settlement")}>
+      <Screen
+        title="Settlement Status"
+        onBack={() => setScreen("settlement")}
+      >
         <View style={styles.statusCard}>
           <Text style={styles.statusIcon}>!</Text>
 
-          <Text style={styles.statusTitle}>Bank API Required</Text>
+          <Text style={styles.statusTitle}>
+            Bank API Required
+          </Text>
 
           <Text style={styles.statusText}>
-            Real settlement requires verified bank details, secure backend
-            services and approved banking or payment APIs.
+            Real settlement requires verified bank details, secure
+            backend services and approved banking/payment APIs.
           </Text>
         </View>
+
+        <MenuItem
+          title="Settlement Fee"
+          subtitle="0.50%"
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Bank Verification"
+          subtitle="Required"
+          onPress={() => setScreen("bank")}
+        />
+
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={() =>
+            Alert.alert(
+              "API Required",
+              "Settlement cannot be processed until the production backend and approved banking/payment API are connected."
+            )
+          }
+        >
+          <Text style={styles.primaryButtonText}>
+            Request Settlement
+          </Text>
+        </TouchableOpacity>
       </Screen>
     );
   }
@@ -299,10 +449,15 @@ const verifyOtp = () => {
         onBack={() => setScreen("settlement")}
       >
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>Rs</Text>
-          <Text style={styles.emptyTitle}>No Settlement History</Text>
+          <Text style={styles.emptyIcon}>₹</Text>
+
+          <Text style={styles.emptyTitle}>
+            No Settlement History
+          </Text>
+
           <Text style={styles.emptyText}>
-            Your settlement records will appear here.
+            Settlement records will appear here after successful
+            settlement requests.
           </Text>
         </View>
       </Screen>
@@ -311,58 +466,55 @@ const verifyOtp = () => {
 
   if (screen === "profile") {
     return (
-      <Screen title="Profile" onBack={() => setScreen("home")}>
-        <View style={styles.profileHeader}>
+      <Screen
+        title="Profile"
+        onBack={() => setScreen("home")}
+      >
+        <View style={styles.profileCard}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>R</Text>
           </View>
 
-          <View>
-            <Text style={styles.profileName}>Rudraa Retailer</Text>
-            <Text style={styles.profileStatus}>Account Active</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.profileName}>
+              Rudraa Retailer
+            </Text>
+
+            <Text style={styles.profileSub}>
+              Retailer Account
+            </Text>
           </View>
         </View>
 
         <MenuItem
-          title="KYC and Business Details"
-          subtitle="Manage retailer information"
+          title="KYC"
+          subtitle="Verification required"
           onPress={() => setScreen("kyc")}
         />
 
         <MenuItem
           title="Bank Account"
-          subtitle="Manage settlement bank details"
+          subtitle="Not Added"
           onPress={() => setScreen("bank")}
         />
 
         <MenuItem
-          title="Notifications"
-          subtitle="View important updates"
-          onPress={() => setScreen("notifications")}
+          title="Account Status"
+          subtitle="Active"
+          onPress={() => {}}
         />
 
         <MenuItem
-          title="Customer Support"
-          subtitle="Get help and raise a request"
+          title="Support"
+          subtitle="Customer Support"
           onPress={() => setScreen("support")}
         />
 
         <MenuItem
           title="About Rudraa Cash"
-          subtitle="Vision, mission and company information"
+          subtitle="Company information"
           onPress={() => setScreen("about")}
         />
-
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => {
-            setLoggedIn(false);
-            setOtpSent(false);
-            setScreen("home");
-          }}
-        >
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
       </Screen>
     );
   }
@@ -370,60 +522,110 @@ const verifyOtp = () => {
   if (screen === "kyc") {
     return (
       <Screen
-        title="KYC and Business Details"
+        title="KYC"
         onBack={() => setScreen("profile")}
       >
-        <View style={styles.menuCard}>
-          <Row label="Business Name" value="Rudraa Retailer" />
-          <Row label="KYC Status" value="Pending Verification" />
-          <Row label="PAN" value="Not Added" />
-          <Row label="GSTIN" value="Not Added" />
-          <Row label="Business Address" value="Not Added" />
+        <View style={styles.statusCard}>
+          <Text style={styles.statusIcon}>!</Text>
+
+          <Text style={styles.statusTitle}>
+            KYC Verification Required
+          </Text>
+
+          <Text style={styles.statusText}>
+            Production KYC verification will be connected with
+            approved KYC and compliance services.
+          </Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.primaryButton}
+        <MenuItem
+          title="Identity Verification"
+          subtitle="Pending"
           onPress={() => setScreen("kycInfo")}
-        >
-          <Text style={styles.primaryButtonText}>Update KYC Details</Text>
-        </TouchableOpacity>
+        />
+
+        <MenuItem
+          title="Address Verification"
+          subtitle="Pending"
+          onPress={() => setScreen("kycInfo")}
+        />
+
+        <MenuItem
+          title="KYC Status"
+          subtitle="API Required"
+          onPress={() => setScreen("kycInfo")}
+        />
       </Screen>
     );
   }
 
   if (screen === "kycInfo") {
     return (
-      <Screen title="KYC Status" onBack={() => setScreen("kyc")}>
-        <View style={styles.statusCard}>
-          <Text style={styles.statusIcon}>!</Text>
+      <Screen
+        title="KYC Information"
+        onBack={() => setScreen("kyc")}
+      >
+        <View style={styles.infoBanner}>
+          <Text style={styles.infoTitle}>
+            KYC & Compliance
+          </Text>
 
-          <Text style={styles.statusTitle}>Secure KYC API Required</Text>
-
-          <Text style={styles.statusText}>
-            Production KYC verification will require a secure backend and
-            approved KYC provider.
+          <Text style={styles.infoText}>
+            Secure KYC verification, document validation and
+            compliance checks will be handled by the production
+            backend and approved service providers.
           </Text>
         </View>
+
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={() =>
+            Alert.alert(
+              "KYC API Required",
+              "Connect approved KYC provider before enabling real verification."
+            )
+          }
+        >
+          <Text style={styles.primaryButtonText}>
+            Start KYC Verification
+          </Text>
+        </TouchableOpacity>
       </Screen>
     );
   }
 
   if (screen === "bank") {
     return (
-      <Screen title="Bank Account" onBack={() => setScreen("profile")}>
-        <View style={styles.balanceCard}>
-          <Text style={styles.balanceLabel}>Settlement Bank Account</Text>
-          <Text style={styles.bankStatus}>Not Added</Text>
-          <Text style={styles.balanceSub}>
-            Add verified bank details for settlement.
+      <Screen
+        title="Bank Account"
+        onBack={() => setScreen("profile")}
+      >
+        <View style={styles.emptyCard}>
+          <Text style={styles.emptyIcon}>₹</Text>
+
+          <Text style={styles.emptyTitle}>
+            No Bank Account Added
+          </Text>
+
+          <Text style={styles.emptyText}>
+            Add and verify a bank account to enable production
+            settlement.
           </Text>
         </View>
+
+        <MenuItem
+          title="Bank Verification"
+          subtitle="API Required"
+          onPress={() => setScreen("bankInfo")}
+        />
 
         <TouchableOpacity
           style={styles.primaryButton}
           onPress={() => setScreen("bankInfo")}
         >
-          <Text style={styles.primaryButtonText}>Add Bank Account</Text>
+          <Text style={styles.primaryButtonText}>
+            Add Bank Account
+          </Text>
         </TouchableOpacity>
       </Screen>
     );
@@ -431,97 +633,109 @@ const verifyOtp = () => {
 
   if (screen === "bankInfo") {
     return (
-      <Screen title="Bank Account Status" onBack={() => setScreen("bank")}>
+      <Screen
+        title="Bank Account Setup"
+        onBack={() => setScreen("bank")}
+      >
         <View style={styles.statusCard}>
           <Text style={styles.statusIcon}>!</Text>
 
-          <Text style={styles.statusTitle}>Secure Banking API Required</Text>
+          <Text style={styles.statusTitle}>
+            Secure Bank API Required
+          </Text>
 
           <Text style={styles.statusText}>
-            Bank verification and account management will be connected through
-            the production backend.
+            Bank account verification and settlement setup require
+            secure backend integration and approved banking/payment
+            services.
           </Text>
         </View>
+
+        <MenuItem
+          title="Account Verification"
+          subtitle="Pending"
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Settlement"
+          subtitle="0.50% platform fee"
+          onPress={() => setScreen("settlement")}
+        />
       </Screen>
     );
   }
 
   if (screen === "notifications") {
     return (
-      <Screen title="Notifications" onBack={() => setScreen("home")}>
-        <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>N</Text>
-          <Text style={styles.emptyTitle}>No Notifications</Text>
-          <Text style={styles.emptyText}>
-            Important account and transaction updates will appear here.
+      <Screen
+        title="Notifications"
+        onBack={() => setScreen("home")}
+      >
+        <View style={styles.infoBanner}>
+          <Text style={styles.infoTitle}>
+            Notifications
+          </Text>
+
+          <Text style={styles.infoText}>
+            Important updates about your account, transactions and
+            settlements will appear here.
+          </Text>
+        </View>
+
+        <MenuItem
+          title="Account Updates"
+          subtitle="Your account and KYC updates will appear here."
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Transaction Updates"
+          subtitle="Transaction status and important alerts."
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Settlement Updates"
+          subtitle="Settlement status and payout notifications."
+          onPress={() => {}}
+        />
+
+        <View style={styles.statusCard}>
+          <Text style={styles.statusIcon}>i</Text>
+
+          <Text style={styles.statusTitle}>
+            Notification Backend Required
+          </Text>
+
+          <Text style={styles.statusText}>
+            Real-time notifications will be connected to the
+            production backend and notification service.
           </Text>
         </View>
       </Screen>
     );
   }
-if (screen === "notifications") {
-  return (
-    <Screen
-      title="Notifications"
-      onBack={() => setScreen("home")}
-    >
-      <View style={styles.infoBanner}>
-        <Text style={styles.infoTitle}>Notifications</Text>
 
-        <Text style={styles.infoText}>
-          Important updates about your account, transactions and
-          settlements will appear here.
-        </Text>
-      </View>
-
-      <MenuItem
-        title="Account Updates"
-        subtitle="Your account and KYC updates will appear here."
-        onPress={() => {}}
-      />
-
-      <MenuItem
-        title="Transaction Updates"
-        subtitle="Transaction status and important alerts."
-        onPress={() => {}}
-      />
-
-      <MenuItem
-        title="Settlement Updates"
-        subtitle="Settlement status and payout notifications."
-        onPress={() => {}}
-      />
-
-      <View style={styles.statusCard}>
-        <Text style={styles.statusIcon}>i</Text>
-
-        <Text style={styles.statusTitle}>
-          Notification Backend Required
-        </Text>
-
-        <Text style={styles.statusText}>
-          Real-time notifications will be connected to the
-          production backend and notification service.
-        </Text>
-      </View>
-    </Screen>
-  );
-          }
   if (screen === "support") {
     return (
-      <Screen title="Customer Support" onBack={() => setScreen("profile")}>
+      <Screen
+        title="Customer Support"
+        onBack={() => setScreen("home")}
+      >
         <View style={styles.infoBanner}>
-          <Text style={styles.infoTitle}>How can we help?</Text>
+          <Text style={styles.infoTitle}>
+            How can we help?
+          </Text>
 
           <Text style={styles.infoText}>
-            Raise a support request for account, transaction or settlement
-            related issues.
+            Support for account, transaction and settlement issues.
           </Text>
         </View>
 
         <MenuItem
           title="Transaction Issue"
-          subtitle="Report a transaction issue"
+          subtitle="Report a transaction problem"
           onPress={() => setScreen("supportInfo")}
         />
 
@@ -533,13 +747,13 @@ if (screen === "notifications") {
 
         <MenuItem
           title="Account and KYC"
-          subtitle="Get help with your account"
+          subtitle="Help with account verification"
           onPress={() => setScreen("supportInfo")}
         />
 
         <MenuItem
           title="Contact Support"
-          subtitle="Raise a support request"
+          subtitle="Support team contact"
           onPress={() => setScreen("supportInfo")}
         />
       </Screen>
@@ -548,77 +762,122 @@ if (screen === "notifications") {
 
   if (screen === "supportInfo") {
     return (
-      <Screen title="Support" onBack={() => setScreen("support")}>
+      <Screen
+        title="Support"
+        onBack={() => setScreen("support")}
+      >
         <View style={styles.statusCard}>
           <Text style={styles.statusIcon}>?</Text>
 
-          <Text style={styles.statusTitle}>Support Backend Required</Text>
+          <Text style={styles.statusTitle}>
+            Support Backend Required
+          </Text>
 
           <Text style={styles.statusText}>
-            Support tickets and communication will be connected to the
-            production support backend.
+            Customer support tickets and communication will be
+            connected with the production support system.
           </Text>
         </View>
+
+        <MenuItem
+          title="Transaction Support"
+          subtitle="Transaction issue assistance"
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Settlement Support"
+          subtitle="Settlement issue assistance"
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="Contact Support"
+          subtitle="Support channel required"
+          onPress={() =>
+            Alert.alert(
+              "Support",
+              "Production support contact will be connected here."
+            )
+          }
+        />
       </Screen>
     );
   }
 
   if (screen === "about") {
     return (
-      <Screen title="About Rudraa Cash" onBack={() => setScreen("profile")}>
-        <View style={styles.aboutLogoBox}>
+      <Screen
+        title="About Rudraa Cash"
+        onBack={() => setScreen("profile")}
+      >
+        <View style={styles.aboutCard}>
           <Image
             source={LOGO}
             style={styles.aboutLogo}
             resizeMode="contain"
           />
-        </View>
 
-        <Text style={styles.aboutBrand}>RUDRAA CASH</Text>
+          <Text style={styles.aboutTitle}>
+            Rudraa Cash
+          </Text>
 
-        <Text style={styles.taglineLarge}>
-          Empowering India, Empowering Retailers
-        </Text>
-
-        <View style={styles.aboutCard}>
-          <Text style={styles.sectionTitle}>Vision</Text>
-
-          <Text style={styles.sectionText}>
-            To empower retailers through accessible, reliable and technology
-            driven financial business solutions.
+          <Text style={styles.aboutTagline}>
+            Empowering India, Empowering Retailers
           </Text>
         </View>
 
-        <View style={styles.aboutCard}>
-          <Text style={styles.sectionTitle}>Mission</Text>
+        <View style={styles.infoBanner}>
+          <Text style={styles.infoTitle}>
+            Vision
+          </Text>
 
-          <Text style={styles.sectionText}>
-            To build a trusted digital ecosystem that helps retailers manage
-            financial services, transactions and settlements efficiently.
+          <Text style={styles.infoText}>
+            To build a trusted digital financial ecosystem that
+            empowers retailers and businesses across India.
           </Text>
         </View>
 
-        <View style={styles.feeBanner}>
-          <Text style={styles.feeTitle}>Platform / Settlement Fee</Text>
-          <Text style={styles.feeValue}>0.50%</Text>
+        <View style={styles.infoBanner}>
+          <Text style={styles.infoTitle}>
+            Mission
+          </Text>
+
+          <Text style={styles.infoText}>
+            To provide secure, accessible and technology-driven
+            financial services for retailers and business partners.
+          </Text>
         </View>
+
+        <MenuItem
+          title="Platform Fee"
+          subtitle="Settlement: 0.50%"
+          onPress={() => {}}
+        />
+
+        <MenuItem
+          title="App Status"
+          subtitle="API-ready prototype"
+          onPress={() => {}}
+        />
       </Screen>
     );
   }
 
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="dark-content" backgroundColor={WHITE} />
+      <StatusBar style="dark" />
 
       <ScrollView
-        contentContainerStyle={styles.container}
+        contentContainerStyle={styles.homeContainer}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <View>
-            <Text style={styles.brand}>RUDRAA CASH</Text>
-            <Text style={styles.headerSub}>Retailer Dashboard</Text>
-          </View>
+          <Image
+            source={LOGO}
+            style={styles.logoSmall}
+            resizeMode="contain"
+          />
 
           <TouchableOpacity
             style={styles.notificationButton}
@@ -630,50 +889,49 @@ if (screen === "notifications") {
 
         <View style={styles.welcomeRow}>
           <View style={{ flex: 1 }}>
-              <TouchableOpacity
-  style={styles.notificationButton}
-  onPress={() => setScreen("notifications")}
->
-  <Text style={styles.notificationIcon}>🔔</Text>
-</TouchableOpacity>
-            <Text style={styles.welcome}>Welcome, Retailer</Text>
+            <Text style={styles.welcome}>
+              Welcome, Retailer
+            </Text>
+
             <Text style={styles.muted}>
               Manage your retailer business
             </Text>
           </View>
-
-          <View style={styles.logoSmallBox}>
-            <Image
-              source={LOGO}
-              style={styles.logoSmall}
-              resizeMode="contain"
-            />
-          </View>
         </View>
 
         <View style={styles.balanceCard}>
-          <Text style={styles.balanceLabel}>Available Balance</Text>
-          <Text style={styles.balance}>Rs. 0.00</Text>
-          <Text style={styles.balanceSub}>Updated just now</Text>
+          <Text style={styles.balanceLabel}>
+            Available Balance
+          </Text>
+
+          <Text style={styles.balanceAmount}>
+            Rs. 0.00
+          </Text>
+
+          <Text style={styles.balanceSub}>
+            Updated just now
+          </Text>
         </View>
 
-        <Text style={styles.sectionHeading}>Quick Actions</Text>
+        <Text style={styles.sectionHeading}>
+          Quick Actions
+        </Text>
 
         <View style={styles.actionGrid}>
           <Action
-            icon="T"
+            icon="↗"
             title="Money Transfer"
             onPress={() => setScreen("transfer")}
           />
 
           <Action
-            icon="S"
+            icon="₹"
             title="Settlement"
             onPress={() => setScreen("settlement")}
           />
 
           <Action
-            icon="H"
+            icon="≡"
             title="Transactions"
             onPress={() => setScreen("transactions")}
           />
@@ -685,43 +943,74 @@ if (screen === "notifications") {
           />
         </View>
 
-        <Text style={styles.sectionHeading}>Today's Overview</Text>
+        <Text style={styles.sectionHeading}>
+          Today's Overview
+        </Text>
 
         <View style={styles.statsRow}>
-          <Stat title="Transactions" value="0" />
-          <Stat title="Pending" value="0" />
-          <Stat title="Settled" value="Rs. 0" />
+          <Stat
+            title="Transfers"
+            value="0"
+          />
+
+          <Stat
+            title="Settlements"
+            value="0"
+          />
+
+          <Stat
+            title="Pending"
+            value="0"
+          />
         </View>
 
         <View style={styles.recentHeader}>
-          <Text style={styles.sectionHeading}>Recent Transactions</Text>
+          <Text style={styles.sectionHeading}>
+            Recent Transactions
+          </Text>
 
-          <TouchableOpacity onPress={() => setScreen("transactions")}>
-            <Text style={styles.viewAll}>View All</Text>
+          <TouchableOpacity
+            onPress={() => setScreen("transactions")}
+          >
+            <Text style={styles.viewAll}>
+              View All
+            </Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>Rs</Text>
+          <Text style={styles.emptyIcon}>₹</Text>
 
-          <Text style={styles.emptyTitle}>No Recent Transactions</Text>
+          <Text style={styles.emptyTitle}>
+            No Recent Transactions
+          </Text>
 
           <Text style={styles.emptyText}>
-            Your latest transactions will appear here.
+            Your latest transaction activity will appear here.
           </Text>
         </View>
 
         <View style={styles.feeBanner}>
-          <Text style={styles.feeTitle}>Platform / Settlement Fee</Text>
-          <Text style={styles.feeValue}>0.50%</Text>
+          <Text style={styles.feeTitle}>
+            Settlement Fee: 0.50%
+          </Text>
+
+          <Text style={styles.feeText}>
+            Transparent platform fee for settlement services.
+          </Text>
         </View>
 
-        <Text style={styles.tagline}>
-          Empowering India, Empowering Retailers
-        </Text>
-      </ScrollView>
+        <View style={styles.taglineCard}>
+          <Text style={styles.tagline}>
+            Empowering India, Empowering Retailers
+          </Text>
+        </View>
 
-      <BottomNav screen={screen} setScreen={setScreen} />
+        <BottomNav
+          screen={screen}
+          setScreen={setScreen}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -729,17 +1018,19 @@ if (screen === "notifications") {
 function Screen({ title, onBack, children }) {
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="dark-content" backgroundColor={WHITE} />
+      <StatusBar style="dark" />
 
-      <View style={styles.topBar}>
+      <View style={styles.screenHeader}>
         <TouchableOpacity
-          onPress={onBack}
           style={styles.backButton}
+          onPress={onBack}
         >
-          <Text style={styles.backText}>{"<"}</Text>
+          <Text style={styles.backText}>‹</Text>
         </TouchableOpacity>
 
-        <Text style={styles.topTitle}>{title}</Text>
+        <Text style={styles.screenTitle}>
+          {title}
+        </Text>
 
         <View style={{ width: 42 }} />
       </View>
@@ -759,12 +1050,17 @@ function Action({ icon, title, onPress }) {
     <TouchableOpacity
       style={styles.actionCard}
       onPress={onPress}
+      activeOpacity={0.8}
     >
       <View style={styles.actionIcon}>
-        <Text style={styles.actionIconText}>{icon}</Text>
+        <Text style={styles.actionIconText}>
+          {icon}
+        </Text>
       </View>
 
-      <Text style={styles.actionTitle}>{title}</Text>
+      <Text style={styles.actionTitle}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -772,38 +1068,47 @@ function Action({ icon, title, onPress }) {
 function Stat({ title, value }) {
   return (
     <View style={styles.statCard}>
-      <Text style={styles.statValue}>{value}</Text>
-      <Text style={styles.statTitle}>{title}</Text>
+      <Text style={styles.statValue}>
+        {value}
+      </Text>
+
+      <Text style={styles.statTitle}>
+        {title}
+      </Text>
     </View>
   );
 }
 
 function Filter({ text, active }) {
   return (
-    <View
+    <TouchableOpacity
       style={[
         styles.filter,
-        active ? styles.filterActive : null,
+        active && styles.filterActive,
       ]}
     >
       <Text
         style={[
           styles.filterText,
-          active ? styles.filterTextActive : null,
+          active && styles.filterTextActive,
         ]}
       >
         {text}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
-function Row({ label, value }) {
+function Row({ title, value }) {
   return (
     <View style={styles.row}>
-      <Text style={styles.rowLabel}>{label}</Text>
+      <Text style={styles.rowTitle}>
+        {title}
+      </Text>
 
-      <Text style={styles.rowValue}>{value}</Text>
+      <Text style={styles.rowValue}>
+        {value}
+      </Text>
     </View>
   );
 }
@@ -813,17 +1118,21 @@ function MenuItem({ title, subtitle, onPress }) {
     <TouchableOpacity
       style={styles.menuItem}
       onPress={onPress}
+      activeOpacity={0.75}
     >
-      <View style={styles.menuIcon}>
-        <Text style={styles.menuIconText}>{">"}</Text>
-      </View>
-
       <View style={{ flex: 1 }}>
-        <Text style={styles.menuTitle}>{title}</Text>
-        <Text style={styles.menuSubtitle}>{subtitle}</Text>
+        <Text style={styles.menuTitle}>
+          {title}
+        </Text>
+
+        <Text style={styles.menuSubtitle}>
+          {subtitle}
+        </Text>
       </View>
 
-      <Text style={styles.chevron}>{">"}</Text>
+      <Text style={styles.menuArrow}>
+        ›
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -832,28 +1141,28 @@ function BottomNav({ screen, setScreen }) {
   return (
     <View style={styles.bottomNav}>
       <NavItem
-        icon="H"
+        icon="⌂"
         title="Home"
         active={screen === "home"}
         onPress={() => setScreen("home")}
       />
 
       <NavItem
-        icon="T"
+        icon="≡"
         title="Transactions"
         active={screen === "transactions"}
         onPress={() => setScreen("transactions")}
       />
 
       <NavItem
-        icon="S"
+        icon="₹"
         title="Settlement"
         active={screen === "settlement"}
         onPress={() => setScreen("settlement")}
       />
 
       <NavItem
-        icon="P"
+        icon="R"
         title="Profile"
         active={screen === "profile"}
         onPress={() => setScreen("profile")}
@@ -867,11 +1176,12 @@ function NavItem({ icon, title, active, onPress }) {
     <TouchableOpacity
       style={styles.navItem}
       onPress={onPress}
+      activeOpacity={0.7}
     >
       <Text
         style={[
           styles.navIcon,
-          active ? styles.navActive : null,
+          active && styles.navActive,
         ]}
       >
         {icon}
@@ -880,7 +1190,7 @@ function NavItem({ icon, title, active, onPress }) {
       <Text
         style={[
           styles.navTitle,
-          active ? styles.navActive : null,
+          active && styles.navActive,
         ]}
       >
         {title}
@@ -895,238 +1205,193 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 
-  container: {
-    padding: 20,
-    paddingBottom: 110,
-  },
-
-  screenContainer: {
-    padding: 20,
-    paddingBottom: 40,
-  },
-
   loginContainer: {
     flexGrow: 1,
     justifyContent: "center",
-    padding: 24,
+    padding: 22,
+    backgroundColor: WHITE,
   },
 
-  logoBox: {
+  loginLogo: {
+    width: 190,
+    height: 100,
     alignSelf: "center",
-    width: 130,
-    height: 130,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 12,
   },
 
-  logo: {
-    width: 120,
-    height: 120,
-  },
-
-  brand: {
-    fontSize: 22,
-    fontWeight: "900",
+  loginTitle: {
+    fontSize: 30,
+    fontWeight: "800",
     color: DARK,
-    letterSpacing: 1.5,
+    textAlign: "center",
   },
 
   loginSubtitle: {
-    color: BLUE,
-    fontSize: 14,
-    fontWeight: "700",
-    marginTop: 4,
-    marginBottom: 28,
+    fontSize: 13,
+    color: MUTED,
+    textAlign: "center",
+    marginTop: 6,
+    marginBottom: 24,
   },
 
   loginCard: {
     backgroundColor: WHITE,
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 22,
+    borderRadius: 20,
     padding: 20,
+    elevation: 3,
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
   },
 
-  loginTitle: {
-    fontSize: 24,
-    fontWeight: "900",
-    color: DARK,
-  },
-
-  loginText: {
-    color: MUTED,
-    fontSize: 14,
-    lineHeight: 21,
-    marginTop: 7,
-    marginBottom: 22,
-  },
-
-  label: {
-    fontSize: 13,
+  sectionTitle: {
+    fontSize: 20,
     fontWeight: "800",
     color: DARK,
-    marginBottom: 8,
-    marginTop: 10,
+    marginBottom: 18,
+  },
+
+  inputLabel: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: DARK,
+    marginBottom: 7,
+    marginTop: 12,
   },
 
   input: {
+    height: 52,
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 13,
+    borderRadius: 12,
     paddingHorizontal: 15,
-    height: 52,
     fontSize: 15,
     color: DARK,
-    backgroundColor: "#FBFEFF",
+    backgroundColor: LIGHT,
   },
 
   primaryButton: {
+    height: 52,
     backgroundColor: BLUE,
-    borderRadius: 14,
-    height: 54,
-    justifyContent: "center",
+    borderRadius: 12,
     alignItems: "center",
-    marginTop: 22,
+    justifyContent: "center",
+    marginTop: 18,
   },
 
   primaryButtonText: {
     color: WHITE,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "800",
   },
 
   secondaryButton: {
+    height: 50,
     borderWidth: 1,
     borderColor: BLUE,
-    borderRadius: 14,
-    height: 54,
-    justifyContent: "center",
+    borderRadius: 12,
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 12,
   },
 
   secondaryButtonText: {
     color: BLUE,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "800",
   },
 
-  linkText: {
-    color: BLUE,
+  demoText: {
+    color: MUTED,
+    fontSize: 11,
+    lineHeight: 17,
     textAlign: "center",
-    fontWeight: "700",
-    marginTop: 18,
+    marginTop: 16,
   },
 
-  demoNote: {
-    color: MUTED,
-    textAlign: "center",
-    fontSize: 11,
-    marginTop: 20,
-    lineHeight: 17,
+  homeContainer: {
+    padding: 18,
+    paddingBottom: 110,
   },
 
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginBottom: 12,
   },
 
-  headerSub: {
-    color: MUTED,
-    fontSize: 13,
-    marginTop: 4,
+  logoSmall: {
+    width: 145,
+    height: 58,
   },
 
   notificationButton: {
-    width: 46,
-    height: 46,
-    borderRadius: 23,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: LIGHT,
-    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: BORDER,
     alignItems: "center",
+    justifyContent: "center",
   },
 
   notificationText: {
+    fontSize: 17,
+    fontWeight: "800",
     color: BLUE,
-    fontSize: 16,
-    fontWeight: "900",
   },
 
   welcomeRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 25,
+    marginBottom: 18,
   },
 
   welcome: {
-    color: DARK,
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "800",
+    color: DARK,
   },
 
   muted: {
     color: MUTED,
-    marginTop: 4,
     fontSize: 13,
-  },
-
-  logoSmallBox: {
-    width: 58,
-    height: 58,
-    borderRadius: 18,
-    backgroundColor: WHITE,
-    borderWidth: 1,
-    borderColor: BORDER,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  logoSmall: {
-    width: 48,
-    height: 48,
+    marginTop: 4,
   },
 
   balanceCard: {
     backgroundColor: BLUE,
-    borderRadius: 22,
+    borderRadius: 20,
     padding: 22,
-    marginTop: 22,
+    marginBottom: 22,
   },
 
   balanceLabel: {
-    color: "#DDF4FC",
+    color: "#E8F7FF",
     fontSize: 13,
     fontWeight: "700",
   },
 
-  balance: {
+  balanceAmount: {
     color: WHITE,
-    fontSize: 34,
+    fontSize: 32,
     fontWeight: "900",
     marginTop: 8,
   },
 
   balanceSub: {
-    color: "#DDF4FC",
+    color: "#D5EFFA",
     fontSize: 12,
-    marginTop: 6,
-  },
-
-  bankStatus: {
-    color: WHITE,
-    fontSize: 24,
-    fontWeight: "900",
-    marginTop: 8,
+    marginTop: 5,
   },
 
   sectionHeading: {
-    color: DARK,
     fontSize: 17,
-    fontWeight: "900",
-    marginTop: 24,
+    fontWeight: "800",
+    color: DARK,
     marginBottom: 12,
   },
 
@@ -1134,6 +1399,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    marginBottom: 24,
   },
 
   actionCard: {
@@ -1141,55 +1407,60 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 18,
+    borderRadius: 16,
     padding: 16,
     marginBottom: 12,
+    minHeight: 115,
+    elevation: 1,
   },
 
   actionIcon: {
     width: 42,
     height: 42,
-    borderRadius: 13,
+    borderRadius: 12,
     backgroundColor: LIGHT,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
   },
 
   actionIconText: {
+    fontSize: 20,
+    fontWeight: "800",
     color: BLUE,
-    fontSize: 17,
-    fontWeight: "900",
   },
 
   actionTitle: {
     color: DARK,
-    fontWeight: "800",
-    marginTop: 12,
     fontSize: 13,
+    fontWeight: "800",
   },
 
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 24,
   },
 
   statCard: {
     width: "31%",
-    backgroundColor: LIGHT,
-    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: BORDER,
+    backgroundColor: WHITE,
+    borderRadius: 14,
     padding: 13,
   },
 
   statValue: {
-    color: DARK,
-    fontSize: 16,
+    color: BLUE,
+    fontSize: 21,
     fontWeight: "900",
   },
 
   statTitle: {
     color: MUTED,
     fontSize: 11,
-    marginTop: 5,
+    marginTop: 4,
   },
 
   recentHeader: {
@@ -1200,220 +1471,230 @@ const styles = StyleSheet.create({
 
   viewAll: {
     color: BLUE,
+    fontSize: 12,
     fontWeight: "800",
-    fontSize: 13,
+    marginBottom: 12,
   },
 
   emptyCard: {
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 20,
-    padding: 25,
-    alignItems: "center",
     backgroundColor: WHITE,
+    borderRadius: 18,
+    padding: 24,
+    alignItems: "center",
+    marginBottom: 16,
   },
 
   emptyIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: LIGHT,
-    textAlign: "center",
-    textAlignVertical: "center",
-    color: BLUE,
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: "900",
-    overflow: "hidden",
-    paddingTop: 16,
+    color: BLUE,
+    marginBottom: 10,
   },
 
   emptyTitle: {
-    color: DARK,
     fontSize: 16,
-    fontWeight: "900",
-    marginTop: 13,
+    fontWeight: "800",
+    color: DARK,
+    textAlign: "center",
   },
 
   emptyText: {
-    color: MUTED,
     fontSize: 12,
+    color: MUTED,
     textAlign: "center",
-    marginTop: 6,
     lineHeight: 18,
+    marginTop: 7,
   },
 
   feeBanner: {
     backgroundColor: LIGHT,
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 18,
-    padding: 17,
-    marginTop: 18,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 14,
   },
 
   feeTitle: {
     color: DARK,
-    fontWeight: "700",
-    fontSize: 12,
+    fontSize: 14,
+    fontWeight: "800",
   },
 
-  feeValue: {
-    color: BLUE,
-    fontSize: 18,
-    fontWeight: "900",
+  feeText: {
+    color: MUTED,
+    fontSize: 12,
+    marginTop: 5,
+    lineHeight: 17,
+  },
+
+  taglineCard: {
+    padding: 18,
+    alignItems: "center",
+    marginBottom: 18,
   },
 
   tagline: {
     color: BLUE,
-    textAlign: "center",
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "800",
-    marginTop: 22,
-    marginBottom: 5,
+    textAlign: "center",
   },
 
-  topBar: {
-    height: 64,
+  screenHeader: {
+    height: 68,
+    paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderBottomColor: BORDER,
+    backgroundColor: WHITE,
   },
 
   backButton: {
     width: 42,
     height: 42,
-    borderRadius: 21,
+    borderRadius: 12,
     backgroundColor: LIGHT,
     alignItems: "center",
     justifyContent: "center",
   },
 
   backText: {
+    fontSize: 30,
+    lineHeight: 32,
     color: BLUE,
-    fontSize: 22,
-    fontWeight: "900",
+    fontWeight: "500",
   },
 
-  topTitle: {
-    color: DARK,
+  screenTitle: {
     fontSize: 18,
-    fontWeight: "900",
+    fontWeight: "800",
+    color: DARK,
+  },
+
+  screenContainer: {
+    padding: 18,
+    paddingBottom: 35,
   },
 
   infoBanner: {
     backgroundColor: LIGHT,
-    borderRadius: 18,
-    padding: 18,
-    marginBottom: 18,
     borderWidth: 1,
     borderColor: BORDER,
+    borderRadius: 16,
+    padding: 17,
+    marginBottom: 16,
   },
 
   infoTitle: {
     color: DARK,
-    fontSize: 17,
-    fontWeight: "900",
+    fontSize: 16,
+    fontWeight: "800",
   },
 
   infoText: {
     color: MUTED,
-    fontSize: 13,
-    lineHeight: 19,
-    marginTop: 5,
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 7,
   },
 
-  previewCard: {
+  feeCard: {
     backgroundColor: LIGHT,
-    borderRadius: 18,
-    padding: 18,
-    marginTop: 15,
-  },
-
-  cardTitle: {
-    color: DARK,
-    fontSize: 16,
-    fontWeight: "900",
-    marginBottom: 5,
-  },
-
-  statusCard: {
-    backgroundColor: LIGHT,
-    borderRadius: 20,
-    padding: 25,
-    alignItems: "center",
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: BORDER,
+    padding: 15,
+    marginTop: 16,
   },
 
-  statusIcon: {
-    width: 55,
-    height: 55,
-    borderRadius: 28,
+  reviewCard: {
     backgroundColor: WHITE,
-    textAlign: "center",
-    textAlignVertical: "center",
-    paddingTop: 16,
-    color: ORANGE,
-    fontSize: 20,
-    fontWeight: "900",
+    borderWidth: 1,
+    borderColor: BORDER,
+    borderRadius: 18,
+    padding: 18,
+    marginBottom: 16,
   },
 
-  statusTitle: {
+  reviewTitle: {
     color: DARK,
     fontSize: 18,
-    fontWeight: "900",
-    textAlign: "center",
-    marginTop: 15,
-  },
-
-  statusText: {
-    color: MUTED,
-    fontSize: 13,
-    lineHeight: 20,
-    textAlign: "center",
-    marginTop: 8,
+    fontWeight: "800",
+    marginBottom: 10,
   },
 
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 13,
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: BORDER,
+    borderBottomColor: "#EEF3F6",
   },
 
-  rowLabel: {
+  rowTitle: {
     color: MUTED,
-    fontSize: 13,
-    flex: 1,
+    fontSize: 12,
   },
 
   rowValue: {
     color: DARK,
-    fontSize: 13,
-    fontWeight: "800",
+    fontSize: 12,
+    fontWeight: "700",
     maxWidth: "55%",
     textAlign: "right",
   },
 
+  statusCard: {
+    backgroundColor: "#FFF9EF",
+    borderWidth: 1,
+    borderColor: "#F0D9AA",
+    borderRadius: 17,
+    padding: 18,
+    marginBottom: 16,
+  },
+
+  statusIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: ORANGE,
+    color: WHITE,
+    textAlign: "center",
+    lineHeight: 32,
+    fontWeight: "900",
+    marginBottom: 10,
+  },
+
+  statusTitle: {
+    color: DARK,
+    fontSize: 15,
+    fontWeight: "800",
+  },
+
+  statusText: {
+    color: MUTED,
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 6,
+  },
+
   filterRow: {
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: 18,
   },
 
   filter: {
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: BORDER,
-    paddingVertical: 10,
-    paddingHorizontal: 17,
-    borderRadius: 20,
-    marginRight: 8,
+    marginRight: 7,
   },
 
   filterActive: {
@@ -1423,40 +1704,64 @@ const styles = StyleSheet.create({
 
   filterText: {
     color: MUTED,
+    fontSize: 11,
     fontWeight: "700",
-    fontSize: 12,
   },
 
   filterTextActive: {
     color: WHITE,
   },
 
-  menuCard: {
+  menuItem: {
+    minHeight: 70,
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: WHITE,
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 18,
+    borderRadius: 15,
     paddingHorizontal: 16,
-    marginBottom: 18,
+    paddingVertical: 12,
+    marginBottom: 11,
   },
 
-  profileHeader: {
+  menuTitle: {
+    color: DARK,
+    fontSize: 14,
+    fontWeight: "800",
+  },
+
+  menuSubtitle: {
+    color: MUTED,
+    fontSize: 11,
+    marginTop: 4,
+  },
+
+  menuArrow: {
+    color: BLUE,
+    fontSize: 27,
+    marginLeft: 10,
+  },
+
+  profileCard: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 18,
     backgroundColor: LIGHT,
-    borderRadius: 20,
-    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: BORDER,
+    borderRadius: 18,
+    padding: 17,
+    marginBottom: 17,
   },
 
   avatar: {
-    width: 58,
-    height: 58,
-    borderRadius: 29,
+    width: 55,
+    height: 55,
+    borderRadius: 28,
     backgroundColor: BLUE,
-    justifyContent: "center",
     alignItems: "center",
-    marginRight: 14,
+    justifyContent: "center",
+    marginRight: 13,
   },
 
   avatarText: {
@@ -1468,159 +1773,77 @@ const styles = StyleSheet.create({
   profileName: {
     color: DARK,
     fontSize: 17,
-    fontWeight: "900",
+    fontWeight: "800",
   },
 
-  profileStatus: {
-    color: GREEN,
-    fontSize: 12,
-    fontWeight: "700",
-    marginTop: 5,
-  },
-
-  menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderWidth: 1,
-    borderColor: BORDER,
-    borderRadius: 18,
-    marginBottom: 12,
-    backgroundColor: WHITE,
-  },
-
-  menuIcon: {
-    width: 42,
-    height: 42,
-    borderRadius: 13,
-    backgroundColor: LIGHT,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 13,
-  },
-
-  menuIconText: {
-    color: BLUE,
-    fontSize: 20,
-    fontWeight: "900",
-  },
-
-  menuTitle: {
-    color: DARK,
-    fontSize: 14,
-    fontWeight: "900",
-  },
-
-  menuSubtitle: {
+  profileSub: {
     color: MUTED,
-    fontSize: 11,
+    fontSize: 12,
     marginTop: 4,
   },
 
-  chevron: {
-    color: BLUE,
-    fontSize: 22,
-    fontWeight: "900",
-  },
-
-  logoutButton: {
-    height: 52,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: "#E5BABA",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
-
-  logoutText: {
-    color: "#B53B3B",
-    fontWeight: "900",
-  },
-
-  aboutLogoBox: {
-    alignSelf: "center",
-    width: 130,
-    height: 130,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  aboutLogo: {
-    width: 120,
-    height: 120,
-  },
-
-  aboutBrand: {
-    textAlign: "center",
-    color: DARK,
-    fontSize: 23,
-    fontWeight: "900",
-    letterSpacing: 1.5,
-    marginTop: 8,
-  },
-
-  taglineLarge: {
-    textAlign: "center",
-    color: BLUE,
-    fontSize: 13,
-    fontWeight: "800",
-    marginTop: 8,
-    marginBottom: 20,
-  },
-
   aboutCard: {
+    alignItems: "center",
     borderWidth: 1,
     borderColor: BORDER,
     borderRadius: 18,
-    padding: 18,
-    marginBottom: 14,
+    padding: 22,
+    marginBottom: 16,
   },
 
-  sectionTitle: {
-    color: BLUE,
-    fontSize: 16,
+  aboutLogo: {
+    width: 180,
+    height: 90,
+    marginBottom: 8,
+  },
+
+  aboutTitle: {
+    color: DARK,
+    fontSize: 23,
     fontWeight: "900",
-    marginBottom: 7,
   },
 
-  sectionText: {
-    color: MUTED,
-    fontSize: 13,
-    lineHeight: 20,
+  aboutTagline: {
+    color: BLUE,
+    fontSize: 12,
+    fontWeight: "700",
+    textAlign: "center",
+    marginTop: 6,
   },
 
   bottomNav: {
     position: "absolute",
-    left: 12,
-    right: 12,
-    bottom: 10,
+    left: 18,
+    right: 18,
+    bottom: 18,
     height: 68,
     backgroundColor: WHITE,
     borderWidth: 1,
     borderColor: BORDER,
-    borderRadius: 22,
+    borderRadius: 20,
     flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
-    elevation: 8,
+    justifyContent: "space-around",
+    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
   },
 
   navItem: {
     alignItems: "center",
     justifyContent: "center",
-    minWidth: 65,
+    flex: 1,
   },
 
   navIcon: {
+    fontSize: 19,
     color: MUTED,
-    fontSize: 17,
-    fontWeight: "900",
+    fontWeight: "800",
   },
 
   navTitle: {
-    color: MUTED,
     fontSize: 10,
+    color: MUTED,
     fontWeight: "700",
     marginTop: 3,
   },
